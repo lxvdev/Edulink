@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
@@ -230,10 +229,11 @@ namespace Edulink
                 url = "https://" + url;
             }
 
-            if (!Regex.IsMatch(url, @"\.[a-z]{2,}$"))
-            {
-                url += ".com";
-            }
+            // Caused some problems
+            //if (!Regex.IsMatch(url, @"\.[a-z]{2,}$"))
+            //{
+            //    url += ".com";
+            //}
 
             return url;
         }
