@@ -6,7 +6,7 @@
     <system:String x:Key="UpdateListButton">Update list</system:String>
     <system:String x:Key="IPAddressesText">IP Addresses:</system:String>
     <system:String x:Key="OpenLinkButton">Open link</system:String>
-    <system:String x:Key="ShutdownButton">Shutdown</system:String>
+    <system:String x:Key="ShutdownButton">Shut down</system:String>
     <system:String x:Key="SendMessageButton">Send message</system:String>
     <system:String x:Key="ViewDesktopButton">View desktop</system:String>
     <system:String x:Key="ViewDesktopState1Button">Waiting for client</system:String>
