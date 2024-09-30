@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="Author">Andrew</system:String>
+    <!--Settings window-->
+    <system:String x:Key="SettingsTitle">Settings</system:String>
+    <system:String x:Key="NameTitle">Name</system:String>
+    <system:String x:Key="IPAddressTitle">IP Address</system:String>
+    <system:String x:Key="PortTitle">Port</system:String>
+    <system:String x:Key="MiscellaneousTitle">Miscellaneous</system:String>
+    <system:String x:Key="LanguageTitle">Language</system:String>
+    <system:String x:Key="RestartAppButton">Reload app</system:String>
+    <system:String x:Key="ResetSettingsButton">Reset settings</system:String>
+    <system:String x:Key="ExitButton">Exit app</system:String>
+    <system:String x:Key="SaveAndReloadConnectionButton">Save and reload connection</system:String>
+    <system:String x:Key="SaveAndRestartButton">Save and reload</system:String>
+    <!--Message window-->
+    <system:String x:Key="MessageTitleBar">Message from teacher</system:String>
+    <system:String x:Key="OkButton">OK</system:String>
+    <system:String x:Key="CancelButton">Cancel</system:String>
+    <system:String x:Key="RespondButton">Reply</system:String>
+    <!--ContextMenuStrip-->
+    <system:String x:Key="ToolStripSettings">Settings</system:String>
+    <system:String x:Key="ToolStripAbout">About</system:String>
+    <system:String x:Key="ToolStripExit">Exit</system:String>
+    
+    <system:String x:Key="ToolStripStatusConnected">Connected to server</system:String>
+    <system:String x:Key="ToolStripStatusDisconnected">Not connected</system:String>
+    <!--First steps-->
+    <system:String x:Key="WelcomeText">Welcome to Edulink!</system:String>
+    <system:String x:Key="BreifDescriptionText">To connect to the teacher's computer, please set up the IP address (found on the top-right corner of the EduLink server app), port, and computer name for identification.</system:String>
+    <system:String x:Key="ChangeLaterText">You can modify these settings later from the icon tray.</system:String>
+    <system:String x:Key="DoneButton">Done</system:String>
+    <!--Dialog input-->
+    <system:String x:Key="SendMessageDialogContent">What message would you like to send?</system:String>
+    <system:String x:Key="SendMessageDialogCaption">Send message</system:String>
+    <!--About window-->
+    <system:String x:Key="About">About</system:String>
+</ResourceDictionary>

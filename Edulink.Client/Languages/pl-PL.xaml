@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="Author">@.etsun0</system:String>
+    <!--Settings window-->
+    <system:String x:Key="SettingsTitle">Ustawienia</system:String>
+    <system:String x:Key="NameTitle">Nazwa</system:String>
+    <system:String x:Key="IPAddressTitle">Adres IP</system:String>
+    <system:String x:Key="PortTitle">Port</system:String>
+    <system:String x:Key="MiscellaneousTitle">Różne ustawienia</system:String>
+    <system:String x:Key="LanguageTitle">Język</system:String>
+    <system:String x:Key="RestartAppButton">Odśwież aplikację</system:String>
+    <system:String x:Key="ResetSettingsButton">Zresetuj ustawienia</system:String>
+    <system:String x:Key="ExitButton">Wyjdź z aplikacji</system:String>
+    <system:String x:Key="SaveAndReloadConnectionButton">Zapisz i odśwież połączenie</system:String>
+    <system:String x:Key="SaveAndRestartButton">Zapisz i odśwież</system:String>
+    <!--Message window-->
+    <system:String x:Key="MessageTitleBar">Wiadomość od nauczyciela</system:String>
+    <system:String x:Key="OkButton">OK</system:String>
+    <system:String x:Key="CancelButton">Anuluj</system:String>
+    <system:String x:Key="RespondButton">Odpowiedz</system:String>
+    <!--ContextMenuStrip-->
+    <system:String x:Key="ToolStripSettings">Ustawienia</system:String>
+    <system:String x:Key="ToolStripAbout">O programie</system:String>
+    <system:String x:Key="ToolStripExit">Wyjście</system:String>
+
+    <system:String x:Key="ToolStripStatusConnected">Połączono z serwerem</system:String>
+    <system:String x:Key="ToolStripStatusDisconnected">Brak połączenia</system:String>
+    <!--First steps-->
+    <system:String x:Key="WelcomeText">Witaj w Edulink!</system:String>
+    <system:String x:Key="BreifDescriptionText">Aby połączyć się z komputerem nauczyciela należy skonfigurować adres IP (znaleziony w prawym górnym rogu aplikacji serwera EduLink ), port, a także nazwę komputera w celu identyfikacji.</system:String>
+    <system:String x:Key="ChangeLaterText">Możesz później zmodyfikować te ustawienia z poziomu zasobnika systemowego.</system:String>
+    <system:String x:Key="DoneButton">Gotowe</system:String>
+    <!--Dialog input-->
+    <system:String x:Key="SendMessageDialogContent">Jaką wiadomość chciał(a)byś wysłać?</system:String>
+    <system:String x:Key="SendMessageDialogCaption">Wyślij wiadomość</system:String>
+    <!--About window-->
+    <system:String x:Key="About">O programie</system:String>
+</ResourceDictionary>

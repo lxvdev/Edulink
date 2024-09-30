@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="Author">@.etsun0</system:String>
+    <!--MainWindow-->
+    <system:String x:Key="UpdateListButton">Lista aktualizacji</system:String>
+    <system:String x:Key="IPAddressesText">Adresy IP:</system:String>
+    <system:String x:Key="OpenLinkButton">Otwórz link</system:String>
+    <system:String x:Key="ShutdownButton">Zamknij system</system:String>
+    <system:String x:Key="SendMessageButton">Wyślij wiadomość</system:String>
+    <system:String x:Key="ViewDesktopButton">Pokaż pulpit</system:String>
+    <system:String x:Key="ViewDesktopState1Button">Oczekiwanie na klienta</system:String>
+    <system:String x:Key="ViewDesktopState2Button">Otrzymywanie obrazka</system:String>
+    <system:String x:Key="RestartAppButton">Uruchom ponmownie</system:String>
+    <system:String x:Key="LockscreenButton">Zablokuj ekran</system:String>
+    <system:String x:Key="SettingsButton">Ustawienia</system:String>
+
+    <system:String x:Key="AllPCsText">Wszystkie połączone komputery</system:String>
+    <!--Input dialog-->
+    <system:String x:Key="LinkDialogContent">Wprowadź prawidłowy adres URL</system:String>
+    <system:String x:Key="LinkDialogCaption">Otwórz link</system:String>
+    <system:String x:Key="SendMessageDialogContent">Jaką wiadomość chciał(a)byś wysłać?</system:String>
+    <system:String x:Key="SendMessageDialogCaption">Wyślij wiadomość</system:String>
+    <system:String x:Key="OkButton">OK</system:String>
+    <system:String x:Key="CancelButton">Anuluj</system:String>
+    <!--Settings window-->
+    <system:String x:Key="SettingsTitle">Ustawienia</system:String>
+    <system:String x:Key="PortTitle">Port</system:String>
+    <system:String x:Key="MiscellaneousTitle">Różne ustawienia</system:String>
+    <system:String x:Key="LanguageTitle">Język</system:String>
+    <system:String x:Key="ResetSettingsButton">Zresetuj konfigurację</system:String>
+    <system:String x:Key="SaveAndRestartButton">Zapisz i odśwież konfigurację</system:String>
+    <!--MessageBox Dialog-->
+    <system:String x:Key="MessageFrom">Wiadomość od:</system:String>
+    <system:String x:Key="RespondButton">Odpowiedz</system:String>
+    <!--About window-->
+    <system:String x:Key="About">O programie</system:String>
+</ResourceDictionary>

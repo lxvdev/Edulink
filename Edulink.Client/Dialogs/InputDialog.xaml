@@ -1,0 +1,27 @@
+﻿<Window x:Class="Edulink.InputDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Edulink"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MaxHeight="500"
+        MinHeight="136"
+        MinWidth="400"
+        MaxWidth="500"
+        Topmost="True"
+        ResizeMode="NoResize"
+        FontFamily="{StaticResource Inter}"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock x:Name="DialogText" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,5"/>
+            <TextBox x:Name="InputTextBox" Padding="2,4" Margin="0,0,0,30" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Button Content="{DynamicResource OkButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="OkButton_Click"/>
+            <Button Content="{DynamicResource CancelButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="CancelButton_Click" Margin="5,0,0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

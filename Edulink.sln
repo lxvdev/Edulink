@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Server", "Edulink.Server\Edulink.Server.csproj", "{8A89A373-D7ED-44A0-A6A1-817BFB25037E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Client", "Edulink.Client\Edulink.Client.csproj", "{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.TcpHelper", "Edulink.TCPHelper\Edulink.TcpHelper.csproj", "{666D8108-AE32-4161-8941-6FE5E490A837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminVerifier", "AdminVerifier\AdminVerifier.csproj", "{7F85866A-D917-4371-8037-DD35CE309FD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A89A373-D7ED-44A0-A6A1-817BFB25037E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A89A373-D7ED-44A0-A6A1-817BFB25037E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A89A373-D7ED-44A0-A6A1-817BFB25037E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A89A373-D7ED-44A0-A6A1-817BFB25037E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{666D8108-AE32-4161-8941-6FE5E490A837}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{666D8108-AE32-4161-8941-6FE5E490A837}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{666D8108-AE32-4161-8941-6FE5E490A837}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{666D8108-AE32-4161-8941-6FE5E490A837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F85866A-D917-4371-8037-DD35CE309FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F85866A-D917-4371-8037-DD35CE309FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F85866A-D917-4371-8037-DD35CE309FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F85866A-D917-4371-8037-DD35CE309FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9F475D9-78B6-4485-ADF6-A6DC9659AC9D}
+	EndGlobalSection
+EndGlobal
