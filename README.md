@@ -1,6 +1,9 @@
 # Edulink - Seamless classroom control at your fingertips
 ## Download
-https://github.com/lxvdev/Edulink/releases
+### Server
+https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.1-server
+### Client
+https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.0-client
 
 ## Instructions
 
