@@ -40,10 +40,16 @@ namespace Edulink.Client
 
         private void ReloadConnection_Click(object sender, RoutedEventArgs e)
         {
-            App.client.Close();
+            SaveSettings();
         }
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
+            App.RestartApp();
+        }
+
+        private void SaveSettings()
         {
             try
             {
@@ -78,8 +84,6 @@ namespace Edulink.Client
                 App.configManager.Settings.Language = (LanguageComboBox.SelectedItem as ComboBoxItem)?.Tag.ToString();
 
                 App.configManager.Save();
-
-                App.RestartApp();
             }
             catch (Exception ex)
             {
