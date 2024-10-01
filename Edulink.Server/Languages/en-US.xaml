@@ -39,5 +39,4 @@
     <!--DesktopPreview window-->
     <system:String x:Key="Save">Save</system:String>
     <system:String x:Key="DesktopPreviewRefresh">Refresh</system:String>
-
 </ResourceDictionary>

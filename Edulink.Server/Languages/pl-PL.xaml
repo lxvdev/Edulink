@@ -36,4 +36,7 @@
     <system:String x:Key="RespondButton">Odpowiedz</system:String>
     <!--About window-->
     <system:String x:Key="About">O programie</system:String>
+    <!--DesktopPreview window-->
+    <system:String x:Key="Save">Save</system:String> <!--Need to update this-->
+    <system:String x:Key="DesktopPreviewRefresh">Refresh</system:String> <!--Need to update this-->
 </ResourceDictionary>
