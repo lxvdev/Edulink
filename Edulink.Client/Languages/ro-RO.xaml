@@ -4,7 +4,7 @@
     <system:String x:Key="Author">My mom</system:String>
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Setări</system:String>
-    <system:String x:Key="NameTitle">Nume</system:String>
+    <system:String x:Key="NameTitle">Nume</system:String> <!--Need to update this-->
     <system:String x:Key="IPAddressTitle">Adresă IP</system:String>
     <system:String x:Key="PortTitle">Port</system:String>
     <system:String x:Key="MiscellaneousTitle">Diverse</system:String>

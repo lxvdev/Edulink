@@ -4,7 +4,7 @@
     <system:String x:Key="Author">Andrew</system:String>
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Ajustes</system:String>
-    <system:String x:Key="NameTitle">Nombre</system:String>
+    <system:String x:Key="NameTitle">Nombre del ordenador</system:String>
     <system:String x:Key="IPAddressTitle">Dirección IP</system:String>
     <system:String x:Key="PortTitle">Puerto</system:String>
     <system:String x:Key="MiscellaneousTitle">Opciones variadas</system:String>

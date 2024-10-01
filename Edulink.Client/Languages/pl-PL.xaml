@@ -4,7 +4,7 @@
     <system:String x:Key="Author">@.etsun0</system:String>
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Ustawienia</system:String>
-    <system:String x:Key="NameTitle">Nazwa</system:String>
+    <system:String x:Key="NameTitle">Nazwa</system:String> <!--Need to update this-->
     <system:String x:Key="IPAddressTitle">Adres IP</system:String>
     <system:String x:Key="PortTitle">Port</system:String>
     <system:String x:Key="MiscellaneousTitle">Różne ustawienia</system:String>
