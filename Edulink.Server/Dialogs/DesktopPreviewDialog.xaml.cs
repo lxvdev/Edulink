@@ -22,14 +22,15 @@ namespace Edulink
             this.timeStamp = DateTime.Now;
             this.bitmap = AddWatermarkToBitmap(bitmap);
             this.ClientInfo = clientInfo;
-            Title = clientInfo.Name;
+            Title = $"{clientInfo.Name} - {timeStamp.ToString("dd/MM/yyyy HH:mm:ss")}";
             PreviewImage.Source = ImageToBitmapImage(this.bitmap);
+            Focus();
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = $"{timeStamp.ToString("yyyy-MM-dd_HH-mm-ss")}_{ClientInfo.Name}";
+            dlg.FileName = $"{ClientInfo.Name}_{timeStamp.ToString("dd-MM-yyyy_HH-mm-ss")}";
             dlg.DefaultExt = ".png";
             dlg.Filter = "PNG files (*.png)|*.png";
 
@@ -42,6 +43,35 @@ namespace Edulink
             }
         }
 
+
+
+        public void UpdateScreenshot(Bitmap bitmap)
+        {
+            this.timeStamp = DateTime.Now;
+            this.bitmap = AddWatermarkToBitmap(bitmap);
+            Title = $"{ClientInfo.Name} - {timeStamp.ToString("dd/MM/yyyy HH:mm:ss")}";
+            PreviewImage.Source = ImageToBitmapImage(this.bitmap);
+            Focus();
+        }
+
+        private BitmapImage ImageToBitmapImage(Bitmap bitmap)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Png);
+                ms.Position = 0;
+
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = ms;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+
+                return bitmapImage;
+            }
+        }
         private Bitmap AddWatermarkToBitmap(Bitmap originalImage)
         {
             int additionalHeight = 52;
@@ -67,33 +97,6 @@ namespace Edulink
 
             return watermarkedImage;
         }
-
-        public void UpdateScreenshot(Bitmap bitmap)
-        {
-            this.timeStamp = DateTime.Now;
-            this.bitmap = AddWatermarkToBitmap(bitmap);
-            PreviewImage.Source = ImageToBitmapImage(this.bitmap);
-        }
-
-        private BitmapImage ImageToBitmapImage(Bitmap bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, ImageFormat.Png);
-                ms.Position = 0;
-
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = ms;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                bitmapImage.Freeze();
-
-
-                return bitmapImage;
-            }
-        }
-
         private Bitmap LoadBitmapFromResources(string resourceName)
         {
             BitmapImage bitmapImage = new BitmapImage(new Uri($"pack://application:,,,/{resourceName}"));
