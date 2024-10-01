@@ -10,6 +10,7 @@
         MinHeight="120"
         MinWidth="400"
         MaxWidth="500"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight">
     <Grid Margin="10">

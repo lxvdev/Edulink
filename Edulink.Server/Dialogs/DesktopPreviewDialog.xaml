@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Edulink"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Height="450" Width="800">
-    <Grid>
-        <Image x:Name="PreviewImage" RenderOptions.BitmapScalingMode="HighQuality"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" x:Name="PreviewImage" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,5"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button x:Name="Save" Content="{DynamicResource Save}" Height="25" MinWidth="80" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,0,5,0" Click="Save_Click"/>
+            <Button x:Name="Refresh" Content="{DynamicResource DesktopPreviewRefresh}" Height="25" MinWidth="80" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="Refresh_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

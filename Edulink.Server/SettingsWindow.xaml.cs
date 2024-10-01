@@ -70,5 +70,10 @@ namespace Edulink
             e.Cancel = true;
             Visibility = Visibility.Collapsed;
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            App.CloseApp();
+        }
     }
 }

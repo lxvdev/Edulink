@@ -12,7 +12,7 @@
     <system:String x:Key="RestartAppButton">Reiniciar applicación</system:String>
     <system:String x:Key="ResetSettingsButton">Restablecer ajustes</system:String>
     <system:String x:Key="ExitButton">Salir de la applicación</system:String>
-    <system:String x:Key="SaveAndReloadConnectionButton">Guardar y reiniciar conexión</system:String>
+    <system:String x:Key="SaveButton">Guardar ajustes</system:String>
     <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar app</system:String>
     <!--Message window-->
     <system:String x:Key="MessageTitleBar">Mensaje del profesor</system:String>

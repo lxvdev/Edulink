@@ -30,9 +30,14 @@
     <system:String x:Key="LanguageTitle">Language</system:String>
     <system:String x:Key="ResetSettingsButton">Reset settings</system:String>
     <system:String x:Key="SaveAndRestartButton">Save and reload</system:String>
+    <system:String x:Key="ExitButton">Exit app</system:String>
     <!--MessageBox Dialog-->
     <system:String x:Key="MessageFrom">Message from</system:String>
     <system:String x:Key="RespondButton">Reply</system:String>
     <!--About window-->
     <system:String x:Key="About">About</system:String>
+    <!--DesktopPreview window-->
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="DesktopPreviewRefresh">Refresh</system:String>
+
 </ResourceDictionary>

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace Edulink
 {
@@ -126,7 +124,7 @@ namespace Edulink
                 helper.Close();
             }
         }
-
+        private List<DesktopPreviewDialog> openDesktopPreviewDialogs = new List<DesktopPreviewDialog>();
         public async Task ListenForCommandsAsync(ClientInfo clientInfo)
         {
             while (true)
@@ -146,15 +144,22 @@ namespace Edulink
                     switch (command)
                     {
                         case "DesktopPreview":
+                            DesktopPreviewDialog existingDialog = openDesktopPreviewDialogs.FirstOrDefault(d => d.ClientInfo == clientInfo);
                             DesktopPreviewButton.SetResourceReference(ContentProperty, "ViewDesktopState2Button");
                             Bitmap image = await clientInfo.Helper.ReceiveImageAsync();
                             DesktopPreviewButton.SetResourceReference(ContentProperty, "ViewDesktopButton");
-                            DesktopPreviewButton.IsEnabled = true;
-                            Application.Current.Dispatcher.Invoke(() =>
+                            //DesktopPreviewButton.IsEnabled = true;
+                            if (existingDialog == null)
                             {
-                                DesktopPreviewDialog desktopPreviewDialog = new DesktopPreviewDialog(ImageToBitmapImage(image), clientInfo.Name);
-                                desktopPreviewDialog.Show();
-                            });
+                                DesktopPreviewDialog desktopPreviewDialog = new DesktopPreviewDialog(image, clientInfo);
+                                openDesktopPreviewDialogs.Add(desktopPreviewDialog);
+                                desktopPreviewDialog.Closed += (s, e) => openDesktopPreviewDialogs.Remove(desktopPreviewDialog);
+                                Application.Current.Dispatcher.Invoke(() => desktopPreviewDialog.Show());
+                            }
+                            else
+                            {
+                                Application.Current.Dispatcher.Invoke(() => existingDialog.UpdateScreenshot(image));
+                            }
                             break;
                         case "SendMessage":
                             Application.Current.Dispatcher.Invoke(() =>
@@ -203,7 +208,7 @@ namespace Edulink
                 case "DesktopPreview":
                     if (await SendCommandAsync(command, null, false))
                     {
-                        DesktopPreviewButton.IsEnabled = false;
+                        //DesktopPreviewButton.IsEnabled = false;
                         DesktopPreviewButton.SetResourceReference(ContentProperty, "ViewDesktopState1Button");
                     }
                     break;
@@ -237,48 +242,37 @@ namespace Edulink
 
             return url;
         }
-        private BitmapImage ImageToBitmapImage(Bitmap bitmap)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                ms.Position = 0;
 
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = ms;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-
-                return bitmapImage;
-            }
-        }
-        public async Task BroadcastCommand(string command, string arguments = null)
-        {
-            foreach (var client in clients)
-            {
-                await client.Helper.SendCommandAsync(command, arguments);
-            }
-        }
         private async Task<bool> SendCommandAsync(string command, string arguments = null, bool multipleClients = true)
         {
-            if (ConnectedPCsList.SelectedItem is ListBoxItem selectedItem)
+            if (ConnectedPCsList.SelectedItems.Count > 0)
             {
-                if (selectedItem.DataContext is ClientInfo selectedClient)
+                if (ConnectedPCsList.SelectedItems.Cast<ListBoxItem>().Any(item => item.DataContext.ToString() == "AllPCs"))
                 {
-                    await selectedClient.Helper.SendCommandAsync(command, arguments);
-                    return true;
+                    if (multipleClients)
+                    {
+                        foreach (var client in clients)
+                        {
+                            await client.Helper.SendCommandAsync(command, arguments);
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("This command can't be used on all clients", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return false;
+                    }
                 }
-                else if (selectedItem.DataContext.ToString() == "AllPCs" && multipleClients)
+
+                foreach (ListBoxItem selectedItem in ConnectedPCsList.SelectedItems)
                 {
-                    await BroadcastCommand(command, arguments);
-                    return true;
+                    if (selectedItem is ListBoxItem item && item.DataContext is ClientInfo selectedClient)
+                    {
+                        await selectedClient.Helper.SendCommandAsync(command, arguments);
+                    }
                 }
-                else if (selectedItem.DataContext.ToString() == "AllPCs" && multipleClients == false)
-                {
-                    MessageBox.Show("This command can't be used on all clients", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return false;
-                }
+
+                return true;
             }
             return false;
         }

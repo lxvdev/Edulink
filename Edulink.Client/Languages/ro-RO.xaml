@@ -12,7 +12,7 @@
     <system:String x:Key="RestartAppButton">Reporniți aplicația</system:String>
     <system:String x:Key="ResetSettingsButton">Resetează setările</system:String>
     <system:String x:Key="ExitButton">Închideți aplicația</system:String>
-    <system:String x:Key="SaveAndReloadConnectionButton">Salvează și reîncărca conexiunea</system:String>
+    <system:String x:Key="SaveButton">Salvează setări</system:String>
     <system:String x:Key="SaveAndRestartButton">Salvează și reportește aplicația</system:String>
     <!--Message window-->
     <system:String x:Key="MessageTitleBar">Mesaj de la profesor</system:String>

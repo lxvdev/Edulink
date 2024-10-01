@@ -31,7 +31,7 @@ namespace Edulink.TCPHelper
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't send text: {ex.Message}");
+                Console.WriteLine($"Couldn't send text: {ex.Message}");
             }
         }
         public async Task<string> ReceiveTextAsync()
@@ -92,7 +92,7 @@ namespace Edulink.TCPHelper
             }
             catch (Exception ex)
             {
-                throw new Exception($"Couldn't send command: {ex.Message}");
+                Console.WriteLine($"Couldn't send command: {ex.Message}");
             }
         }
         public async Task<(string command, string argument)> ReceiveCommandAsync()

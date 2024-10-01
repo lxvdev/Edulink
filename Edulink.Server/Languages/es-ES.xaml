@@ -30,10 +30,13 @@
     <system:String x:Key="LanguageTitle">Idioma</system:String>
     <system:String x:Key="ResetSettingsButton">Restablecer ajustes</system:String>
     <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar app</system:String>
+    <system:String x:Key="ExitButton">Salir de la applicación</system:String>
     <!--MessageBox Dialog-->
     <system:String x:Key="MessageFrom">Mensaje de</system:String>
     <system:String x:Key="RespondButton">Responder</system:String>
     <!--About window-->
     <system:String x:Key="About">Acerca de</system:String>
-
+    <!--DesktopPreview window-->
+    <system:String x:Key="Save">Guardar</system:String>
+    <system:String x:Key="DesktopPreviewRefresh">Refrescar</system:String>
 </ResourceDictionary>

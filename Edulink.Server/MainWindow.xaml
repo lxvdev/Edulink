@@ -37,8 +37,8 @@
                     </StackPanel>
                 </Grid>
 
-                <ListBox Grid.Row="1" x:Name="ConnectedPCsList" SelectedIndex="0" FontSize="14" Margin="0,0,0,5">
-
+                <ListBox Grid.Row="1" x:Name="ConnectedPCsList" SelectionMode="Extended" SelectedIndex="-1" FontSize="14" Margin="0,0,0,5">
+                    
                 </ListBox>
 
                 <Grid Grid.Row="2">

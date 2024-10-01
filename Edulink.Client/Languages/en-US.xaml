@@ -12,7 +12,7 @@
     <system:String x:Key="RestartAppButton">Reload app</system:String>
     <system:String x:Key="ResetSettingsButton">Reset settings</system:String>
     <system:String x:Key="ExitButton">Exit app</system:String>
-    <system:String x:Key="SaveAndReloadConnectionButton">Save and reload connection</system:String>
+    <system:String x:Key="SaveButton">Save settings</system:String>
     <system:String x:Key="SaveAndRestartButton">Save and reload</system:String>
     <!--Message window-->
     <system:String x:Key="MessageTitleBar">Message from teacher</system:String>

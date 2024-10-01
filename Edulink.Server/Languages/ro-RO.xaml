@@ -30,6 +30,7 @@
     <system:String x:Key="LanguageTitle">Limbă</system:String>
     <system:String x:Key="ResetSettingsButton">Resetează setările</system:String>
     <system:String x:Key="SaveAndRestartButton">Salvare și repornire</system:String>
+    <system:String x:Key="ExitButton">Închideți aplicația</system:String>
     <!--MessageBox Dialog-->
     <system:String x:Key="MessageFrom">Mesaj de la</system:String>
     <system:String x:Key="RespondButton">Răspunde</system:String>
