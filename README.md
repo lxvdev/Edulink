@@ -1,6 +1,9 @@
 # Edulink - Seamless classroom control at your fingertips
 ## Download
-https://github.com/lxvdev/Edulink/releases
+### Server
+https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.1-server
+### Client
+https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.0-client
 
 ## Instructions
 
@@ -53,6 +56,8 @@ EduLink supports multiple languages, including:
 - Spanish (Andrew)
 - Romanian (My mom)
 - Polish (@etsun1x)
+### Assets
+- Google Fonts (Inter)
 
 ## Screenshots
 ![Edulink Client_l0YbQmVrL4](https://github.com/user-attachments/assets/05b58f43-2325-4f2f-be1e-04a5ce296578)
