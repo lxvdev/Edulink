@@ -11,7 +11,7 @@
     <system:String x:Key="ViewDesktopButton">Pokaż pulpit</system:String>
     <system:String x:Key="ViewDesktopState1Button">Oczekiwanie na klienta</system:String>
     <system:String x:Key="ViewDesktopState2Button">Otrzymywanie obrazka</system:String>
-    <system:String x:Key="RestartAppButton">Uruchom ponmownie</system:String>
+    <system:String x:Key="RestartAppButton">Uruchom ponownie</system:String>
     <system:String x:Key="LockscreenButton">Zablokuj ekran</system:String>
     <system:String x:Key="SettingsButton">Ustawienia</system:String>
 
@@ -37,6 +37,6 @@
     <!--About window-->
     <system:String x:Key="About">O programie</system:String>
     <!--DesktopPreview window-->
-    <system:String x:Key="Save">Save</system:String> <!--Need to update this-->
-    <system:String x:Key="DesktopPreviewRefresh">Refresh</system:String> <!--Need to update this-->
+    <system:String x:Key="Save">Zapisz</system:String>
+    <system:String x:Key="DesktopPreviewRefresh">Odśwież</system:String>
 </ResourceDictionary>

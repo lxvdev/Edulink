@@ -4,7 +4,7 @@
     <system:String x:Key="Author">@.etsun0</system:String>
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Ustawienia</system:String>
-    <system:String x:Key="NameTitle">Nazwa</system:String> <!--Need to update this-->
+    <system:String x:Key="NameTitle">Nazwa komputera</system:String>
     <system:String x:Key="IPAddressTitle">Adres IP</system:String>
     <system:String x:Key="PortTitle">Port</system:String>
     <system:String x:Key="MiscellaneousTitle">Różne ustawienia</system:String>
@@ -12,7 +12,7 @@
     <system:String x:Key="RestartAppButton">Odśwież aplikację</system:String>
     <system:String x:Key="ResetSettingsButton">Zresetuj ustawienia</system:String>
     <system:String x:Key="ExitButton">Wyjdź z aplikacji</system:String>
-    <system:String x:Key="SaveButton">Zapisz i odśwież połączenie</system:String> <!--Need to update this-->
+    <system:String x:Key="SaveButton">Zapisz ustawienia</system:String>
     <system:String x:Key="SaveAndRestartButton">Zapisz i odśwież</system:String>
     <!--Message window-->
     <system:String x:Key="MessageTitleBar">Wiadomość od nauczyciela</system:String>
