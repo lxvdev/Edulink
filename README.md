@@ -53,7 +53,7 @@ EduLink supports multiple languages, including:
 ## Credits
 ### Translating
 - English (Andrew)
-- Spanish (Andrew)
+- Spanish (Andrew and Carmen Rodríguez Mínguez)
 - Romanian (My mom)
 - Polish (@etsun1x)
 ### Assets
