@@ -6,15 +6,19 @@ namespace Edulink.Classes
 {
     public class TaskSchedulerHelper
     {
-        public static void CreateManualTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string args = null)
+        TaskSchedulerClass schedulerClass;
+        public TaskSchedulerHelper()
+        {
+            schedulerClass = new TaskSchedulerClass();
+            schedulerClass.Connect();
+
+        }
+        public void CreateManualTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string args = null)
         {
             try
             {
-                TaskSchedulerClass scheduler = new TaskSchedulerClass();
-                scheduler.Connect();
-
-                ITaskFolder rootFolder = scheduler.GetFolder("\\");
-                ITaskDefinition taskDef = scheduler.NewTask(0);
+                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
+                ITaskDefinition taskDef = schedulerClass.NewTask(0);
                 taskDef.RegistrationInfo.Description = description;
                 taskDef.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
                 taskDef.Principal.LogonType = _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN;
@@ -48,14 +52,11 @@ namespace Edulink.Classes
                 throw new Exception($"Error creating task: {ex.Message}");
             }
         }
-        public static void DeleteTask(string taskName)
+        public void DeleteTask(string taskName)
         {
             try
             {
-                TaskSchedulerClass scheduler = new TaskSchedulerClass();
-                scheduler.Connect();
-
-                ITaskFolder rootFolder = scheduler.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
                 rootFolder.DeleteTask(taskName, 0);
 
                 Console.WriteLine("Task successfully deleted.");
@@ -65,14 +66,11 @@ namespace Edulink.Classes
                 throw new Exception($"Error deleting task: {ex.Message}");
             }
         }
-        public static bool TaskExistsWithCorrectPath(string taskName, string expectedExePath)
+        public bool TaskExistsWithCorrectPath(string taskName, string expectedExePath)
         {
             try
             {
-                TaskSchedulerClass scheduler = new TaskSchedulerClass();
-                scheduler.Connect();
-
-                ITaskFolder rootFolder = scheduler.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
 
                 IRegisteredTask task = rootFolder.GetTask(taskName);
 
@@ -106,15 +104,11 @@ namespace Edulink.Classes
                 return false;
             }
         }
-
-        public static void UpdateTask(string taskName, string newExePath, bool runWithHighestPrivileges = false, string newArgs = null)
+        public void UpdateTask(string taskName, string newExePath, bool runWithHighestPrivileges = false, string newArgs = null)
         {
             try
             {
-                TaskSchedulerClass scheduler = new TaskSchedulerClass();
-                scheduler.Connect();
-
-                ITaskFolder rootFolder = scheduler.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
 
                 IRegisteredTask task = rootFolder.GetTask(taskName);
 
