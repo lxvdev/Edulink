@@ -1,36 +1,42 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <system:String x:Key="Author">Andrew</system:String>
+    <system:String x:Key="Author">Andrew and Carmen Rodríguez Mínguez</system:String>
     <!--MainWindow-->
     <system:String x:Key="UpdateListButton">Actualizar lista</system:String>
-    <system:String x:Key="IPAddressesText">Direcciónes IP:</system:String>
-    <system:String x:Key="OpenLinkButton">Abrir link</system:String>
-    <system:String x:Key="ShutdownButton">Apagar</system:String>
-    <system:String x:Key="SendMessageButton">Mandar mensaje</system:String>
+    <system:String x:Key="IPAddressesText">Dirección IP:</system:String>
+    <system:String x:Key="OpenLinkButton">Abrir enlace</system:String>
+    <system:String x:Key="ShutdownButton">Apagar ordenador</system:String>
+    <system:String x:Key="SendMessageButton">Enviar mensaje</system:String>
     <system:String x:Key="ViewDesktopButton">Ver escritorio</system:String>
     <system:String x:Key="ViewDesktopState1Button">Esperando al cliente</system:String>
     <system:String x:Key="ViewDesktopState2Button">Recibiendo imagen</system:String>
-    <system:String x:Key="RestartAppButton">Reiniciar applicación</system:String>
+    <system:String x:Key="RestartAppButton">Reiniciar aplicación</system:String>
     <system:String x:Key="LockscreenButton">Pantalla de bloqueo</system:String>
     <system:String x:Key="SettingsButton">Ajustes</system:String>
+    <system:String x:Key="BlockInputButton">Bloqueo de entrada</system:String>
+    <system:String x:Key="UnBlockInputButton">Desbloqueo de entrada</system:String>
+    <system:String x:Key="ResetPasswordButton">Restablecer contraseña</system:String>
+    <system:String x:Key="RestartButton">Reiniciar ordenador</system:String>
 
-    <system:String x:Key="AllPCsText">Todos los PCs conectados</system:String>
+    <system:String x:Key="ConnectedComputers">Ordenadores conectados</system:String>
+
+    <system:String x:Key="AllPCsText">Todos los ordenadores conectados</system:String>
     <!--Input dialog-->
-    <system:String x:Key="LinkDialogContent">Introduce una URL valida</system:String>
-    <system:String x:Key="LinkDialogCaption">Abrir link</system:String>
-    <system:String x:Key="SendMessageDialogContent">Que mensaje le gustaria mandar?</system:String>
-    <system:String x:Key="SendMessageDialogCaption">Mandar mensaje</system:String>
+    <system:String x:Key="LinkDialogContent">Introduce un enlace válido</system:String>
+    <system:String x:Key="LinkDialogCaption">Abrir enlace</system:String>
+    <system:String x:Key="SendMessageDialogContent">¿Qué mensaje le gustaría mandar?</system:String>
+    <system:String x:Key="SendMessageDialogCaption">Enviar mensaje</system:String>
     <system:String x:Key="OkButton">Aceptar</system:String>
     <system:String x:Key="CancelButton">Cancelar</system:String>
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Ajustes</system:String>
     <system:String x:Key="PortTitle">Puerto</system:String>
-    <system:String x:Key="MiscellaneousTitle">Opciones variadas</system:String>
+    <system:String x:Key="MiscellaneousTitle">Opciones adicionales</system:String>
     <system:String x:Key="LanguageTitle">Idioma</system:String>
     <system:String x:Key="ResetSettingsButton">Restablecer ajustes</system:String>
-    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar app</system:String>
-    <system:String x:Key="ExitButton">Salir de la applicación</system:String>
+    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar aplicación</system:String>
+    <system:String x:Key="ExitButton">Salir de la aplicación</system:String>
     <!--MessageBox Dialog-->
     <system:String x:Key="MessageFrom">Mensaje de</system:String>
     <system:String x:Key="RespondButton">Responder</system:String>
