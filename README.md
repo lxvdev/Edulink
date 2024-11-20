@@ -55,7 +55,7 @@ Edulink supports multiple languages, including:
 - English (Andrew)
 - Spanish (Andrew and Carmen Rodríguez Mínguez)
 - Romanian (My mom)
-- Polish (@etsun1x)
+- Polish (@R3ikou)
 ### Assets
 - Google Fonts (Inter)
 
