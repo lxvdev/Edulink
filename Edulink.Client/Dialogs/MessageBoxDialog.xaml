@@ -4,21 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Edulink"
+        xmlns:a="clr-namespace:Edulink.Attached"
+        xmlns:icon="clr-namespace:Edulink.Controls.MaterialSymbol"
         mc:Ignorable="d"
         FontFamily="{StaticResource Inter}"
-        Title="{DynamicResource MessageTitleBar}"
-        MinHeight="120"
-        MinWidth="400"
-        MaxWidth="500"
-        WindowStartupLocation="CenterScreen"
         Topmost="True"
-        ResizeMode="NoResize"
-        SizeToContent="WidthAndHeight">
+        UseLayoutRounding="True"
+        MinHeight="120" MinWidth="400" MaxWidth="500" Width="410" Height="120"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="10">
-        <TextBlock x:Name="MessageContent" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Margin="0,0,0,35"/>
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="{DynamicResource OkButton}" FontSize="14" Height="25" MinWidth="80" Padding="10,0" Margin="0,0,5,0" Click="OkButton_Click"/>
-            <Button Content="{DynamicResource RespondButton}" FontSize="14" Height="25" MinWidth="80" Padding="10,0" Margin="0,0,0,0" Click="RespondButton_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <icon:MaterialSymbol Grid.Column="0"
+                                 x:Name="Symbol"
+                                 Kind="Info"
+                                 IsFilled="False"
+                                 Height="42"
+                                 Width="42"
+                                 SymbolBrush="RoyalBlue"
+                                 Margin="0,0,10,0" Visibility="Collapsed"/>
+
+            <TextBox Grid.Column="1" x:Name="MessageContent" IsReadOnly="True"
+                     Style="{StaticResource HeaderTextBox}"
+                     BorderThickness="0" TextWrapping="Wrap"/>
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5,0,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button x:Name="OkButton" Content="{DynamicResource Message.Ok}" Margin="5,0,0,0" Visibility="Collapsed"/>
+            <Button x:Name="ReplyButton" Content="{DynamicResource Message.Reply}" Margin="5,0,0,0" Visibility="Collapsed"/>
+            <Button x:Name="CancelButton" Content="{DynamicResource Message.Cancel}" Margin="5,0,0,0" Visibility="Collapsed"/>
+            <Button x:Name="YesButton" Content="{DynamicResource Message.Yes}" Margin="5,0,0,0" Visibility="Collapsed"/>
+            <Button x:Name="NoButton" Content="{DynamicResource Message.No}" Margin="5,0,0,0" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Window>
