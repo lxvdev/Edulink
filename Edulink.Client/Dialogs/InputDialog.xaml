@@ -4,24 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Edulink"
+        xmlns:attached="clr-namespace:Edulink.Attached"
+        xmlns:icon="clr-namespace:Edulink.Controls.MaterialSymbol"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
-        MaxHeight="500"
-        MinHeight="136"
-        MinWidth="400"
-        MaxWidth="500"
-        Topmost="True"
-        ResizeMode="NoResize"
         FontFamily="{StaticResource Inter}"
-        WindowStartupLocation="CenterScreen">
+        Topmost="True"
+        MaxHeight="500" MinHeight="120" MinWidth="400" MaxWidth="500" Width="130" Height="160"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Title="{DynamicResource Input.TitleBar}">
     <Grid Margin="10">
-        <StackPanel>
-            <TextBlock x:Name="DialogText" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,5"/>
-            <TextBox x:Name="InputTextBox" Padding="2,4" Margin="0,0,0,30" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock x:Name="DialogText"
+                       Text="{DynamicResource Input.Content}"
+                       Style="{StaticResource Header}"
+                       TextWrapping="Wrap" Margin="0,0,0,5"/>
+            <TextBox x:Name="InputTextBox" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource OkButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="OkButton_Click"/>
-            <Button Content="{DynamicResource CancelButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="CancelButton_Click" Margin="5,0,0,0"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,5,0,0">
+            <Button Content="{DynamicResource Input.Ok}" Click="OkButton_Click"/>
+            <Button Content="{DynamicResource Input.Cancel}" Click="CancelButton_Click" Margin="5,0,0,0"/>
         </StackPanel>
     </Grid>
 </Window>
