@@ -63,9 +63,9 @@ namespace Edulink.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon EduLink_Client {
+        internal static System.Drawing.Icon Edulink_Client {
             get {
-                object obj = ResourceManager.GetObject("EduLink_Client", resourceCulture);
+                object obj = ResourceManager.GetObject("Edulink_Client", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
