@@ -7,18 +7,18 @@
     <system:String x:Key="NameTitle">Nombre del ordenador</system:String>
     <system:String x:Key="IPAddressTitle">Dirección IP</system:String>
     <system:String x:Key="PortTitle">Puerto</system:String>
-    <system:String x:Key="MiscellaneousTitle">Opciones variadas</system:String>
+    <system:String x:Key="MiscellaneousTitle">Opciones adicionales</system:String>
     <system:String x:Key="LanguageTitle">Idioma</system:String>
-    <system:String x:Key="RestartAppButton">Reiniciar applicación</system:String>
+    <system:String x:Key="RestartAppButton">Reiniciar aplicación</system:String>
     <system:String x:Key="ResetSettingsButton">Restablecer ajustes</system:String>
     <system:String x:Key="ExitButton">Salir de la applicación</system:String>
     <system:String x:Key="SaveButton">Guardar ajustes</system:String>
-    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar app</system:String>
+    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar aplicación</system:String>
     <!--Message window-->
     <system:String x:Key="MessageTitleBar">Mensaje del profesor</system:String>
     <system:String x:Key="OkButton">Aceptar</system:String>
     <system:String x:Key="CancelButton">Cancelar</system:String>
-    <system:String x:Key="RespondButton">Responder</system:String>
+    <system:String x:Key="ReplyButton">Responder</system:String>
     <!--ContextMenuStrip-->
     <system:String x:Key="ToolStripSettings">Ajustes</system:String>
     <system:String x:Key="ToolStripAbout">Acerca de</system:String>

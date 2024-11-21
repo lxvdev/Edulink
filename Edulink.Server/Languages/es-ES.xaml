@@ -4,18 +4,24 @@
     <system:String x:Key="Author">Andrew</system:String>
     <!--MainWindow-->
     <system:String x:Key="UpdateListButton">Actualizar lista</system:String>
-    <system:String x:Key="IPAddressesText">Direcciónes IP:</system:String>
-    <system:String x:Key="OpenLinkButton">Abrir link</system:String>
-    <system:String x:Key="ShutdownButton">Apagar</system:String>
-    <system:String x:Key="SendMessageButton">Mandar mensaje</system:String>
+    <system:String x:Key="IPAddressesText">Dirección IP:</system:String>
+    <system:String x:Key="OpenLinkButton">Abrir enlace</system:String>
+    <system:String x:Key="ShutdownButton">Apagar ordenador</system:String>
+    <system:String x:Key="SendMessageButton">Enviar mensaje</system:String>
     <system:String x:Key="ViewDesktopButton">Ver escritorio</system:String>
     <system:String x:Key="ViewDesktopState1Button">Esperando al cliente</system:String>
     <system:String x:Key="ViewDesktopState2Button">Recibiendo imagen</system:String>
-    <system:String x:Key="RestartAppButton">Reiniciar applicación</system:String>
+    <system:String x:Key="RestartAppButton">Reiniciar aplicación</system:String>
     <system:String x:Key="LockscreenButton">Pantalla de bloqueo</system:String>
     <system:String x:Key="SettingsButton">Ajustes</system:String>
+    <system:String x:Key="BlockInputButton">Bloqueo de entrada</system:String>
+    <system:String x:Key="UnBlockInputButton">Desbloqueo de entrada</system:String>
+    <system:String x:Key="ResetPasswordButton">Restablecer contraseña</system:String>
+    <system:String x:Key="RestartButton">Reiniciar ordenador</system:String>
 
-    <system:String x:Key="AllPCsText">Todos los PCs conectados</system:String>
+    <system:String x:Key="ConnectedComputers">Ordenadores conectados</system:String>
+
+    <system:String x:Key="AllPCsText">Todos los ordenadores conectados</system:String>
     <!--Input dialog-->
     <system:String x:Key="LinkDialogContent">Introduce una URL valida</system:String>
     <system:String x:Key="LinkDialogCaption">Abrir link</system:String>
@@ -26,17 +32,25 @@
     <!--Settings window-->
     <system:String x:Key="SettingsTitle">Ajustes</system:String>
     <system:String x:Key="PortTitle">Puerto</system:String>
-    <system:String x:Key="MiscellaneousTitle">Opciones variadas</system:String>
+    <system:String x:Key="MiscellaneousTitle">Opciones adicionales</system:String>
     <system:String x:Key="LanguageTitle">Idioma</system:String>
     <system:String x:Key="ResetSettingsButton">Restablecer ajustes</system:String>
-    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar app</system:String>
-    <system:String x:Key="ExitButton">Salir de la applicación</system:String>
+    <system:String x:Key="SaveAndRestartButton">Guardar y reiniciar aplicación</system:String>
+    <system:String x:Key="ExitButton">Salir de la aplicación</system:String>
     <!--MessageBox Dialog-->
     <system:String x:Key="MessageFrom">Mensaje de</system:String>
-    <system:String x:Key="RespondButton">Responder</system:String>
+    <system:String x:Key="ReplyButton">Responder</system:String>
     <!--About window-->
     <system:String x:Key="About">Acerca de</system:String>
     <!--DesktopPreview window-->
     <system:String x:Key="Save">Guardar</system:String>
     <system:String x:Key="DesktopPreviewRefresh">Refrescar</system:String>
+    <!--Client toolTip-->
+    <system:String x:Key="ToolTipName">Nombre:</system:String>
+    <system:String x:Key="ToolTipVersion">Versión:</system:String>
+    <system:String x:Key="ToolTipConnectionTime">Connectado a las</system:String>
+    <system:String x:Key="ToolTipEndpoint">Punto de acceso:</system:String>
+    <!--Dialogs-->
+    <system:String x:Key="ReceivingImageDialogMessage">Recibiendo imagen...</system:String>
+    <system:String x:Key="ReceivingImageDialogTitle">Recibiendo</system:String>
 </ResourceDictionary>
