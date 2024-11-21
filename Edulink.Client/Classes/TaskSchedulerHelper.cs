@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using TaskScheduler;
 
 namespace Edulink.Classes
 {
-    public class TaskSchedulerHelper
+    public class TaskSchedulerHelper : IDisposable
     {
         TaskSchedulerClass schedulerClass;
         public TaskSchedulerHelper()
@@ -13,39 +14,96 @@ namespace Edulink.Classes
             schedulerClass.Connect();
 
         }
-        public void CreateManualTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string args = null)
+        public void CreateLoginTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string arguments = null)
         {
             try
             {
-                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
-                ITaskDefinition taskDef = schedulerClass.NewTask(0);
-                taskDef.RegistrationInfo.Description = description;
-                taskDef.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-                taskDef.Principal.LogonType = _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN;
+                ITaskFolder rootFolder = schedulerClass.GetFolder(@"\");
+                ITaskDefinition taskDefinition = schedulerClass.NewTask(0);
 
-                taskDef.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
+                taskDefinition.RegistrationInfo.Description = description;
+                taskDefinition.RegistrationInfo.Author = "Andrew";
 
-                taskDef.Settings.RunOnlyIfIdle = false;
-                taskDef.Settings.DisallowStartIfOnBatteries = false;
-                taskDef.Settings.StopIfGoingOnBatteries = false;
-                taskDef.Settings.WakeToRun = true;
+                //taskDef.Principal.UserId = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                taskDefinition.Principal.GroupId = "S-1-5-4"; // Interactive (It runs when a user logs in)
+                taskDefinition.Principal.LogonType = _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN;
+                taskDefinition.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
 
-                taskDef.Settings.AllowDemandStart = true;
-                taskDef.Settings.ExecutionTimeLimit = "PT0S";
-                taskDef.Settings.RestartInterval = "PT1M";
-                taskDef.Settings.RestartCount = 9999;
+                ILogonTrigger logonTrigger = (ILogonTrigger)taskDefinition.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
+                logonTrigger.UserId = null;
 
-                IActionCollection actionCollection = taskDef.Actions;
-                IAction action = actionCollection.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
-                IExecAction execAction = (IExecAction)action;
+                IExecAction execAction = (IExecAction)taskDefinition.Actions.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                 execAction.Path = exePath;
-                execAction.Arguments = args;
+                execAction.Arguments = arguments;
 
-                IRegisteredTask regTask = rootFolder.RegisterTaskDefinition(
-                    taskName, taskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE,
-                    null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, "");
+                taskDefinition.Settings.StartWhenAvailable = true;
+                taskDefinition.Settings.RunOnlyIfIdle = false;
+                taskDefinition.Settings.DisallowStartIfOnBatteries = false;
+                taskDefinition.Settings.StopIfGoingOnBatteries = false;
+                taskDefinition.Settings.WakeToRun = true;
 
-                Console.WriteLine("Manual task successfully created.");
+                taskDefinition.Settings.AllowDemandStart = true;
+                taskDefinition.Settings.ExecutionTimeLimit = "PT0S";
+                taskDefinition.Settings.RestartInterval = "PT1M";
+                taskDefinition.Settings.RestartCount = 9999;
+
+                rootFolder.RegisterTaskDefinition(
+                    taskName,
+                    taskDefinition,
+                    (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE,
+                    null,
+                    null,
+                    _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN,
+                    null
+                );
+
+                Console.WriteLine("Startup task was successfully created.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error creating task: {ex.Message}");
+            }
+        }
+        public void CreateManualTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string arguments = null)
+        {
+            try
+            {
+                ITaskFolder rootFolder = schedulerClass.GetFolder(@"\");
+                ITaskDefinition taskDefinition = schedulerClass.NewTask(0);
+
+                taskDefinition.RegistrationInfo.Description = description;
+
+                taskDefinition.Principal.UserId = null;
+                taskDefinition.Principal.LogonType = _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN;
+                taskDefinition.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
+
+                IActionCollection actions = taskDefinition.Actions;
+                IExecAction execAction = (IExecAction)actions.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
+                execAction.Path = exePath;
+                execAction.Arguments = arguments;
+
+                taskDefinition.Settings.StartWhenAvailable = true;
+                taskDefinition.Settings.RunOnlyIfIdle = false;
+                taskDefinition.Settings.DisallowStartIfOnBatteries = false;
+                taskDefinition.Settings.StopIfGoingOnBatteries = false;
+                taskDefinition.Settings.WakeToRun = true;
+
+                taskDefinition.Settings.AllowDemandStart = true;
+                taskDefinition.Settings.ExecutionTimeLimit = "PT0S";
+                taskDefinition.Settings.RestartInterval = "PT1M";
+                taskDefinition.Settings.RestartCount = 9999;
+
+                rootFolder.RegisterTaskDefinition(
+                    taskName,
+                    taskDefinition,
+                    (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE,
+                    null,
+                    null,
+                    _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN,
+                    null
+                );
+
+                Console.WriteLine("Manual task was successfully created.");
             }
             catch (Exception ex)
             {
@@ -56,7 +114,7 @@ namespace Edulink.Classes
         {
             try
             {
-                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder(@"\");
                 rootFolder.DeleteTask(taskName, 0);
 
                 Console.WriteLine("Task successfully deleted.");
@@ -70,14 +128,14 @@ namespace Edulink.Classes
         {
             try
             {
-                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder(@"\");
 
                 IRegisteredTask task = rootFolder.GetTask(taskName);
 
                 if (task != null)
                 {
-                    ITaskDefinition taskDef = task.Definition;
-                    IActionCollection actions = taskDef.Actions;
+                    ITaskDefinition taskDefinition = task.Definition;
+                    IActionCollection actions = taskDefinition.Actions;
 
                     IExecAction execAction = (IExecAction)actions.Cast<IAction>().FirstOrDefault(a => a is IExecAction);
 
@@ -108,26 +166,26 @@ namespace Edulink.Classes
         {
             try
             {
-                ITaskFolder rootFolder = schedulerClass.GetFolder("\\");
+                ITaskFolder rootFolder = schedulerClass.GetFolder(@"\");
 
                 IRegisteredTask task = rootFolder.GetTask(taskName);
 
                 if (task != null)
                 {
-                    ITaskDefinition taskDef = task.Definition;
-                    taskDef.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
+                    ITaskDefinition taskDefinition = task.Definition;
+                    taskDefinition.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
 
-                    taskDef.Settings.RunOnlyIfIdle = false;
-                    taskDef.Settings.DisallowStartIfOnBatteries = false;
-                    taskDef.Settings.StopIfGoingOnBatteries = false;
-                    taskDef.Settings.WakeToRun = true;
+                    taskDefinition.Settings.RunOnlyIfIdle = false;
+                    taskDefinition.Settings.DisallowStartIfOnBatteries = false;
+                    taskDefinition.Settings.StopIfGoingOnBatteries = false;
+                    taskDefinition.Settings.WakeToRun = true;
 
-                    taskDef.Settings.AllowDemandStart = true;
-                    taskDef.Settings.ExecutionTimeLimit = "PT0S";
-                    taskDef.Settings.RestartInterval = "PT1M";
-                    taskDef.Settings.RestartCount = 9999;
+                    taskDefinition.Settings.AllowDemandStart = true;
+                    taskDefinition.Settings.ExecutionTimeLimit = "PT0S";
+                    taskDefinition.Settings.RestartInterval = "PT1M";
+                    taskDefinition.Settings.RestartCount = 9999;
 
-                    IActionCollection actions = taskDef.Actions;
+                    IActionCollection actions = taskDefinition.Actions;
                     IExecAction execAction = (IExecAction)actions.Cast<IAction>().FirstOrDefault(a => a is IExecAction);
 
                     if (execAction == null)
@@ -144,7 +202,7 @@ namespace Edulink.Classes
                     execAction.Arguments = newArgs;
 
                     rootFolder.RegisterTaskDefinition(
-                        taskName, taskDef, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE,
+                        taskName, taskDefinition, (int)_TASK_CREATION.TASK_CREATE_OR_UPDATE,
                         null, null, _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN, null);
 
                     Console.WriteLine("Task successfully updated.");
@@ -158,6 +216,11 @@ namespace Edulink.Classes
             {
                 throw new Exception($"Error updating task: {ex.Message}");
             }
+        }
+
+        public void Dispose()
+        {
+            Marshal.ReleaseComObject(schedulerClass);
         }
     }
 }
