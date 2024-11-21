@@ -7,7 +7,7 @@ https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.1-client
 
 ## Instructions
 
-### ![EduLink_Server](https://github.com/user-attachments/assets/760381c0-c832-4008-930f-7c2e314ed969) Server
+### ![Edulink_Server](https://github.com/user-attachments/assets/760381c0-c832-4008-930f-7c2e314ed969) Server
 No configuration is required for the server to start working immediately.
    
 1. **Change Port (Optional):**  
@@ -15,7 +15,7 @@ No configuration is required for the server to start working immediately.
    - Navigate to ```File > Settings``` in the application menu.
    - Adjust the port number as needed.
 
-### ![EduLink_Client](https://github.com/user-attachments/assets/bef07dee-0080-4e06-bff7-217c091d215a) Client
+### ![Edulink_Client](https://github.com/user-attachments/assets/bef07dee-0080-4e06-bff7-217c091d215a) Client
 
 1. **Initial Configuration:**  
     When launching the client for the first time, you will be prompted to configure:
@@ -23,12 +23,12 @@ No configuration is required for the server to start working immediately.
     - **IP Address:** The IP address of the teacher's server (found on the top-right corner of the server window).
     - **Port:** The port number used for communication (matches the server's port).
 
-3. **Accessing EduLink:**
-   - After configuration, EduLink will run in the background and can be accessed from the tray icon.
+3. **Accessing Edulink:**
+   - After configuration, Edulink will run in the background and can be accessed from the tray icon.
    - Right-click the icon for quick access to features such as settings, shutting down the app, or the current connection to the server.
 
 4. **Admin Permission for Settings:**
-   - When trying to access ```Settings```, EduLink will prompt for admin permissions.
+   - When trying to access ```Settings```, Edulink will prompt for admin permissions.
    - This ensures that only authorized users (e.g., teachers) can modify important settings, such as IP and port, to maintain the integrity of the connection.
 
 ## Features
@@ -40,11 +40,11 @@ No configuration is required for the server to start working immediately.
 - **Lock Screen**: Sends the student to the lock screen.
 
 ## System Requirements
-- **Operating Systems:** EduLink is compatible with Windows 7 through Windows 11.
+- **Operating Systems:** Edulink is compatible with Windows 7 through Windows 11.
 - **Note:** Windows XP has not been tested.
 
 ## Language Support
-EduLink supports multiple languages, including:
+Edulink supports multiple languages, including:
 - English
 - Spanish
 - Romanian
@@ -53,9 +53,9 @@ EduLink supports multiple languages, including:
 ## Credits
 ### Translating
 - English (Andrew)
-- Spanish (Andrew)
+- Spanish (Andrew and Carmen Rodríguez Mínguez)
 - Romanian (My mom)
-- Polish (@etsun1x)
+- Polish (@R3ikou)
 ### Assets
 - Google Fonts (Inter)
 
