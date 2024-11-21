@@ -1,0 +1,36 @@
+﻿<Window x:Class="Edulink.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Edulink"
+        mc:Ignorable="d"
+        MinWidth="450"
+        MinHeight="200"
+        ResizeMode="NoResize"
+        FontFamily="{StaticResource Inter}"
+        Title="{DynamicResource About.Title}" Height="200" Width="450">
+    <Grid Margin="10">
+        <StackPanel>
+            <TextBlock Margin="0,0,0,5">
+                <Run x:Name="Product"
+                     Text="{DynamicResource About.FallbackName}"
+                     FontSize="32"/>
+                <Run x:Name="Version" FontSize="18"/>
+            </TextBlock>
+            
+            <TextBlock x:Name="Description"
+                       Text="{DynamicResource About.FallbackDescription}"
+                       Margin="0,0,0,5"/>
+            
+            <TextBlock x:Name="Copyright"
+                       Text="{DynamicResource About.FallbackCopyright}"
+                       Margin="0,0,0,5"/>
+
+        </StackPanel>
+        <Button x:Name="CloseButton"
+                Content="{DynamicResource About.Close}"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                Click="CloseButton_Click"/>
+    </Grid>
+</Window>
