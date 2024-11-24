@@ -3,6 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="Author">@R3ikou</system:String>
     <!--Settings window-->
+    
     <system:String x:Key="Settings.Title">Ustawienia</system:String>
     
     <system:String x:Key="Settings.Name.Header">Nazwa komputera</system:String>
