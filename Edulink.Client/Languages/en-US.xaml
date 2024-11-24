@@ -3,37 +3,124 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="Author">Andrew</system:String>
     <!--Settings window-->
-    <system:String x:Key="SettingsTitle">Settings</system:String>
-    <system:String x:Key="NameTitle">Name of PC</system:String>
-    <system:String x:Key="IPAddressTitle">IP Address</system:String>
-    <system:String x:Key="PortTitle">Port</system:String>
-    <system:String x:Key="MiscellaneousTitle">Miscellaneous</system:String>
-    <system:String x:Key="LanguageTitle">Language</system:String>
-    <system:String x:Key="RestartAppButton">Reload app</system:String>
-    <system:String x:Key="ResetSettingsButton">Reset settings</system:String>
-    <system:String x:Key="ExitButton">Exit app</system:String>
-    <system:String x:Key="SaveButton">Save settings</system:String>
-    <system:String x:Key="SaveAndRestartButton">Save and reload</system:String>
-    <!--Message window-->
-    <system:String x:Key="MessageTitleBar">Message from teacher</system:String>
-    <system:String x:Key="OkButton">OK</system:String>
-    <system:String x:Key="CancelButton">Cancel</system:String>
-    <system:String x:Key="RespondButton">Reply</system:String>
+    <system:String x:Key="Settings.Title">Settings</system:String>
+    
+    <system:String x:Key="Settings.Name.Header">Name of computer</system:String>
+    
+    <system:String x:Key="Settings.IPAddress.Header">IP Address</system:String>
+    
+    <system:String x:Key="Settings.Port.Header">Port</system:String>
+
+    <system:String x:Key="Settings.Miscellaneous.Header">Miscellaneous</system:String>
+    <system:String x:Key="Settings.Miscellaneous.RestartApplication">Restart application</system:String>
+    <system:String x:Key="Settings.Miscellaneous.ResetSettings">Reset settings</system:String>
+    <system:String x:Key="Settings.Miscellaneous.ExitApplication">Exit application</system:String>
+    <system:String x:Key="Settings.Miscellaneous.SaveWithoutRestarting">Save without restarting</system:String>
+
+    <system:String x:Key="Settings.UpdaterService.Header">Update service</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus">The updater service is</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus.Running">running</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus.Stopped">stopped</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus.Paused">paused</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus.Starting">starting</system:String>
+    <system:String x:Key="Settings.UpdaterService.ServiceStatus.Stopping">stopping</system:String>
+    <system:String x:Key="Settings.UpdaterService.StartService">Start service</system:String>
+    <system:String x:Key="Settings.UpdaterService.StopService">Stop service</system:String>
+    <system:String x:Key="Settings.UpdaterService.RefreshStatus">Refresh status</system:String>
+    <system:String x:Key="Settings.UpdaterService.InstallService">Install service</system:String>
+    <system:String x:Key="Settings.UpdaterService.UninstallService">Uninstall service</system:String>
+
+    <system:String x:Key="Settings.Password.Header">Password</system:String>
+    <system:String x:Key="Settings.Password.ChangePassword">Change password</system:String>
+    <system:String x:Key="Settings.Password.SetPassword">Set password</system:String>
+
+    <system:String x:Key="Settings.Language.Header">Language</system:String>
+
+    <system:String x:Key="Settings.SaveAndRestart">Save and restart</system:String>
+    <!--Message dialog-->
+    <system:String x:Key="Message.TitleBar">Message from teacher</system:String>
+    <system:String x:Key="Message.Ok">OK</system:String>
+    <system:String x:Key="Message.Cancel">Cancel</system:String>
+    <system:String x:Key="Message.Reply">Reply</system:String>
+    <system:String x:Key="Message.Yes">Yes</system:String>
+    <system:String x:Key="Message.No">No</system:String>
+
+    <!--Input dialog-->
+    <system:String x:Key="Input.TitleBar">Enter input</system:String>
+    <system:String x:Key="Input.Content">Enter your input</system:String>
+    <system:String x:Key="Input.Ok">OK</system:String>
+    <system:String x:Key="Input.Cancel">Cancel</system:String>
     <!--ContextMenuStrip-->
     <system:String x:Key="ToolStripSettings">Settings</system:String>
     <system:String x:Key="ToolStripAbout">About</system:String>
     <system:String x:Key="ToolStripExit">Exit</system:String>
-    
+
     <system:String x:Key="ToolStripStatusConnected">Connected to server</system:String>
     <system:String x:Key="ToolStripStatusDisconnected">Not connected</system:String>
     <!--First steps-->
-    <system:String x:Key="WelcomeText">Welcome to Edulink!</system:String>
-    <system:String x:Key="BreifDescriptionText">To connect to the teacher's computer, please set up the IP address (found on the top-right corner of the EduLink server app), port, and computer name for identification.</system:String>
-    <system:String x:Key="ChangeLaterText">You can modify these settings later from the icon tray.</system:String>
-    <system:String x:Key="DoneButton">Done</system:String>
-    <!--Dialog input-->
-    <system:String x:Key="SendMessageDialogContent">What message would you like to send?</system:String>
-    <system:String x:Key="SendMessageDialogCaption">Send message</system:String>
+    <system:String x:Key="FirstSteps.Title">Edulink setup</system:String>
+    <system:String x:Key="FirstSteps.Stepper.Step1">Welcome</system:String>
+    <system:String x:Key="FirstSteps.Stepper.Step2">Computer</system:String>
+    <system:String x:Key="FirstSteps.Stepper.Step3">Connection</system:String>
+    <system:String x:Key="FirstSteps.Stepper.Step4">Password</system:String>
+    <system:String x:Key="FirstSteps.Stepper.Step5">Confirmation</system:String>
+
+    <system:String x:Key="FirstSteps.Previous">Previous</system:String>
+    <system:String x:Key="FirstSteps.Next">Next</system:String>
+    <system:String x:Key="FirstSteps.Finish">Finish</system:String>
+
+    <system:String x:Key="FirstSteps.Welcome.Description">Let's get your computer connected! Follow these steps to complete the setup.</system:String>
+    <system:String x:Key="FirstSteps.Welcome.ClickNext">Click 'Next' to continue</system:String>
+    
+    <system:String x:Key="FirstSteps.Computer.Description">Enter a name to identify this computer on the teacher's screen.</system:String>
+    <system:String x:Key="FirstSteps.Computer.Name.Header">Name</system:String>
+
+    <system:String x:Key="FirstSteps.Connection.Description">Enter the teacher's IP address and port to connect.</system:String>
+    <system:String x:Key="FirstSteps.Connection.IPAddress.Header">IP Address</system:String>
+    <system:String x:Key="FirstSteps.Connection.Port.Header">Port</system:String>
+
+    <system:String x:Key="FirstSteps.Password.Description">Set a password to protect these settings from being changed by a student.</system:String>
+    <system:String x:Key="FirstSteps.Password.ChangePassword">Change password</system:String>
+    <system:String x:Key="FirstSteps.Password.SetPassword">Set password</system:String>
+
+    <system:String x:Key="FirstSteps.Finish.ChangeLater">You can modify these settings later from the icon tray.</system:String>
     <!--About window-->
-    <system:String x:Key="About">About</system:String>
+    <system:String x:Key="About.Title">About</system:String>
+    <system:String x:Key="About.FallbackName">Couldn't load product name</system:String>
+    <system:String x:Key="About.FallbackDescription">Couldn't load description</system:String>
+    <system:String x:Key="About.FallbackCopyright">Couldn't load copyright info</system:String>
+    <system:String x:Key="About.Close">Close</system:String>
+    <!--Password dialog-->
+    <system:String x:Key="Password.TitleBar">Password</system:String>
+    <system:String x:Key="Password.Title.EnterPassword">Enter password</system:String>
+    <system:String x:Key="Password.Title.SetPassword">Set password</system:String>
+    <system:String x:Key="Password.Title.ChangePassword">Change password</system:String>
+    <system:String x:Key="Password.CurrentPassword.Placeholder">Current password</system:String>
+    <system:String x:Key="Password.Password.Placeholder">Password</system:String>
+    <system:String x:Key="Password.ConfirmPassword.Placeholder">Confirm password</system:String>
+    <system:String x:Key="Password.Strength">Strength:</system:String>
+    <system:String x:Key="Password.Strength.Weak">Weak</system:String>
+    <system:String x:Key="Password.Strength.Medium">Medium</system:String>
+    <system:String x:Key="Password.Strength.Strong">Strong</system:String>
+    <system:String x:Key="Password.Strength.VeryStrong">Very strong</system:String>
+    <system:String x:Key="Password.Done">Done</system:String>
+
+    <!--Input dialog content-->
+    <system:String x:Key="Input.TitleBar.SendMessage">Send message</system:String>
+    <system:String x:Key="Input.Content.SendMessage">What message would you like to send?</system:String>
+
+    <!--MessageBox default titles-->
+    <system:String x:Key="Message.TitleBar.Error">Error</system:String>
+    <system:String x:Key="Message.TitleBar.Information">Information</system:String>
+    <system:String x:Key="Message.TitleBar.Warning">Warning</system:String>
+    <system:String x:Key="Message.TitleBar.Success">Success</system:String>
+
+    <!--MessageBox dialog content-->
+    <!--Password dialog-->
+    <system:String x:Key="Message.Content.IncorrectPassword">Incorrect password</system:String>
+    <system:String x:Key="Message.Content.PasswordsDoNotMatch">Passwords do not match</system:String>
+    <system:String x:Key="Message.Content.EnterAPassword">Please enter a password</system:String>
+    <system:String x:Key="Message.Content.WeakPassword">Are you sure you want to use a weak password?</system:String>
+    <system:String x:Key="Message.Content.NoPasswordSet">It is strongly recommended to set a password. Would you like to set a password now?</system:String>
+
 </ResourceDictionary>
