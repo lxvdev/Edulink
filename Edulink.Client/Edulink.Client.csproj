@@ -109,7 +109,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\MessageBoxDialog.xaml">
+    <Page Include="Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,7 +124,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Themes\Attached\ButtonIconHelper.cs" />
+    <Compile Include="Themes\Attached\IconHelper.cs" />
     <Compile Include="Themes\Attached\PasswordBoxHelper.cs" />
     <Compile Include="Classes\HashUtility.cs" />
     <Compile Include="Dialogs\PasswordDialog.xaml.cs">
@@ -143,8 +143,8 @@
     <Compile Include="FirstStepsWindow.xaml.cs">
       <DependentUpon>FirstStepsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\MessageBoxDialog.xaml.cs">
-      <DependentUpon>MessageBoxDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
