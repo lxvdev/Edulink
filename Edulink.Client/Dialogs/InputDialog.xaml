@@ -9,8 +9,10 @@
         mc:Ignorable="d"
         FontFamily="{StaticResource Inter}"
         Topmost="True"
-        MaxHeight="500" MinHeight="120" MinWidth="400" MaxWidth="500" Width="130" Height="160"
-        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        ResizeMode="NoResize"
+        UseLayoutRounding="True"
+        MaxHeight="500" MinHeight="120" MinWidth="400" MaxWidth="500"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" 
         Title="{DynamicResource Input.TitleBar}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -25,8 +27,8 @@
             <TextBox x:Name="InputTextBox" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,5,0,0">
-            <Button Content="{DynamicResource Input.Ok}" Click="OkButton_Click"/>
-            <Button Content="{DynamicResource Input.Cancel}" Click="CancelButton_Click" Margin="5,0,0,0"/>
+            <Button Content="{DynamicResource Input.Cancel}" Click="CancelButton_Click"/>
+            <Button Content="{DynamicResource Input.Ok}" Click="OkButton_Click" Margin="5,0,0,0"/>
         </StackPanel>
     </Grid>
 </Window>

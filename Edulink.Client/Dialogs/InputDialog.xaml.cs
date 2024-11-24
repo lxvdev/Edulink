@@ -9,20 +9,20 @@ namespace Edulink
     public partial class InputDialog : Window
     {
         public string InputValue { get; private set; }
-        public InputDialogResult Result { get; private set; }
+        public InputDialogButtonResult Button { get; private set; }
 
-        public InputDialog(string dialogHeader, string caption)
+        public InputDialog(string message, string title)
         {
             InitializeComponent();
-            DialogText.Text = dialogHeader;
-            Title = caption;
+            DialogText.Text = message;
+            Title = title;
             InputTextBox.Focus();
         }
 
         private void SendInput()
         {
             InputValue = InputTextBox.Text;
-            Result = InputDialogResult.Ok;
+            Button = InputDialogButtonResult.Ok;
             DialogResult = true;
             Close();
         }
@@ -34,7 +34,7 @@ namespace Edulink
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Result = InputDialogResult.Cancel;
+            Button = InputDialogButtonResult.Cancel;
             DialogResult = true;
             Close();
         }
@@ -47,21 +47,55 @@ namespace Edulink
             }
         }
 
-        public static (InputDialogResult result, string input) Show(string dialogHeader, string caption)
+        public static InputDialogResult Show(string message, string title)
         {
-            InputDialog dialog = new InputDialog(dialogHeader, caption);
-            bool? result = dialog.ShowDialog();
-
-            if (result == true)
+            InputDialog dialog = new InputDialog(message, title);
+            if (dialog.ShowDialog() == true)
             {
-                return (dialog.Result, dialog.InputValue);
+                return new InputDialogResult(dialog.Button, dialog.InputValue);
             }
 
-            return (InputDialogResult.None, null);
+            return new InputDialogResult(dialog.Button);
         }
     }
 
-    public enum InputDialogResult
+    public class InputDialogResult
+    {
+        public InputDialogButtonResult ButtonResult { get; set; }
+        public string ReplyResult { get; set; }
+
+        public InputDialogResult(InputDialogButtonResult buttonResult, string reply = null)
+        {
+            ButtonResult = buttonResult;
+            ReplyResult = reply;
+        }
+
+        public static bool operator ==(InputDialogResult result, InputDialogButtonResult buttonResult)
+        {
+            return result != null && result.ButtonResult == buttonResult;
+        }
+
+        public static bool operator !=(InputDialogResult result, InputDialogButtonResult buttonResult)
+        {
+            return !(result == buttonResult);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is InputDialogResult result)
+            {
+                return this.ButtonResult == result.ButtonResult;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ButtonResult.GetHashCode();
+        }
+    }
+
+    public enum InputDialogButtonResult
     {
         None,
         Ok,
