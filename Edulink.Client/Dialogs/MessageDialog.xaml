@@ -1,4 +1,4 @@
-﻿<Window x:Class="Edulink.MessageBoxDialog"
+﻿<Window x:Class="Edulink.MessageDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,9 +9,11 @@
         mc:Ignorable="d"
         FontFamily="{StaticResource Inter}"
         Topmost="True"
+        ResizeMode="NoResize"
         UseLayoutRounding="True"
-        MinHeight="120" MinWidth="400" MaxWidth="500" Width="410" Height="120"
-        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        MinHeight="120" MinWidth="400" MaxWidth="500"
+        Height="120" Width="400"
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,20 +26,23 @@
             </Grid.ColumnDefinitions>
             <icon:MaterialSymbol Grid.Column="0"
                                  x:Name="Symbol"
-                                 Kind="Info"
-                                 IsFilled="False"
-                                 Height="42"
-                                 Width="42"
-                                 SymbolBrush="RoyalBlue"
+                                 Kind="Info" IsFilled="False"
+                                 Width="42" Height="42" 
                                  Margin="0,0,10,0" Visibility="Collapsed"/>
 
-            <TextBox Grid.Column="1" x:Name="MessageContent" IsReadOnly="True"
-                     Style="{StaticResource HeaderTextBox}"
-                     BorderThickness="0" TextWrapping="Wrap"/>
+            <TextBox Grid.Column="1"
+                     x:Name="MessageContent"
+                     VerticalAlignment="Center"
+                     Height="Auto"
+                     Padding="0"
+                     IsReadOnly="True"
+                     FontSize="18"
+                     BorderThickness="0"
+                     TextWrapping="Wrap"/>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5,0,0"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button x:Name="OkButton" Content="{DynamicResource Message.Ok}" Margin="5,0,0,0" Visibility="Collapsed"/>
+                    HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button x:Name="OkButton" Content="{DynamicResource Message.Ok}" a:IconHelper.Kind="CheckCircle" Margin="5,0,0,0" Visibility="Collapsed"/>
             <Button x:Name="ReplyButton" Content="{DynamicResource Message.Reply}" Margin="5,0,0,0" Visibility="Collapsed"/>
             <Button x:Name="CancelButton" Content="{DynamicResource Message.Cancel}" Margin="5,0,0,0" Visibility="Collapsed"/>
             <Button x:Name="YesButton" Content="{DynamicResource Message.Yes}" Margin="5,0,0,0" Visibility="Collapsed"/>
