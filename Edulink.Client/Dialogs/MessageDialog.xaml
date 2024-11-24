@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Edulink"
         xmlns:a="clr-namespace:Edulink.Attached"
-        xmlns:icon="clr-namespace:Edulink.Controls.MaterialSymbol"
+        xmlns:i="clr-namespace:Edulink.Controls.MaterialSymbol"
         mc:Ignorable="d"
         FontFamily="{StaticResource Inter}"
         Topmost="True"
@@ -24,11 +24,11 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <icon:MaterialSymbol Grid.Column="0"
-                                 x:Name="Symbol"
-                                 Kind="Info" IsFilled="False"
-                                 Width="42" Height="42" 
-                                 Margin="0,0,10,0" Visibility="Collapsed"/>
+            <i:MaterialSymbol Grid.Column="0"
+                              x:Name="Symbol"
+                              Kind="Info" IsFilled="False"
+                              Width="42" Height="42" 
+                              Margin="0,0,10,0" Visibility="Collapsed"/>
 
             <TextBox Grid.Column="1"
                      x:Name="MessageContent"
@@ -42,11 +42,41 @@
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5,0,0"
                     HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Button x:Name="OkButton" Content="{DynamicResource Message.Ok}" a:IconHelper.Kind="CheckCircle" Margin="5,0,0,0" Visibility="Collapsed"/>
-            <Button x:Name="ReplyButton" Content="{DynamicResource Message.Reply}" Margin="5,0,0,0" Visibility="Collapsed"/>
-            <Button x:Name="CancelButton" Content="{DynamicResource Message.Cancel}" Margin="5,0,0,0" Visibility="Collapsed"/>
-            <Button x:Name="YesButton" Content="{DynamicResource Message.Yes}" Margin="5,0,0,0" Visibility="Collapsed"/>
-            <Button x:Name="NoButton" Content="{DynamicResource Message.No}" Margin="5,0,0,0" Visibility="Collapsed"/>
+            <Button x:Name="ReplyButton" Content="{DynamicResource Message.Reply}" Margin="5,0,0,0" Visibility="Collapsed">
+                <a:IconHelper.Icon>
+                    <i:MaterialSymbol Kind="Reply"
+                                      SymbolSize="16"
+                                      Width="16" Height="16"/>
+                </a:IconHelper.Icon>
+            </Button>
+            <Button x:Name="CancelButton" Content="{DynamicResource Message.Cancel}" Margin="5,0,0,0" Visibility="Collapsed">
+                <a:IconHelper.Icon>
+                    <i:MaterialSymbol Kind="Cancel"
+                                      SymbolSize="16"
+                                      Width="16" Height="16"/>
+                </a:IconHelper.Icon>
+            </Button>
+            <Button x:Name="YesButton" Content="{DynamicResource Message.Yes}" Margin="5,0,0,0" Visibility="Collapsed">
+                <a:IconHelper.Icon>
+                    <i:MaterialSymbol Kind="CheckCircle"
+                                      SymbolSize="16"
+                                      Width="16" Height="16"/>
+                </a:IconHelper.Icon>
+            </Button>
+            <Button x:Name="NoButton" Content="{DynamicResource Message.No}" Margin="5,0,0,0" Visibility="Collapsed">
+                <a:IconHelper.Icon>
+                    <i:MaterialSymbol Kind="Block"
+                                      SymbolSize="16"
+                                      Width="16" Height="16"/>
+                </a:IconHelper.Icon>
+            </Button>
+            <Button x:Name="OkButton" Content="{DynamicResource Message.Ok}" Margin="5,0,0,0" Visibility="Collapsed">
+                <a:IconHelper.Icon>
+                    <i:MaterialSymbol Kind="CheckCircle"
+                                      SymbolSize="16"
+                                      Width="16" Height="16"/>
+                </a:IconHelper.Icon>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
