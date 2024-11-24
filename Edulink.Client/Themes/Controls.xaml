@@ -404,7 +404,7 @@
                                                   VerticalAlignment="Center"
                                                   HorizontalAlignment="Center"
                                                   Visibility="Visible" />
-                                    <!-- Content -->
+                                <!-- Content -->
                                 <ContentPresenter Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   HorizontalAlignment="Center"
