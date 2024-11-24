@@ -17,7 +17,7 @@ namespace Edulink.Controls.MaterialSymbol
              nameof(Kind),
              typeof(MaterialSymbolKind),
              typeof(MaterialSymbol),
-             new PropertyMetadata(default(MaterialSymbolKind), OnSymbolChanged));
+             new FrameworkPropertyMetadata(default(MaterialSymbolKind), OnSymbolChanged));
 
         public MaterialSymbolKind Kind
         {
@@ -29,7 +29,7 @@ namespace Edulink.Controls.MaterialSymbol
             nameof(IsFilled),
             typeof(bool),
             typeof(MaterialSymbol),
-            new PropertyMetadata(false, OnSymbolChanged));
+            new FrameworkPropertyMetadata(false, OnSymbolChanged));
 
         public bool IsFilled
         {
@@ -41,7 +41,7 @@ namespace Edulink.Controls.MaterialSymbol
             nameof(SymbolBrush),
             typeof(Brush),
             typeof(MaterialSymbol),
-            new PropertyMetadata(Brushes.Black));
+            new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.Inherits, null, CoerceSymbolBrush));
 
         public Brush SymbolBrush
         {
@@ -53,7 +53,7 @@ namespace Edulink.Controls.MaterialSymbol
             nameof(SymbolGeometry),
             typeof(Geometry),
             typeof(MaterialSymbol),
-            new PropertyMetadata(null));
+            new FrameworkPropertyMetadata(null));
 
         public Geometry SymbolGeometry
         {
@@ -65,7 +65,8 @@ namespace Edulink.Controls.MaterialSymbol
             nameof(SymbolSize),
             typeof(double),
             typeof(MaterialSymbol),
-            new PropertyMetadata(double.NaN));
+            new FrameworkPropertyMetadata(double.NaN));
+
 
         public double SymbolSize
         {
@@ -95,5 +96,23 @@ namespace Edulink.Controls.MaterialSymbol
                 SymbolGeometry = null;
             }
         }
+
+        private static object CoerceSymbolBrush(DependencyObject d, object baseValue)
+        {
+            MaterialSymbol materialSymbol = d as MaterialSymbol;
+
+            if (baseValue == DependencyProperty.UnsetValue || baseValue == null)
+            {
+                if (materialSymbol?.TemplatedParent is Control parentControl && parentControl.Foreground is Brush foreground)
+                {
+                    return foreground;
+                }
+
+                return Brushes.Black;
+            }
+
+            return baseValue;
+        }
+
     }
 }

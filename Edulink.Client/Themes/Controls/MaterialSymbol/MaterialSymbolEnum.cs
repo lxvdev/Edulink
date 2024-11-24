@@ -18,5 +18,10 @@
         CheckCircle,
         Warning,
         Info,
+        ResetSettings,
+        ArrowDropDown,
+        DesktopAccessDisabled,
+        Close,
+        Settings
     }
 }
