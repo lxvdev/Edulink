@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Client", "Edulink.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.TcpHelper", "Edulink.TCPHelper\Edulink.TcpHelper.csproj", "{666D8108-AE32-4161-8941-6FE5E490A837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminVerifier", "AdminVerifier\AdminVerifier.csproj", "{7F85866A-D917-4371-8037-DD35CE309FD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Updater.Service", "Edulink.Updater.Service\Edulink.Updater.Service.csproj", "{02AA9670-0474-46D0-B2F8-35D32A90D8BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{666D8108-AE32-4161-8941-6FE5E490A837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666D8108-AE32-4161-8941-6FE5E490A837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666D8108-AE32-4161-8941-6FE5E490A837}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F85866A-D917-4371-8037-DD35CE309FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F85866A-D917-4371-8037-DD35CE309FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F85866A-D917-4371-8037-DD35CE309FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F85866A-D917-4371-8037-DD35CE309FD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AA9670-0474-46D0-B2F8-35D32A90D8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AA9670-0474-46D0-B2F8-35D32A90D8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AA9670-0474-46D0-B2F8-35D32A90D8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AA9670-0474-46D0-B2F8-35D32A90D8BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
