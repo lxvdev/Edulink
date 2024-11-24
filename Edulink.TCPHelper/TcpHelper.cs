@@ -1,183 +1,93 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
+﻿using Edulink.Classes;
+using Edulink.TCPHelper.Classes;
+using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Edulink.TCPHelper
 {
-    public class TcpHelper
+    public class TcpHelper : IDisposable
     {
-        public TcpClient client;
-        private NetworkStream stream;
-        private int bufferSize;
+        public TcpClient Client;
+        private NetworkStream _stream;
+        private StreamReader _reader;
+        private StreamWriter _writer;
+        private readonly SemaphoreSlim _sendLock = new SemaphoreSlim(1, 1);
 
-        public TcpHelper(TcpClient tcpClient, int buffer)
+        public TcpHelper(TcpClient tcpClient)
         {
-            client = tcpClient;
-            stream = client.GetStream();
-            bufferSize = buffer;
+            Client = tcpClient ?? throw new ArgumentNullException(nameof(tcpClient));
+            _stream = Client.GetStream();
+            //_bufferSize = buffer > 0 ? buffer : throw new ArgumentOutOfRangeException(nameof(buffer), "Buffer size must be greater than 0
+            _reader = new StreamReader(_stream, Encoding.UTF8);
+            _writer = new StreamWriter(_stream, Encoding.UTF8) { AutoFlush = true };
         }
 
-        // Sending and receiving text
-        public async Task SendTextAsync(string message)
+        public async Task SendCommandAsync(EdulinkCommand command)
         {
+            await _sendLock.WaitAsync();
             try
             {
-                byte[] data = Encoding.UTF8.GetBytes(message);
-                await stream.WriteAsync(data, 0, data.Length);
+                await _writer.WriteLineAsync(command.ToString());
+                await _writer.WriteLineAsync("END");
             }
-            catch (Exception ex)
+            finally
             {
-                Console.WriteLine($"Couldn't send text: {ex.Message}");
+                _sendLock.Release();
             }
         }
-        public async Task<string> ReceiveTextAsync()
-        {
-            try
-            {
-                byte[] buffer = new byte[bufferSize];
-                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                return message;
-            }
-            catch (IOException)
-            {
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't receive text: {ex.Message}");
-            }
-        }
-        public async Task<string> ReceiveTextWithTimeoutAsync(int timeoutMilliseconds)
-        {
-            try
-            {
-                Task<string> receiveTask = ReceiveTextAsync();
-                Task delayTask = Task.Delay(timeoutMilliseconds);
 
-                Task completedTask = await Task.WhenAny(receiveTask, delayTask);
+        public async Task<EdulinkCommand> ReceiveCommandAsync(TimeSpan? timeout = null)
+        {
+            StringBuilder commandBuilder = new StringBuilder();
+            string line;
 
-                if (completedTask == receiveTask)
+            using (var cts = new CancellationTokenSource())
+            {
+                if (timeout.HasValue)
                 {
-                    return await receiveTask;
+                    cts.CancelAfter(timeout.Value);
                 }
-                else
+
+                try
                 {
-                    // If the timeout occurred
+                    while ((line = await _reader.ReadLineAsync().WithCancellation(cts.Token)) != null)
+                    {
+                        if (line == "END")
+                        {
+                            break;
+                        }
+                        commandBuilder.AppendLine(line);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
                     return null;
                 }
             }
-            catch (IOException)
-            {
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't receive text: {ex.Message}");
-            }
+
+            return new EdulinkCommand(commandBuilder.ToString());
         }
 
-        // Sending and receiving commands
-        public async Task SendCommandAsync(string command, string argument = null)
+
+        public void Dispose()
         {
-            try
-            {
-                string message = argument == null ? command : $"{command}\u001E{argument}";
-
-                await SendTextAsync(message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Couldn't send command: {ex.Message}");
-            }
-        }
-        public async Task<(string command, string argument)> ReceiveCommandAsync()
-        {
-            try
-            {
-                string message = await ReceiveTextAsync();
-
-                string[] parts = message?.Split('\u001E');
-
-                if (parts != null && parts.Length > 0)
-                {
-                    string command = parts[0];
-                    string argument = parts.Length > 1 ? parts[1] : null;
-                    return (command, argument);
-                }
-                else
-                {
-                    throw new Exception("Received data is not in the expected format.");
-                }
-            }
-            catch (IOException)
-            {
-                return (null, null);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Couldn't receive command: {ex.Message}");
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        // Sending and receiving images
-        public async Task SendImageAsync(Bitmap screenshot)
+        protected virtual void Dispose(bool disposing)
         {
-            byte[] imageBytes = ImageToByteArray(screenshot);
-
-            byte[] lengthPrefix = BitConverter.GetBytes(imageBytes.Length);
-            await stream.WriteAsync(lengthPrefix, 0, lengthPrefix.Length);
-
-            await stream.WriteAsync(imageBytes, 0, imageBytes.Length);
-            await stream.FlushAsync();
-        }
-        public async Task<Bitmap> ReceiveImageAsync()
-        {
-            byte[] lengthPrefix = new byte[sizeof(int)];
-            await stream.ReadAsync(lengthPrefix, 0, 4);
-            int imageLength = BitConverter.ToInt32(lengthPrefix, 0);
-
-            byte[] imageBytes = new byte[imageLength];
-            int totalBytesRead = 0;
-
-            while (totalBytesRead < imageLength)
+            if (disposing)
             {
-                int bytesRead = await stream.ReadAsync(imageBytes, totalBytesRead, imageLength - totalBytesRead);
-                if (bytesRead == 0)
-                {
-                    throw new Exception("Client disconnected during image transfer");
-                }
-                totalBytesRead += bytesRead;
+                _stream?.Dispose();
+                _reader?.Dispose();
+                _writer?.Dispose();
+                Client?.Dispose();
             }
-
-            return ByteArrayToImage(imageBytes);
-        }
-
-        // Converting images
-        private byte[] ImageToByteArray(Image image)
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                image.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
-            }
-        }
-        private Bitmap ByteArrayToImage(byte[] byteArray)
-        {
-            using (MemoryStream ms = new MemoryStream(byteArray))
-            {
-                return new Bitmap(ms);
-            }
-        }
-
-        public void Close()
-        {
-            stream?.Close();
-            client?.Close();
         }
     }
 }
