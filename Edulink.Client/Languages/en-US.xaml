@@ -84,7 +84,7 @@
     <system:String x:Key="FirstSteps.Password.SetPassword">Set password</system:String>
 
     <system:String x:Key="FirstSteps.Finish.ChangeLater">You can modify these settings later from the icon tray.</system:String>
-    <!--About window-->
+    <!--About dialog-->
     <system:String x:Key="About.Title">About</system:String>
     <system:String x:Key="About.FallbackName">Couldn't load product name</system:String>
     <system:String x:Key="About.FallbackDescription">Couldn't load description</system:String>
