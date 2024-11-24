@@ -22,6 +22,15 @@
         ArrowDropDown,
         DesktopAccessDisabled,
         Close,
-        Settings
+        Settings,
+        Save,
+        SaveClock,
+        SaveAs,
+        Key,
+        Delete,
+        InstallDesktop,
+        Refresh,
+        StopCircle,
+        NotStarted,
     }
 }
