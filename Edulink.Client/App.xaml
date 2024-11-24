@@ -5,8 +5,11 @@
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
+            <FontFamily x:Key="Inter">pack://application:,,,/Themes/Fonts/#Inter</FontFamily>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Controls.xaml"/>
+                <ResourceDictionary Source="Themes/Controls/Generic.xaml"/>
+                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
                 <ResourceDictionary Source="Languages/en-US.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
