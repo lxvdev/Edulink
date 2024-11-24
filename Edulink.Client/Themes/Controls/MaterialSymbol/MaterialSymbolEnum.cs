@@ -32,5 +32,8 @@
         Refresh,
         StopCircle,
         NotStarted,
+        Block,
+        Cancel,
+        Reply,
     }
 }
