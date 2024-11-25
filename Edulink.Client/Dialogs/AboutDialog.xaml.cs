@@ -5,9 +5,9 @@ namespace Edulink
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
     /// </summary>
-    public partial class AboutWindow : Window
+    public partial class AboutDialog : Window
     {
-        public AboutWindow()
+        public AboutDialog()
         {
             InitializeComponent();
             Assembly assembly = Assembly.GetExecutingAssembly();
