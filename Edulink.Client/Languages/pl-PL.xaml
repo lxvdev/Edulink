@@ -52,12 +52,12 @@
     <system:String x:Key="Input.Ok">OK</system:String>
     <system:String x:Key="Input.Cancel">Anuluj</system:String>
     <!--ContextMenuStrip-->
-    <system:String x:Key="ToolStripSettings">Ustawienia</system:String>
-    <system:String x:Key="ToolStripAbout">O programie</system:String>
-    <system:String x:Key="ToolStripExit">Wyjdź </system:String>
+    <system:String x:Key="TrayContextMenu.Settings">Ustawienia</system:String>
+    <system:String x:Key="TrayContextMenu.About">O programie</system:String>
+    <system:String x:Key="TrayContextMenu.Exit">Wyjdź </system:String>
 
-    <system:String x:Key="ToolStripStatusConnected"> Połączono z serwerem</system:String>
-    <system:String x:Key="ToolStripStatusDisconnected">Brak połączenia</system:String>
+    <system:String x:Key="TrayContextMenu.Status.Connected"> Połączono z serwerem</system:String>
+    <system:String x:Key="TrayContextMenu.Status.Disconnected">Brak połączenia</system:String>
     <!--First steps-->
     <system:String x:Key="FirstSteps.Title">Konfiguracja EduLink </system:String>
     <system:String x:Key="FirstSteps.Stepper.Step1">Na powitanie</system:String>
@@ -122,6 +122,6 @@
     <system:String x:Key="Message.Content.PasswordsDoNotMatch">Hasła do siebie nie pasują</system:String>
     <system:String x:Key="Message.Content.EnterAPassword">Należy wprowadzić hasło</system:String>
     <system:String x:Key="Message.Content.WeakPassword">Czy jesteś pewien / pewna, że chcesz użyć słabego hasła?</system:String>
-    <system:String x:Key="Message.Content.NoPasswordSet">Ustawienie hasła jest przez nas zalecane. Czy chcesz to teraz zrobić? </system:String>
+    <system:String x:Key="Message.Content.NoPasswordSet">Ustawienie hasła jest przez nas zalecane. Czy chcesz to teraz zrobić?</system:String>
 
 </ResourceDictionary>

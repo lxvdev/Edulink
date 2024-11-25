@@ -50,13 +50,13 @@
     <system:String x:Key="Input.Content">Enter your input</system:String>
     <system:String x:Key="Input.Ok">OK</system:String>
     <system:String x:Key="Input.Cancel">Cancel</system:String>
-    <!--ContextMenuStrip-->
-    <system:String x:Key="ToolStripSettings">Settings</system:String>
-    <system:String x:Key="ToolStripAbout">About</system:String>
-    <system:String x:Key="ToolStripExit">Exit</system:String>
+    <!--Tray ContextMenu-->
+    <system:String x:Key="TrayContextMenu.Settings">Settings</system:String>
+    <system:String x:Key="TrayContextMenu.About">About</system:String>
+    <system:String x:Key="TrayContextMenu.Exit">Exit</system:String>
 
-    <system:String x:Key="ToolStripStatusConnected">Connected to server</system:String>
-    <system:String x:Key="ToolStripStatusDisconnected">Not connected</system:String>
+    <system:String x:Key="TrayContextMenu.Status.Connected">Connected to server</system:String>
+    <system:String x:Key="TrayContextMenu.Status.Disconnected">Not connected</system:String>
     <!--First steps-->
     <system:String x:Key="FirstSteps.Title">Edulink setup</system:String>
     <system:String x:Key="FirstSteps.Stepper.Step1">Welcome</system:String>
