@@ -117,10 +117,20 @@
 
     <!--MessageBox dialog content-->
     <!--Password dialog-->
-    <system:String x:Key="Message.Content.IncorrectPassword">Incorrect password</system:String>
-    <system:String x:Key="Message.Content.PasswordsDoNotMatch">Passwords do not match</system:String>
-    <system:String x:Key="Message.Content.EnterAPassword">Please enter a password</system:String>
+    <system:String x:Key="Message.Content.IncorrectPassword">Incorrect password.</system:String>
+    <system:String x:Key="Message.Content.PasswordsDoNotMatch">Passwords do not match.</system:String>
+    <system:String x:Key="Message.Content.EnterAPassword">Please enter a password.</system:String>
     <system:String x:Key="Message.Content.WeakPassword">Are you sure you want to use a weak password?</system:String>
     <system:String x:Key="Message.Content.NoPasswordSet">It is strongly recommended to set a password. Would you like to set a password now?</system:String>
+    <!--App.xaml.cs-->
+    <system:String x:Key="Message.Content.FailedToRestartAsAdmin">Failed to restart application as administrator.</system:String>
+    <system:String x:Key="Message.Content.AnotherInstanceIsAlreadyRunning">Another instance of this application is already running.</system:String>
+    <!--Settings window-->
+    <system:String x:Key="Message.Content.NameCannotBeEmpty">Name cannot be empty.</system:String>
+    <system:String x:Key="Message.Content.IPAddressCannotBeEmpty">IP Address cannot be empty.</system:String>
+    <system:String x:Key="Message.Content.InvalidIPAddress">Invalid IP Address.</system:String>
+    <system:String x:Key="Message.Content.PortCannotBeEmpty">Port cannot be empty.</system:String>
+    <system:String x:Key="Message.Content.PortMustBeAValidNumber">Port must be a valid number.</system:String>
+    <system:String x:Key="Message.Content.PortCannotBeHigherThanFour">Port cannot be higher than 4.</system:String>
 
 </ResourceDictionary>
