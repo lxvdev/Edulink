@@ -1,49 +1,63 @@
 ﻿using Edulink.TCPHelper;
+using Edulink.TCPHelper.Classes;
 using System;
-using System.Diagnostics;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
+using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Edulink.Client
 {
-    public class Client
+    public class Client : IDisposable
     {
         private TcpClient tcpClient;
-        public TcpHelper helper;
+        public TcpHelper Helper;
         private string ipAddress;
         private int port;
         private string name;
-        public bool Connected => tcpClient != null && tcpClient.Connected;
+        public bool Connected { get; private set; } = false;
+
+        public event EventHandler<EdulinkCommand> CommandReceived;
+        public event EventHandler<bool> ConnectionStatusChanged;
+
         public Client(string ipAddress, int port, string name)
         {
             this.ipAddress = ipAddress;
             this.port = port;
             this.name = name;
+            tcpClient = new TcpClient();
         }
 
         public async Task<bool> ConnectAsync()
         {
             try
             {
-                tcpClient = new TcpClient();
                 await tcpClient.ConnectAsync(ipAddress, port);
-                helper = new TcpHelper(tcpClient, 1024);
+                Helper = new TcpHelper(tcpClient);
 
-                await helper.SendTextAsync(name);
-
-                string response = await helper.ReceiveTextWithTimeoutAsync(6000);
-                if (string.IsNullOrEmpty(response))
+                await Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    helper.Close();
+                    Command = "CONNECT",
+                    Parameters = new Dictionary<string, string>
+                    {
+                        { "Name", name },
+                        { "Version", Assembly.GetExecutingAssembly().GetName().Version.ToString() }
+                    }
+                });
+
+                EdulinkCommand response = await Helper.ReceiveCommandAsync(TimeSpan.FromSeconds(5));
+                if (response == null)
+                {
+                    Dispose();
                     return false;
                 }
 
+                Connected = true;
+                ConnectionStatusChanged?.Invoke(this, Connected);
+
                 return true;
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }
@@ -55,108 +69,31 @@ namespace Edulink.Client
             {
                 try
                 {
-                    (string command, string argument) = await helper.ReceiveCommandAsync();
+                    EdulinkCommand command = await Helper.ReceiveCommandAsync();
 
-                    if (string.IsNullOrEmpty(command))
+                    if (command == null)
                     {
                         throw new Exception("Connection lost");
                     }
 
-                    Console.WriteLine($"Command received: {command}");
-                    await HandleCommand(command, argument);
+                    Console.WriteLine($"Command received: {command.Command}");
+                    CommandReceived?.Invoke(this, command);
                 }
                 catch (Exception ex)
                 {
+                    Connected = false;
+                    ConnectionStatusChanged?.Invoke(this, Connected);
                     Console.WriteLine(ex.Message);
                     break;
                 }
             }
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool LockWorkStation();
-        private async Task HandleCommand(string command, string argument)
+        public void Dispose()
         {
-            try
-            {
-                switch (command)
-                {
-                    case "Link":
-                        OpenLink(argument);
-                        break;
-                    case "SendMessage":
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            MessageBoxDialog messageBoxDialog = new MessageBoxDialog(argument);
-                            messageBoxDialog.Show();
-                        });
-                        break;
-                    case "DesktopPreview":
-                        Bitmap bitmapImage = CaptureScreenshot();
-                        await helper.SendCommandAsync(command);
-                        await helper.SendImageAsync(bitmapImage);
-                        break;
-                    case "RestartApp":
-                        App.RestartApp();
-                        break;
-                    case "Shutdown":
-                        ShutdownComputer();
-                        break;
-                    case "Lockscreen":
-                        LockWorkStation();
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error handling command: {ex.Message}");
-            }
-        }
-
-        private Bitmap CaptureScreenshot()
-        {
-            var bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
-            Bitmap screenshot = new Bitmap(bounds.Width, bounds.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            using (Graphics g = Graphics.FromImage(screenshot))
-            {
-                g.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy);
-            }
-
-            return screenshot;
-        }
-
-        private void OpenLink(string url)
-        {
-            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = url,
-                    UseShellExecute = true
-                });
-            }
-            else
-            {
-                Console.WriteLine("Invalid URL provided.");
-            }
-        }
-
-        private void ShutdownComputer()
-        {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "shutdown",
-                Arguments = "/s /t 0",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-            });
-        }
-
-        public void Close()
-        {
-            helper?.Close();
+            Helper?.Dispose();
+            Connected = false;
+            ConnectionStatusChanged?.Invoke(this, Connected);
         }
     }
 }
