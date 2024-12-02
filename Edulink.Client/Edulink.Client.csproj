@@ -73,6 +73,9 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Themes\Attached\PlaceholderHelper.cs" />
     <Compile Include="Themes\Attached\CornerRadiusHelper.cs" />
+    <Compile Include="Themes\Controls.xaml.cs">
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbol.cs" />
     <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbolEnum.cs" />
     <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbolPathData.cs" />
@@ -210,9 +213,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Edulink.Client.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
@@ -236,7 +236,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Edulink.Client.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
