@@ -51,7 +51,7 @@
     <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="TcpHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\EdulinkCommand.cs" />
+    <Compile Include="Models\EdulinkCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

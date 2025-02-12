@@ -1,5 +1,5 @@
 ﻿using Edulink.Classes;
-using Edulink.TCPHelper.Classes;
+using Edulink.TCPHelper.Models;
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -21,9 +21,8 @@ namespace Edulink.TCPHelper
         {
             Client = tcpClient ?? throw new ArgumentNullException(nameof(tcpClient));
             _stream = Client.GetStream();
-            //_bufferSize = buffer > 0 ? buffer : throw new ArgumentOutOfRangeException(nameof(buffer), "Buffer size must be greater than 0
             _reader = new StreamReader(_stream, Encoding.UTF8);
-            _writer = new StreamWriter(_stream, Encoding.UTF8) { AutoFlush = true };
+            _writer = new StreamWriter(_stream, Encoding.UTF8) { AutoFlush = false };
         }
 
         public async Task SendCommandAsync(EdulinkCommand command)
@@ -33,6 +32,7 @@ namespace Edulink.TCPHelper
             {
                 await _writer.WriteLineAsync(command.ToString());
                 await _writer.WriteLineAsync("END");
+                await _writer.FlushAsync();
             }
             finally
             {
@@ -45,7 +45,7 @@ namespace Edulink.TCPHelper
             StringBuilder commandBuilder = new StringBuilder();
             string line;
 
-            using (var cts = new CancellationTokenSource())
+            using (CancellationTokenSource cts = new CancellationTokenSource())
             {
                 if (timeout.HasValue)
                 {
@@ -71,7 +71,6 @@ namespace Edulink.TCPHelper
 
             return new EdulinkCommand(commandBuilder.ToString());
         }
-
 
         public void Dispose()
         {
