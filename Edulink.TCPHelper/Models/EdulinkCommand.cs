@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Edulink.TCPHelper.Classes
+namespace Edulink.TCPHelper.Models
 {
     public class EdulinkCommand
     {
         public string Command { get; set; }
         public Dictionary<string, string> Parameters { get; set; } = new Dictionary<string, string>();
-        public byte[] Content { get; set; }
+        public byte[] Content { get; set; } = Array.Empty<byte>();
 
         public string ProtocolName => "EDULINK";
         public string ProtocolVersion => "1.0";
-
-        //public EdulinkCommand(string command, Dictionary<string, string> parameters = default, byte[] content = null)
-        //{
-        //    Command = command;
-        //    Parameters = parameters;
-        //    Content = content;
-        //}
 
         public EdulinkCommand() { }
 
@@ -37,7 +30,6 @@ namespace Edulink.TCPHelper.Classes
             {
                 string line;
 
-                // If theres a first line then its a header :)
                 if ((line = reader.ReadLine()) != null)
                 {
                     string[] headerParts = line.Split(new[] { ' ' }, 2, StringSplitOptions.None);
@@ -46,10 +38,7 @@ namespace Edulink.TCPHelper.Classes
                         Command = headerParts[0];
 
                         string[] protocolInfo = headerParts[1].Split(new[] { "/" }, 2, StringSplitOptions.None);
-                        if (protocolInfo.Length > 0)
-                        {
-                            // Soon
-                        }
+                        // TODO: Check if the protocol info is valid
                     }
                 }
                 while ((line = reader.ReadLine()) != null)
@@ -57,20 +46,11 @@ namespace Edulink.TCPHelper.Classes
                     if (line.Contains("= "))
                     {
                         string[] paramParts = line.Split(new[] { "= " }, 2, StringSplitOptions.None);
-                        if (paramParts.Length > 0)
-                        {
-                            string key = paramParts[0];
-                            string value = paramParts[1];
-                            Parameters[key] = value;
-                        }
+                        Parameters[paramParts[0]] = paramParts[1];
                     }
-                    else
+                    else if (!string.IsNullOrWhiteSpace(line))
                     {
-                        // Hope this works because im tired of this content thing
-                        if (!string.IsNullOrEmpty(line.Trim()))
-                        {
-                            Content = Convert.FromBase64String(line.Trim());
-                        }
+                        Content = Convert.FromBase64String(line.Trim());
                     }
                 }
             }
@@ -81,15 +61,12 @@ namespace Edulink.TCPHelper.Classes
             StringBuilder commandBuilder = new StringBuilder();
             commandBuilder.AppendLine($"{Command} {ProtocolName}/{ProtocolVersion}");
 
-            if (Parameters != null)
+            foreach (KeyValuePair<string, string> parameter in Parameters)
             {
-                foreach (var parameter in Parameters)
-                {
-                    commandBuilder.AppendLine($"{parameter.Key}= {parameter.Value}");
-                }
+                commandBuilder.AppendLine($"{parameter.Key}= {parameter.Value}");
             }
 
-            if (Content != null && Content.Length > 0)
+            if (Content.Length > 0)
             {
                 commandBuilder.AppendLine();
                 commandBuilder.AppendLine(Convert.ToBase64String(Content));
