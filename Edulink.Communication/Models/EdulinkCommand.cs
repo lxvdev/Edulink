@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Edulink.TCPHelper.Models
+namespace Edulink.Communication.Models
 {
     public class EdulinkCommand
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Edulink.Classes
+namespace Edulink.Communication.Classes
 {
     public static class TaskExtensions
     {

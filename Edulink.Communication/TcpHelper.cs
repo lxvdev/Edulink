@@ -1,5 +1,5 @@
-﻿using Edulink.Classes;
-using Edulink.TCPHelper.Models;
+﻿using Edulink.Communication.Classes;
+using Edulink.Communication.Models;
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Edulink.TCPHelper
+namespace Edulink.Communication
 {
     public class TcpHelper : IDisposable
     {
