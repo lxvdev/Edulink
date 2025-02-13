@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Server", "Edulink.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Client", "Edulink.Client\Edulink.Client.csproj", "{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.TcpHelper", "Edulink.TCPHelper\Edulink.TcpHelper.csproj", "{666D8108-AE32-4161-8941-6FE5E490A837}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Communication", "Edulink.Communication\Edulink.Communication.csproj", "{666D8108-AE32-4161-8941-6FE5E490A837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Updater.Service", "Edulink.Updater.Service\Edulink.Updater.Service.csproj", "{02AA9670-0474-46D0-B2F8-35D32A90D8BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edulink.Service", "Edulink.Service\Edulink.Service.csproj", "{02AA9670-0474-46D0-B2F8-35D32A90D8BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
