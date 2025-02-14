@@ -1,26 +1,54 @@
-﻿<Window x:Class="Edulink.InputDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Edulink"
-        mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
-        MaxHeight="500"
-        MinHeight="136"
-        MinWidth="400"
-        MaxWidth="500"
-        FontFamily="{StaticResource Inter}"
-        WindowStartupLocation="CenterScreen">
+﻿<Window
+    x:Class="Edulink.InputDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Edulink.ViewModels"
+    Title="{Binding Title}"
+    Width="360"
+    Height="120"
+    MinWidth="360"
+    MinHeight="120"
+    MaxWidth="500"
+    FontFamily="{StaticResource Inter}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Style="{StaticResource MaterialDesignWindow}"
+    Topmost="True"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
     <Grid Margin="10">
-        <StackPanel>
-            <TextBlock x:Name="DialogText" FontSize="16" TextWrapping="Wrap" Margin="0,0,0,5"/>
-            <TextBox x:Name="InputTextBox" Padding="2,4" Margin="0,0,0,30" PreviewKeyUp="InputTextBox_PreviewKeyUp"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBox
+                x:Name="InputTextBox"
+                materialDesign:HintAssist.Hint="{Binding Message}"
+                PreviewKeyUp="InputTextBox_PreviewKeyUp"
+                Text="{Binding InputValue, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Button Content="{DynamicResource OkButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="OkButton_Click"/>
-            <Button Content="{DynamicResource CancelButton}" Height="25" MinWidth="80" Padding="10,0" FontSize="14" Click="CancelButton_Click" Margin="5,0,0,0"/>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,5,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <Button
+                Command="{Binding CancelCommand}"
+                Content="{DynamicResource Input.Cancel}"
+                Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button
+                Margin="5,0,0,0"
+                Command="{Binding OkCommand, UpdateSourceTrigger=PropertyChanged}"
+                Content="{DynamicResource Input.Ok}"
+                Style="{StaticResource MaterialDesignFlatButton}" />
         </StackPanel>
     </Grid>
 </Window>
