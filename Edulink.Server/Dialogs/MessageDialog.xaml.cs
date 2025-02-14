@@ -47,34 +47,10 @@ namespace Edulink
         public MessageDialogButtonResult ButtonResult { get; set; }
         public string ReplyResult { get; set; }
 
-        public MessageDialogResult(MessageDialogButtonResult buttonResult, string reply = null)
+        public MessageDialogResult(MessageDialogButtonResult buttonResult, string replyResult = null)
         {
             ButtonResult = buttonResult;
-            ReplyResult = reply;
-        }
-
-        public static bool operator ==(MessageDialogResult result, MessageDialogButtonResult buttonResult)
-        {
-            return result != null && result.ButtonResult == buttonResult;
-        }
-
-        public static bool operator !=(MessageDialogResult result, MessageDialogButtonResult buttonResult)
-        {
-            return !(result == buttonResult);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is MessageDialogResult result)
-            {
-                return this.ButtonResult == result.ButtonResult;
-            }
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return ButtonResult.GetHashCode();
+            ReplyResult = replyResult;
         }
     }
 
