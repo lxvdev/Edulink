@@ -118,7 +118,7 @@ namespace Edulink
         {
             MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], $"{Application.Current.TryFindResource("Message.Title.MessageFrom")} {e.Client.Name}",
                 MessageDialogButton.OkReply);
-            if (messageDialogResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
+            if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
             {
                 await e.Client.Helper.SendCommandAsync(new EdulinkCommand
                 {
@@ -150,6 +150,8 @@ namespace Edulink
         {
             if (DataContext is MainWindowViewModel viewModel)
             {
+                if (!viewModel.ViewDesktopCommand.CanExecute(null))
+                    return;
                 viewModel.ViewDesktopCommand.Execute(null);
             }
         }
