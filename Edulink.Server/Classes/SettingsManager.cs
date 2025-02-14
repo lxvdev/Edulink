@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Edulink.Models;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace Edulink.Classes
         private readonly string _appDataFolder;
         private readonly string _settingsFile;
 
-        public AppSettings Settings { get; private set; }
+        public Settings Settings;
 
         public SettingsManager(string settingsFolder = null, string fileName = null)
         {
@@ -31,19 +32,19 @@ namespace Edulink.Classes
                 {
                     using (StreamReader reader = new StreamReader(_settingsFile))
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
-                        Settings = (AppSettings)serializer.Deserialize(reader);
+                        XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                        Settings = (Settings)serializer.Deserialize(reader);
                     }
                 }
                 else
                 {
-                    Settings = new AppSettings();
+                    Settings = new Settings();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading settings: {ex.Message}");
-                Settings = Settings ?? new AppSettings();
+                Console.WriteLine($"Error loading settings: {ex.Message}");
+                Settings = Settings ?? new Settings();
             }
         }
 
@@ -58,7 +59,7 @@ namespace Edulink.Classes
 
                 using (StreamWriter writer = new StreamWriter(_settingsFile))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
+                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                     serializer.Serialize(writer, Settings);
                 }
 
@@ -71,17 +72,9 @@ namespace Edulink.Classes
 
         public void Reset()
         {
-            Settings = new AppSettings();
+            Settings = new Settings();
             Save();
             Console.WriteLine("Settings have been reset to default values.");
-        }
-
-        public class AppSettings
-        {
-            public int Port { get; set; } = 7153;
-            public bool DesktopPreviewEnabled { get; set; } = true;
-            public double DesktopPreviewFrequency { get; set; } = 5000;
-            public string Language { get; set; } = null;
         }
     }
 }
