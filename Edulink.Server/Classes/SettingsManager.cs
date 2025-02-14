@@ -13,7 +13,7 @@ namespace Edulink.Classes
         private readonly string _appDataFolder;
         private readonly string _settingsFile;
 
-        public Settings Settings;
+        public Settings Settings { get; set; }
 
         public SettingsManager(string settingsFolder = null, string fileName = null)
         {
