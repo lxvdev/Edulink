@@ -1,0 +1,102 @@
+﻿<Window
+    x:Class="Edulink.MessageDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:Edulink.ViewModels"
+    Title="{Binding MessageDialog.Title}"
+    Width="360"
+    Height="120"
+    MinWidth="360"
+    MinHeight="100"
+    MaxWidth="500"
+    FontFamily="{StaticResource Inter}"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    Style="{StaticResource MaterialDesignWindow}"
+    Topmost="True"
+    UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,0,10,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:PackIcon
+                Grid.Column="0"
+                Width="42"
+                Height="42"
+                Margin="0,0,10,0"
+                d:Foreground="RoyalBlue"
+                d:Kind="Info"
+                Foreground="{Binding MessageDialog.IconColor}"
+                Kind="{Binding MessageDialog.IconKind}"
+                Visibility="{Binding MessageDialog.IconVisibility}" />
+
+            <TextBox
+                Grid.Column="1"
+                Padding="0"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Left"
+                d:Text="This is a message that will only show in designer"
+                materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"
+                BorderThickness="0"
+                FontSize="16"
+                IsReadOnly="True"
+                IsTabStop="False"
+                Text="{Binding MessageDialog.Message}"
+                TextWrapping="Wrap" />
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,5,0,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Button
+                Margin="5,0,0,0"
+                d:Visibility="Collapsed"
+                Command="{Binding ReplyCommand}"
+                Content="{DynamicResource Message.Reply}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Visibility="{Binding MessageDialog.ReplyButtonVisibility}" />
+            <Button
+                Margin="5,0,0,0"
+                d:Visibility="Collapsed"
+                Command="{Binding CancelCommand}"
+                Content="{DynamicResource Message.Cancel}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Visibility="{Binding MessageDialog.CancelButtonVisibility}" />
+            <Button
+                Margin="5,0,0,0"
+                d:Visibility="Collapsed"
+                Command="{Binding YesCommand}"
+                Content="{DynamicResource Message.Yes}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Visibility="{Binding MessageDialog.YesButtonVisibility}" />
+            <Button
+                Margin="5,0,0,0"
+                d:Visibility="Collapsed"
+                Command="{Binding NoCommand}"
+                Content="{DynamicResource Message.No}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Visibility="{Binding MessageDialog.NoButtonVisibility}" />
+            <Button
+                Margin="5,0,0,0"
+                d:Visibility="Visible"
+                Command="{Binding OkCommand}"
+                Content="{DynamicResource Message.Ok}"
+                Style="{StaticResource MaterialDesignFlatButton}"
+                Visibility="{Binding MessageDialog.OkButtonVisibility}" />
+        </StackPanel>
+    </Grid>
+</Window>
