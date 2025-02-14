@@ -1,5 +1,4 @@
 ﻿using Edulink.ViewModels;
-using System;
 using System.Windows;
 namespace Edulink
 {
@@ -12,16 +11,8 @@ namespace Edulink
         {
             InitializeComponent();
             AboutDialogViewModel aboutDialogViewModel = new AboutDialogViewModel();
-            aboutDialogViewModel.RequestClose += OnRequestClose;
+            aboutDialogViewModel.RequestClose += (s, e) => Close();
             DataContext = aboutDialogViewModel;
-        }
-
-        private void OnRequestClose(object sender, EventArgs e)
-        {
-            if (sender is AboutDialogViewModel viewModel)
-            {
-                Close();
-            }
         }
     }
 }
