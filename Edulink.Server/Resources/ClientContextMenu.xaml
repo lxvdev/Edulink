@@ -1,0 +1,39 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <ContextMenu x:Key="ClientContextMenu" materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
+        <MenuItem
+            Command="{Binding LinkCommand}"
+            Header="{DynamicResource Main.Buttons.OpenLink}"
+            Icon="{materialDesign:PackIcon Kind=Link}" />
+        <MenuItem
+            Command="{Binding MessageCommand}"
+            Header="{DynamicResource Main.Buttons.SendMessage}"
+            Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
+        <MenuItem
+            Command="{Binding ViewDesktopCommand}"
+            Header="{DynamicResource Main.Buttons.ViewDesktop}"
+            Icon="{materialDesign:PackIcon Kind=DesktopWindows}" />
+        <MenuItem
+            Command="{Binding RestartApplicationCommand}"
+            Header="{DynamicResource Main.Buttons.RestartApplication}"
+            Icon="{materialDesign:PackIcon Kind=ApplicationOutline}" />
+        <MenuItem
+            Command="{Binding ShutdownCommand}"
+            Header="{DynamicResource Main.Buttons.ShutdownComputer}"
+            Icon="{materialDesign:PackIcon Kind=Shutdown}" />
+        <MenuItem
+            Command="{Binding RestartCommand}"
+            Header="{DynamicResource Main.Buttons.RestartComputer}"
+            Icon="{materialDesign:PackIcon Kind=Restart}" />
+        <MenuItem
+            Command="{Binding LockscreenCommand}"
+            Header="{DynamicResource Main.Buttons.LockScreen}"
+            Icon="{materialDesign:PackIcon Kind=LockOutline}" />
+        <MenuItem
+            Command="{Binding UpdateCommand}"
+            Header="{DynamicResource Main.Buttons.UpdateApplication}"
+            Icon="{materialDesign:PackIcon Kind=Update}" />
+    </ContextMenu>
+</ResourceDictionary>
