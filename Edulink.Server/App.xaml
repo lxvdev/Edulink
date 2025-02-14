@@ -1,13 +1,35 @@
-﻿<Application x:Class="Edulink.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Edulink"
-             StartupUri="MainWindow.xaml">
+﻿<Application
+    x:Class="Edulink.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+    StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
+            <FontFamily x:Key="Inter">pack://application:,,,/Themes/Fonts/Inter.ttf#Inter</FontFamily>
+
+            <!--  Theme settings  -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Languages/en-US.xaml"/>
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="Indigo"
+                    SecondaryColor="Indigo">
+                    <materialDesign:BundledTheme.ColorAdjustment>
+                        <materialDesign:ColorAdjustment
+                            Colors="All"
+                            Contrast="Medium"
+                            DesiredContrastRatio="4.5" />
+                    </materialDesign:BundledTheme.ColorAdjustment>
+                </materialDesign:BundledTheme>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+                <ResourceDictionary Source="/Languages/en-US.xaml" />
+
+                <ResourceDictionary Source="/Resources/ClientTooltip.xaml" />
+                <ResourceDictionary Source="/Resources/ClientContextMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
