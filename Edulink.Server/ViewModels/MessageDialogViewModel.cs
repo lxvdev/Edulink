@@ -8,11 +8,8 @@ namespace Edulink.ViewModels
 {
     public class MessageDialogViewModel
     {
-        public RelayCommand OkCommand => new RelayCommand(execute => Ok());
-        public RelayCommand ReplyCommand => new RelayCommand(execute => Reply());
-        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
-        public RelayCommand YesCommand => new RelayCommand(execute => Yes());
-        public RelayCommand NoCommand => new RelayCommand(execute => No());
+        private Models.MessageDialog _messageDialog = new Models.MessageDialog();
+        public Models.MessageDialog MessageDialog => _messageDialog;
 
         public MessageDialogViewModel(string message, string title, MessageDialogButton button, MessageDialogIcon icon)
         {
@@ -21,9 +18,6 @@ namespace Edulink.ViewModels
             SetMessageIcon(icon);
             SetButtonVisibility(button);
         }
-
-        private Models.MessageDialog _messageDialog = new Models.MessageDialog();
-        public Models.MessageDialog MessageDialog => _messageDialog;
 
         # region Icon and Button Setup
         public void SetMessageIcon(MessageDialogIcon icon)
@@ -88,17 +82,19 @@ namespace Edulink.ViewModels
         #endregion
 
         #region Commands
+        public RelayCommand OkCommand => new RelayCommand(execute => Ok());
         private void Ok()
         {
             _messageDialog.ButtonResult = MessageDialogButtonResult.Ok;
             OnRequestClose(true);
         }
 
+        public RelayCommand ReplyCommand => new RelayCommand(execute => Reply());
         private void Reply()
         {
             InputDialogResult result = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendMessage"),
                                                         (string)Application.Current.TryFindResource("Input.Title.SendMessage"));
-            if (result == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(result.ReplyResult))
+            if (result.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(result.ReplyResult))
             {
                 _messageDialog.ReplyResult = result.ReplyResult;
                 _messageDialog.ButtonResult = MessageDialogButtonResult.Reply;
@@ -106,18 +102,21 @@ namespace Edulink.ViewModels
             }
         }
 
+        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
         private void Cancel()
         {
             _messageDialog.ButtonResult = MessageDialogButtonResult.Cancel;
             OnRequestClose(true);
         }
 
+        public RelayCommand YesCommand => new RelayCommand(execute => Yes());
         private void Yes()
         {
             _messageDialog.ButtonResult = MessageDialogButtonResult.Yes;
             OnRequestClose(true);
         }
 
+        public RelayCommand NoCommand => new RelayCommand(execute => No());
         private void No()
         {
             _messageDialog.ButtonResult = MessageDialogButtonResult.No;
