@@ -10,7 +10,7 @@
     <system:String x:Key="Main.Menu.Help">_Help</system:String>
     <system:String x:Key="Main.Menu.Help.About">_About</system:String>
 
-    <system:String x:Key="Main.ConnectedComputers">Connected computers</system:String>
+    <system:String x:Key="Main.ConnectedComputers">Connected computers ({0})</system:String>
 
     <system:String x:Key="Main.SortBy">Sort by</system:String>
     <system:String x:Key="Main.SortBy.Name">Name</system:String>
@@ -32,10 +32,10 @@
     <system:String x:Key="Main.AllComputers">All connected computers</system:String>
 
     <!--  Client toolTip  -->
-    <system:String x:Key="Main.List.ToolTip.Name">Name:</system:String>
-    <system:String x:Key="Main.List.ToolTip.Version">Version:</system:String>
-    <system:String x:Key="Main.List.ToolTip.ConnectionTime">Connected at</system:String>
-    <system:String x:Key="Main.List.ToolTip.Endpoint">Endpoint:</system:String>
+    <system:String x:Key="Main.List.ToolTip.Name">Name: {0}</system:String>
+    <system:String x:Key="Main.List.ToolTip.Version">Version: {0}</system:String>
+    <system:String x:Key="Main.List.ToolTip.ConnectionTime">Connected at {0:HH:mm:ss}</system:String>
+    <system:String x:Key="Main.List.ToolTip.Endpoint">Endpoint: {0}</system:String>
 
     <!--  Settings window  -->
     <system:String x:Key="Settings.Title">Settings</system:String>
@@ -79,7 +79,7 @@
     <system:String x:Key="Message.Content.NoClientsConnected">No clients are currently connected</system:String>
     <system:String x:Key="Message.Content.CouldntInitializeServer">Couldn't initialize server. Please change the settings.</system:String>
     <!--  MessageDialog.xaml.cs  -->
-    <system:String x:Key="Message.Title.MessageFrom">Message from</system:String>
+    <system:String x:Key="Message.Title.MessageFrom">Message from {0}</system:String>
 
     <!--  Input dialog  -->
     <system:String x:Key="Input.Ok">OK</system:String>
