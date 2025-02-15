@@ -223,7 +223,7 @@ namespace Edulink.ViewModels
             InputDialogResult urlInputDialogResult = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.OpenLink"),
                                                                       (string)Application.Current.TryFindResource("Input.Title.OpenLink"));
 
-            if (urlInputDialogResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(urlInputDialogResult.ReplyResult))
+            if (urlInputDialogResult.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(urlInputDialogResult.ReplyResult))
             {
                 await SendCommandAsync(
                     new EdulinkCommand
@@ -261,7 +261,7 @@ namespace Edulink.ViewModels
             InputDialogResult messageInputDialog = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendMessage"),
                                                                     (string)Application.Current.TryFindResource("Input.Title.SendMessage"));
 
-            if (messageInputDialog == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(messageInputDialog.ReplyResult))
+            if (messageInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(messageInputDialog.ReplyResult))
             {
                 await SendCommandAsync(new EdulinkCommand
                 {
