@@ -93,9 +93,6 @@
 
     <!--  About dialog  -->
     <system:String x:Key="About.Title">About</system:String>
-    <system:String x:Key="About.FallbackName">Couldn't load product name</system:String>
-    <system:String x:Key="About.FallbackDescription">Couldn't load description</system:String>
-    <system:String x:Key="About.FallbackCopyright">Couldn't load copyright info</system:String>
     <system:String x:Key="About.Close">CLOSE</system:String>
 
     <!--  DesktopPreview window  -->
