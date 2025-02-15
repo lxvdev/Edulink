@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\DesktopPreviewDialogViewModel.cs" />
     <Compile Include="ViewModels\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MessageDialogViewModel.cs" />
