@@ -92,7 +92,7 @@ namespace Edulink
                 using (MemoryStream ms = new MemoryStream(e.Command.Content))
                 {
                     Bitmap image = new Bitmap(ms);
-                    existingDialog.UpdateScreenshot(image);
+                    existingDialog.UpdateDesktop(image);
                 }
             }
         }
