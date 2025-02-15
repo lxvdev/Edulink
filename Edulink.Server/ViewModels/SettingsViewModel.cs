@@ -1,6 +1,6 @@
-﻿using Edulink.Classes;
-using Edulink.Models;
-using Edulink.MVVM;
+﻿using Edulink.Server.Classes;
+using Edulink.Server.Models;
+using Edulink.Server.MVVM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Windows;
 
-namespace Edulink.ViewModels
+namespace Edulink.Server.ViewModels
 {
     public class SettingsViewModel : ViewModelBase, INotifyDataErrorInfo
     {
@@ -122,7 +121,7 @@ namespace Edulink.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageDialog.Show($"{ex.Message}", MessageDialogTitle.Error, MessageDialogButton.Ok, MessageDialogIcon.Error);
             }
         }
 

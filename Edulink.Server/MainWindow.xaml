@@ -1,10 +1,10 @@
 ﻿<Window
-    x:Class="Edulink.MainWindow"
+    x:Class="Edulink.Server.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Edulink.Converters"
+    xmlns:converters="clr-namespace:Edulink.Server.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Edulink"
+    xmlns:local="clr-namespace:Edulink.Server"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Edulink Server"
@@ -63,10 +63,8 @@
                     <TextBlock
                         HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Style="{StaticResource MaterialDesignBody1TextBlock}">
-                        <Run Text="{DynamicResource Main.ConnectedComputers}" />
-                        <Run Text="{Binding ClientsCount, Mode=OneWay, StringFormat='({0})'}" />
-                    </TextBlock>
+                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+                        Text="{Binding ClientsCount, Mode=OneWay, StringFormat={StaticResource Main.ConnectedComputers}}" />
                     <!--  Sorting  -->
                     <StackPanel
                         Margin="0,0,0,5"

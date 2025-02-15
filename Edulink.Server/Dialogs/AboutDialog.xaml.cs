@@ -1,6 +1,6 @@
-﻿using Edulink.ViewModels;
+﻿using Edulink.Server.ViewModels;
 using System.Windows;
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

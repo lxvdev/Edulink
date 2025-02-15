@@ -1,7 +1,7 @@
-﻿using Edulink.MVVM;
+﻿using Edulink.Server.MVVM;
 using System;
 
-namespace Edulink.ViewModels
+namespace Edulink.Server.ViewModels
 {
     internal class InputDialogViewModel : ViewModelBase
     {

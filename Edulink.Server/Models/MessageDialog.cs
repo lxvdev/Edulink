@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Edulink.Models
+namespace Edulink.Server.Models
 {
     public class MessageDialog
     {

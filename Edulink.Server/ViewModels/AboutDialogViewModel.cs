@@ -1,9 +1,9 @@
-﻿using Edulink.MVVM;
+﻿using Edulink.Server.MVVM;
 using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Edulink.ViewModels
+namespace Edulink.Server.ViewModels
 {
     public class AboutDialogViewModel
     {

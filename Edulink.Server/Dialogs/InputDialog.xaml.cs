@@ -1,8 +1,8 @@
-﻿using Edulink.ViewModels;
+﻿using Edulink.Server.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for InputDialog.xaml

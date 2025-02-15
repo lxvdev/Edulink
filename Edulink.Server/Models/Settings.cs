@@ -1,4 +1,4 @@
-﻿namespace Edulink.Models
+﻿namespace Edulink.Server.Models
 {
     public class Settings
     {

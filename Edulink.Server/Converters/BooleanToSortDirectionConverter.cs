@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Edulink.Converters
+namespace Edulink.Server.Converters
 {
     public class BooleanToSortDirectionConverter : IValueConverter
     {

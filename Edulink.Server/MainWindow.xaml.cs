@@ -1,5 +1,5 @@
-﻿using Edulink.Communication.Models;
-using Edulink.ViewModels;
+﻿using Edulink.Server.Communication.Models;
+using Edulink.Server.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,19 +20,19 @@ namespace Edulink
     {
         private SettingsWindow _settingsWindow;
         private AboutDialog _aboutDialog;
-        private Server _server;
+        private Core.Server _server;
 
         public MainWindow()
         {
             InitializeComponent();
             try
             {
-                _server = new Server(App.SettingsManager.Settings.Port);
+                _server = new Core.Server(App.SettingsManager.Settings.Port);
                 _server.CommandReceived += Server_CommandReceived;
 
                 MainWindowViewModel mainWindowViewModel = new MainWindowViewModel(_server);
                 DataContext = mainWindowViewModel;
-                Loaded += MainWindow_Loaded;
+                Loaded += async (s, e) => await _server.StartServerAsync();
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace Edulink
         }
 
         #region Handle received commands
-        private void Server_CommandReceived(object sender, Server.CommandReceivedEventArgs e)
+        private void Server_CommandReceived(object sender, Core.Server.CommandReceivedEventArgs e)
         {
             switch (e.Command.Command)
             {
@@ -76,7 +76,7 @@ namespace Edulink
             }
         }
 
-        private void HandleDesktop(Server.CommandReceivedEventArgs e)
+        private void HandleDesktop(Core.Server.CommandReceivedEventArgs e)
         {
             if (e.Command.Content != null)
             {
@@ -97,7 +97,7 @@ namespace Edulink
             }
         }
 
-        private void HandlePreview(Server.CommandReceivedEventArgs e)
+        private void HandlePreview(Core.Server.CommandReceivedEventArgs e)
         {
             if (e.Command.Content != null)
             {
@@ -114,9 +114,9 @@ namespace Edulink
             }
         }
 
-        private async Task HandleMessageAsync(Server.CommandReceivedEventArgs e)
+        private async Task HandleMessageAsync(Core.Server.CommandReceivedEventArgs e)
         {
-            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], $"{Application.Current.TryFindResource("Message.Title.MessageFrom")} {e.Client.Name}",
+            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], string.Format((string)Application.Current.TryFindResource("Message.Title.MessageFrom"), e.Client.Name),
                 MessageDialogButton.OkReply);
             if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
             {
@@ -132,29 +132,6 @@ namespace Edulink
         }
 
         #endregion
-
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (App.SettingsManager.Settings.Port.ToString().Length > 4)
-            {
-                MessageBox.Show("Port cannot be larger than 4 numbers.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                _settingsWindow.Show();
-            }
-            else
-            {
-                await _server.StartServerAsync();
-            }
-        }
-
-        private void ComputersList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (DataContext is MainWindowViewModel viewModel)
-            {
-                if (!viewModel.ViewDesktopCommand.CanExecute(null))
-                    return;
-                viewModel.ViewDesktopCommand.Execute(null);
-            }
-        }
 
         #region Menu Items
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -188,6 +165,16 @@ namespace Edulink
             App.CloseApp();
         }
         #endregion
+
+        private void ComputersList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is MainWindowViewModel viewModel)
+            {
+                if (!viewModel.ViewDesktopCommand.CanExecute(null))
+                    return;
+                viewModel.ViewDesktopCommand.Execute(null);
+            }
+        }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {

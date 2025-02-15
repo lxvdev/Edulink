@@ -1,9 +1,9 @@
-﻿using Edulink.Models;
-using Edulink.ViewModels;
+﻿using Edulink.Server.Models;
+using Edulink.Server.ViewModels;
 using System.Drawing;
 using System.Windows;
 
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for DesktopPreviewDialog.xaml

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Edulink.Properties {
+namespace Edulink.Server.Properties {
     using System;
     
     

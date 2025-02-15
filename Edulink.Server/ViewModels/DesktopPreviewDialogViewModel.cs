@@ -1,6 +1,6 @@
-﻿using Edulink.Communication.Models;
-using Edulink.Models;
-using Edulink.MVVM;
+﻿using Edulink.Server.Communication.Models;
+using Edulink.Server.Models;
+using Edulink.Server.MVVM;
 using Microsoft.Win32;
 using System;
 using System.Drawing;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Edulink.ViewModels
+namespace Edulink.Server.ViewModels
 {
     public class DesktopPreviewDialogViewModel : ViewModelBase
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Edulink.MVVM
+namespace Edulink.Server.MVVM
 {
     public class RelayCommand : ICommand
     {

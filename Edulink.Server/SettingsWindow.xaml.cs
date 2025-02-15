@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml

@@ -1,6 +1,6 @@
-﻿using Edulink.Communication.Models;
-using Edulink.Models;
-using Edulink.MVVM;
+﻿using Edulink.Server.Communication.Models;
+using Edulink.Server.Models;
+using Edulink.Server.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +14,7 @@ using System.Web;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Edulink.ViewModels
+namespace Edulink.Server.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
@@ -27,7 +27,7 @@ namespace Edulink.ViewModels
         public RelayCommand LockscreenCommand => new RelayCommand(async execute => await LockscreenAsync(), canExecute => SelectedClients.Any());
         public RelayCommand UpdateCommand => new RelayCommand(async execute => await UpdateAsync(), canExecute => SelectedClients.Any());
 
-        public MainWindowViewModel(Server server)
+        public MainWindowViewModel(Core.Server server)
         {
             _clients.CollectionChanged += Clients_CollectionChanged;
             server.ClientConnected += Server_ClientConnected;
@@ -189,12 +189,12 @@ namespace Edulink.ViewModels
         }
 
         // Handle connection/disconnection
-        private void Server_ClientConnected(object sender, Server.ClientConnectedEventArgs e)
+        private void Server_ClientConnected(object sender, Core.Server.ClientConnectedEventArgs e)
         {
             _clients.Add(e.Client);
         }
 
-        private void Server_ClientDisconnected(object sender, Server.ClientDisconnectedEventArgs e)
+        private void Server_ClientDisconnected(object sender, Core.Server.ClientDisconnectedEventArgs e)
         {
             _clients.Remove(e.Client);
         }

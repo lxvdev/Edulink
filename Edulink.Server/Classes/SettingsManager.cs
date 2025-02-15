@@ -1,11 +1,11 @@
-﻿using Edulink.Models;
+﻿using Edulink.Server.Models;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Xml.Serialization;
 
-namespace Edulink.Classes
+namespace Edulink.Server.Classes
 {
     public class SettingsManager
     {

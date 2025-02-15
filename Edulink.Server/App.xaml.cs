@@ -1,11 +1,11 @@
-﻿using Edulink.Classes;
+﻿using Edulink.Server.Classes;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace Edulink
+namespace Edulink.Server
 {
     /// <summary>
     /// Interaction logic for App.xaml

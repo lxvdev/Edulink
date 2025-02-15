@@ -1,9 +1,9 @@
-﻿using Edulink.MVVM;
-using Edulink.Communication;
+﻿using Edulink.Server.MVVM;
+using Edulink.Server.Communication;
 using System;
 using System.Windows.Media.Imaging;
 
-namespace Edulink.Models
+namespace Edulink.Server.Models
 {
     public class Client : ViewModelBase, IDisposable
     {

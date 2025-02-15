@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Edulink.MVVM
+namespace Edulink.Server.MVVM
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
