@@ -17,17 +17,19 @@
     <system:String x:Key="Main.SortBy.Version">Version</system:String>
     <system:String x:Key="Main.SortBy.ConnectionTime">Conection time</system:String>
 
+    <system:String x:Key="Main.Commands.SendLink">Send link</system:String>
+    <system:String x:Key="Main.Commands.ShutdownComputer">Shut down computer</system:String>
+    <system:String x:Key="Main.Commands.SendMessage">Send message</system:String>
+    <system:String x:Key="Main.Commands.ViewDesktop">View desktop</system:String>
+    <system:String x:Key="Main.Commands.RestartApplication">Restart application</system:String>
+    <system:String x:Key="Main.Commands.LockScreen">Lock screen</system:String>
+    <system:String x:Key="Main.Commands.ResetPassword">Reset password</system:String>
+    <system:String x:Key="Main.Commands.RestartComputer">Restart computer</system:String>
+    <system:String x:Key="Main.Commands.ChangeName">Change name</system:String>
+    <system:String x:Key="Main.Commands.UpdateApplication">Update application</system:String>
 
-    <system:String x:Key="Main.Buttons.OpenLink">Open link</system:String>
-    <system:String x:Key="Main.Buttons.ShutdownComputer">Shut down computer</system:String>
-    <system:String x:Key="Main.Buttons.SendMessage">Send message</system:String>
-    <system:String x:Key="Main.Buttons.ViewDesktop">View desktop</system:String>
-    <system:String x:Key="Main.Buttons.RestartApplication">Restart application</system:String>
-    <system:String x:Key="Main.Buttons.LockScreen">Lock screen</system:String>
-    <system:String x:Key="Main.Buttons.ResetPassword">Reset password</system:String>
-    <system:String x:Key="Main.Buttons.RestartComputer">Restart computer</system:String>
-    <system:String x:Key="Main.Buttons.ChangeName">Change name</system:String>
-    <system:String x:Key="Main.Buttons.UpdateApplication">Update application</system:String>
+    <system:String x:Key="Main.Commands.ExcludeFromPreview">Exclude from preview</system:String>
+    <system:String x:Key="Main.Commands.IncludeOnPreview">Include on preview</system:String>
 
     <system:String x:Key="Main.AllComputers">All connected computers</system:String>
 
@@ -53,6 +55,11 @@
     <system:String x:Key="Settings.Miscellaneous.Exit">Exit application</system:String>
 
     <system:String x:Key="Settings.Language.Header">Language</system:String>
+
+    <system:String x:Key="Settings.Theme.Header">Theme</system:String>
+    <system:String x:Key="Settings.Theme.Auto">Auto</system:String>
+    <system:String x:Key="Settings.Theme.Light">Light</system:String>
+    <system:String x:Key="Settings.Theme.Dark">Dark</system:String>
 
     <system:String x:Key="Settings.IPAddress">IP Address: {0}</system:String>
 
@@ -86,8 +93,8 @@
     <system:String x:Key="Input.Cancel">CANCEL</system:String>
 
     <!--  Input dialog content  -->
-    <system:String x:Key="Input.Title.OpenLink">Open link</system:String>
-    <system:String x:Key="Input.Content.OpenLink">Enter your link here</system:String>
+    <system:String x:Key="Input.Title.SendLink">Send link</system:String>
+    <system:String x:Key="Input.Content.SendLink">Enter your link here</system:String>
     <system:String x:Key="Input.Title.SendMessage">Send message</system:String>
     <system:String x:Key="Input.Content.SendMessage">Enter your message here</system:String>
 
@@ -95,9 +102,9 @@
     <system:String x:Key="About.Title">About</system:String>
     <system:String x:Key="About.Close">CLOSE</system:String>
 
-    <!--  DesktopPreview window  -->
-    <system:String x:Key="DesktopPreview.Save">Save</system:String>
-    <system:String x:Key="DesktopPreview.Refresh">Refresh</system:String>
-    <system:String x:Key="DesktopPreview.ReceivingImage">Receiving image...</system:String>
+    <!--  Desktop dialog  -->
+    <system:String x:Key="Desktop.Save">Save</system:String>
+    <system:String x:Key="Desktop.Refresh">Refresh</system:String>
+    <system:String x:Key="Desktop.ReceivingImage">Receiving image...</system:String>
 
 </ResourceDictionary>
