@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Edulink Client")]
-[assembly: AssemblyCopyright("Copyright © Andrew 2024")]
+[assembly: AssemblyCopyright("Copyright © Andrew 2024-2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
