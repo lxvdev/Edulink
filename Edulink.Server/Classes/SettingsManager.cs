@@ -1,11 +1,11 @@
-﻿using Edulink.Server.Models;
+﻿using Edulink.Models;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Xml.Serialization;
 
-namespace Edulink.Server.Classes
+namespace Edulink.Classes
 {
     public class SettingsManager
     {
@@ -18,7 +18,7 @@ namespace Edulink.Server.Classes
         public SettingsManager(string settingsFolder = null, string fileName = null)
         {
             _appName = Assembly.GetExecutingAssembly().GetName().Name;
-            _appDataFolder = settingsFolder ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), _appName);
+            _appDataFolder = settingsFolder ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), _appName);
             _settingsFile = Path.Combine(_appDataFolder, fileName ?? "settings.xml");
 
             Load();
