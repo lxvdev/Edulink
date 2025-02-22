@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Edulink.Server.Properties {
+namespace Edulink.Properties {
     using System;
     
     
@@ -57,6 +57,16 @@ namespace Edulink.Server.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Edulink_Server {
+            get {
+                object obj = ResourceManager.GetObject("Edulink_Server", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

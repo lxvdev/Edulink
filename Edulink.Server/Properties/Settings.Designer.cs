@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Edulink.Server.Properties {
+namespace Edulink.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
