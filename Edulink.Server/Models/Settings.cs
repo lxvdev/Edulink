@@ -1,4 +1,4 @@
-﻿namespace Edulink.Server.Models
+﻿namespace Edulink.Models
 {
     public class Settings
     {
@@ -6,5 +6,6 @@
         public bool PreviewEnabled { get; set; } = true;
         public double PreviewFrequency { get; set; } = 5000;
         public string Language { get; set; } = null;
+        public string Theme { get; set; } = "Auto";
     }
 }
