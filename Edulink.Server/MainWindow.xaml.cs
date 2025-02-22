@@ -1,5 +1,8 @@
-﻿using Edulink.Server.Communication.Models;
-using Edulink.Server.ViewModels;
+﻿using Edulink.Communication.Models;
+using Edulink.Core;
+using Edulink.Models;
+using Edulink.ViewModels;
+using Edulink.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +14,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace Edulink.Server
+namespace Edulink
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,18 +23,20 @@ namespace Edulink.Server
     {
         private SettingsWindow _settingsWindow;
         private AboutDialog _aboutDialog;
-        private Core.Server _server;
+        private Server _server;
+
+        private MainWindowViewModel _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
             try
             {
-                _server = new Core.Server(App.SettingsManager.Settings.Port);
-                _server.CommandReceived += Server_CommandReceived;
+                _server = new Server(App.SettingsManager.Settings.Port);
+                _server.CommandReceived += Server_CommandReceivedAsync;
 
-                MainWindowViewModel mainWindowViewModel = new MainWindowViewModel(_server);
-                DataContext = mainWindowViewModel;
+                _viewModel = new MainWindowViewModel(_server);
+                DataContext = _viewModel;
                 Loaded += async (s, e) => await _server.StartServerAsync();
             }
             catch (Exception)
@@ -40,7 +45,6 @@ namespace Edulink.Server
                     MessageDialogTitle.Error, MessageDialogButton.Ok, MessageDialogIcon.Error);
 
                 SettingsWindow settingsWindow = new SettingsWindow();
-                settingsWindow.Owner = null;
                 settingsWindow.Show();
 
                 Close();
@@ -48,27 +52,21 @@ namespace Edulink.Server
         }
 
         #region Handle received commands
-        private void Server_CommandReceived(object sender, Core.Server.CommandReceivedEventArgs e)
+        private async void Server_CommandReceivedAsync(object sender, Server.CommandReceivedEventArgs e)
         {
             switch (e.Command.Command)
             {
-                case "DESKTOP":
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        HandleDesktop(e);
-                    });
+                case Commands.Desktop:
+                    HandleDesktop(e);
                     break;
-                case "PREVIEW":
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        HandlePreview(e);
-                    });
+                case Commands.Preview:
+                    HandlePreview(e);
                     break;
-                case "MESSAGE":
-                    _ = Application.Current.Dispatcher.Invoke(async () =>
-                    {
-                        await HandleMessageAsync(e);
-                    });
+                case Commands.Message:
+                    await HandleMessageAsync(e);
+                    break;
+                case Commands.Disconnect:
+                    e.Client.Helper.Dispose();
                     break;
                 default:
                     Console.WriteLine($"Unknown command received from {e.Client.Name}: {e.Command.Command}");
@@ -76,16 +74,21 @@ namespace Edulink.Server
             }
         }
 
-        private void HandleDesktop(Core.Server.CommandReceivedEventArgs e)
+        private void HandleDesktop(Server.CommandReceivedEventArgs e)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.Command.Content != null)
             {
-                DesktopPreviewDialog existingDialog = ((MainWindowViewModel)DataContext).openDesktopPreviewDialogs.FirstOrDefault(dialog => dialog.Client == e.Client);
+                DesktopDialog existingDialog = _viewModel.openDesktopDialogs.FirstOrDefault(dialog => dialog.Client == e.Client);
                 if (existingDialog == null)
                 {
-                    existingDialog = new DesktopPreviewDialog(e.Client);
-                    ((MainWindowViewModel)DataContext).openDesktopPreviewDialogs.Add(existingDialog);
-                    existingDialog.Closed += (s, _) => ((MainWindowViewModel)DataContext).openDesktopPreviewDialogs.Remove(existingDialog);
+                    existingDialog = new DesktopDialog(e.Client);
+                    _viewModel.openDesktopDialogs.Add(existingDialog);
+                    existingDialog.Closed += (s, _) => _viewModel.openDesktopDialogs.Remove(existingDialog);
                     existingDialog.Show();
                 }
 
@@ -97,7 +100,7 @@ namespace Edulink.Server
             }
         }
 
-        private void HandlePreview(Core.Server.CommandReceivedEventArgs e)
+        private void HandlePreview(Server.CommandReceivedEventArgs e)
         {
             if (e.Command.Content != null)
             {
@@ -110,12 +113,17 @@ namespace Edulink.Server
                     bitmapImage.EndInit();
                 }
                 bitmapImage.Freeze();
-                e.Client.DesktopPreview = bitmapImage;
+                e.Client.Preview = bitmapImage;
             }
         }
 
-        private async Task HandleMessageAsync(Core.Server.CommandReceivedEventArgs e)
+        private async Task HandleMessageAsync(Server.CommandReceivedEventArgs e)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], string.Format((string)Application.Current.TryFindResource("Message.Title.MessageFrom"), e.Client.Name),
                 MessageDialogButton.OkReply);
             if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
@@ -124,9 +132,9 @@ namespace Edulink.Server
                 {
                     Command = e.Command.Command,
                     Parameters = new Dictionary<string, string>
-                        {
-                            { "Message", messageDialogResult.ReplyResult }
-                        }
+                    {
+                        { "Message", messageDialogResult.ReplyResult }
+                    }
                 });
             }
         }
@@ -170,9 +178,9 @@ namespace Edulink.Server
         {
             if (DataContext is MainWindowViewModel viewModel)
             {
-                if (!viewModel.ViewDesktopCommand.CanExecute(null))
+                if (!viewModel.DesktopCommand.CanExecute(null))
                     return;
-                viewModel.ViewDesktopCommand.Execute(null);
+                viewModel.DesktopCommand.Execute(null);
             }
         }
 
