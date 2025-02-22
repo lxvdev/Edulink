@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Edulink.Server.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Edulink.Server.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.NotifyIcon.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=682384a853a08aad, processorArchitecture=MSIL">
@@ -91,38 +91,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <None Include="Classes\DarkTitleBar.cs" />
+    <None Include="Classes\ThemeManager.cs" />
     <Compile Include="Converters\BooleanToSortDirectionConverter.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Dialogs\AboutDialog.xaml.cs">
+    <Compile Include="Models\Commands.cs" />
+    <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InputDialog.xaml.cs">
+    <Compile Include="Views\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+    <Compile Include="Views\MessageDialog.xaml.cs">
       <DependentUpon>MessageDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\MessageDialog.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="SettingsWindow.xaml.cs">
+    <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
-    <Compile Include="ViewModels\DesktopPreviewDialogViewModel.cs" />
+    <Compile Include="ViewModels\DesktopDialogViewModel.cs" />
     <Compile Include="ViewModels\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MessageDialogViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Resource Include="Fonts\Inter.ttf" />
-    <Page Include="Dialogs\AboutDialog.xaml">
+    <Page Include="Views\AboutDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\DesktopPreviewDialog.xaml">
+    <Page Include="Views\DesktopDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,11 +140,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Resource>
-    <Page Include="Dialogs\InputDialog.xaml">
+    <Page Include="Views\InputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\MessageDialog.xaml">
+    <Page Include="Views\MessageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -159,8 +161,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\SettingsManager.cs" />
-    <Compile Include="Dialogs\DesktopPreviewDialog.xaml.cs">
-      <DependentUpon>DesktopPreviewDialog.xaml</DependentUpon>
+    <Compile Include="Views\DesktopDialog.xaml.cs">
+      <DependentUpon>DesktopDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -174,7 +176,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsWindow.xaml">
+    <Page Include="Views\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -219,10 +221,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Edulink.Server.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Edulink_32px.png" />
+    <Resource Include="Resources\Edulink.Server.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Edulink.Communication\Edulink.Communication.csproj">
