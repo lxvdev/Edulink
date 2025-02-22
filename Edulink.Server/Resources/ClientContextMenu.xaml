@@ -5,35 +5,49 @@
     <ContextMenu x:Key="ClientContextMenu" materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
         <MenuItem
             Command="{Binding LinkCommand}"
-            Header="{DynamicResource Main.Buttons.OpenLink}"
+            Header="{DynamicResource Main.Commands.SendLink}"
             Icon="{materialDesign:PackIcon Kind=Link}" />
         <MenuItem
             Command="{Binding MessageCommand}"
-            Header="{DynamicResource Main.Buttons.SendMessage}"
+            Header="{DynamicResource Main.Commands.SendMessage}"
             Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
         <MenuItem
             Command="{Binding ViewDesktopCommand}"
-            Header="{DynamicResource Main.Buttons.ViewDesktop}"
+            Header="{DynamicResource Main.Commands.ViewDesktop}"
             Icon="{materialDesign:PackIcon Kind=DesktopWindows}" />
         <MenuItem
             Command="{Binding RestartApplicationCommand}"
-            Header="{DynamicResource Main.Buttons.RestartApplication}"
+            Header="{DynamicResource Main.Commands.RestartApplication}"
             Icon="{materialDesign:PackIcon Kind=ApplicationOutline}" />
         <MenuItem
             Command="{Binding ShutdownCommand}"
-            Header="{DynamicResource Main.Buttons.ShutdownComputer}"
+            Header="{DynamicResource Main.Commands.ShutdownComputer}"
             Icon="{materialDesign:PackIcon Kind=Shutdown}" />
         <MenuItem
             Command="{Binding RestartCommand}"
-            Header="{DynamicResource Main.Buttons.RestartComputer}"
+            Header="{DynamicResource Main.Commands.RestartComputer}"
             Icon="{materialDesign:PackIcon Kind=Restart}" />
         <MenuItem
             Command="{Binding LockscreenCommand}"
-            Header="{DynamicResource Main.Buttons.LockScreen}"
+            Header="{DynamicResource Main.Commands.LockScreen}"
             Icon="{materialDesign:PackIcon Kind=LockOutline}" />
         <MenuItem
             Command="{Binding UpdateCommand}"
-            Header="{DynamicResource Main.Buttons.UpdateApplication}"
+            Header="{DynamicResource Main.Commands.UpdateApplication}"
             Icon="{materialDesign:PackIcon Kind=Update}" />
+
+        <Separator />
+
+        <MenuItem
+            Command="{Binding ExcludePreviewCommand}"
+            CommandParameter="true"
+            Header="{DynamicResource Main.Commands.ExcludeFromPreview}"
+            Icon="{materialDesign:PackIcon Kind=ImageRemoveOutline}" />
+
+        <MenuItem
+            Command="{Binding ExcludePreviewCommand}"
+            CommandParameter="false"
+            Header="{DynamicResource Main.Commands.IncludeOnPreview}"
+            Icon="{materialDesign:PackIcon Kind=Plus}" />
     </ContextMenu>
 </ResourceDictionary>
