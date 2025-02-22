@@ -1,9 +1,10 @@
-﻿using Edulink.Server.MVVM;
+﻿using Edulink.MVVM;
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Input;
 
-namespace Edulink.Server.ViewModels
+namespace Edulink.ViewModels
 {
     public class AboutDialogViewModel
     {
@@ -21,9 +22,9 @@ namespace Edulink.Server.ViewModels
             Copyright = $"{assembly.GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright}";
         }
 
-        public RelayCommand CloseCommand => new RelayCommand(execute => OnRequestClose());
+        public ICommand CloseCommand => new RelayCommand(execute => OnRequestClose());
 
-        public RelayCommand GithubCommand => new RelayCommand(execute => Github());
+        public ICommand GithubCommand => new RelayCommand(execute => Github());
         private void Github()
         {
             Process.Start("https://github.com/lxvdev/Edulink");
