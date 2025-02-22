@@ -1,7 +1,9 @@
-﻿using Edulink.Server.MVVM;
+﻿using Edulink.MVVM;
+using Edulink.Views;
 using System;
+using System.Windows.Input;
 
-namespace Edulink.Server.ViewModels
+namespace Edulink.ViewModels
 {
     internal class InputDialogViewModel : ViewModelBase
     {
@@ -31,14 +33,14 @@ namespace Edulink.Server.ViewModels
         }
 
         #region Commands    
-        public RelayCommand OkCommand => new RelayCommand(execute => Ok(), canExecute => !string.IsNullOrEmpty(InputValue));
+        public ICommand OkCommand => new RelayCommand(execute => Ok(), canExecute => !string.IsNullOrEmpty(InputValue));
         private void Ok()
         {
             ButtonResult = InputDialogButtonResult.Ok;
             OnRequestClose(true);
         }
 
-        public RelayCommand CancelCommand => new RelayCommand(execute => Cancel());
+        public ICommand CancelCommand => new RelayCommand(execute => Cancel());
         private void Cancel()
         {
             ButtonResult = InputDialogButtonResult.Cancel;
