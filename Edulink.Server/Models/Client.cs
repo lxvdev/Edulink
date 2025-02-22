@@ -1,9 +1,9 @@
-﻿using Edulink.Server.MVVM;
-using Edulink.Server.Communication;
+﻿using Edulink.Communication;
+using Edulink.MVVM;
 using System;
 using System.Windows.Media.Imaging;
 
-namespace Edulink.Server.Models
+namespace Edulink.Models
 {
     public class Client : ViewModelBase, IDisposable
     {
@@ -23,26 +23,24 @@ namespace Edulink.Server.Models
         public string Endpoint { get; set; }
 
         private bool _isExcludedFromPreview;
-
         public bool IsExcludedFromPreview
         {
-            get { return _isExcludedFromPreview; }
+            get => _isExcludedFromPreview;
             set
             {
                 _isExcludedFromPreview = value;
-                DesktopPreview = null;
                 OnPropertyChanged();
             }
         }
 
 
-        private BitmapImage _desktopPreview;
-        public BitmapImage DesktopPreview
+        private BitmapImage _preview;
+        public BitmapImage Preview
         {
-            get { return _desktopPreview; }
+            get => _preview;
             set
             {
-                _desktopPreview = value;
+                _preview = value;
                 OnPropertyChanged();
             }
         }
@@ -50,7 +48,7 @@ namespace Edulink.Server.Models
         private bool _isVisible = true;
         public bool IsVisible
         {
-            get { return _isVisible; }
+            get => _isVisible;
             set
             {
                 if (_isVisible != value)
@@ -70,7 +68,7 @@ namespace Edulink.Server.Models
         private bool _isSelected;
         public bool IsSelected
         {
-            get { return _isSelected; }
+            get => _isSelected;
             set
             {
                 if (_isSelected != value)
