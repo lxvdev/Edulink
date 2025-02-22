@@ -1,11 +1,12 @@
-﻿using Edulink.Server.Classes;
+﻿using Edulink.Classes;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace Edulink.Server
+namespace Edulink
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -13,12 +14,16 @@ namespace Edulink.Server
     public partial class App : Application
     {
         public static SettingsManager SettingsManager = new SettingsManager();
+        private readonly PaletteHelper _paletteHelper = new PaletteHelper();
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             SetLanguage(SettingsManager.Settings.Language);
+            ApplyTheme(SettingsManager.Settings.Theme);
         }
 
+        #region Language
         public static void SetLanguage(string locale = null)
         {
             string cultureName = locale ?? CultureInfo.InstalledUICulture.ToString();
@@ -60,6 +65,27 @@ namespace Edulink.Server
                 default:
                     return "..\\Languages\\en-US.xaml";
             }
+        }
+        #endregion
+
+        private void ApplyTheme(string theme)
+        {
+            Theme materialTheme = _paletteHelper.GetTheme();
+
+            if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
+            {
+                materialTheme.SetBaseTheme(BaseTheme.Dark);
+            }
+            else if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase))
+            {
+                materialTheme.SetBaseTheme(BaseTheme.Light);
+            }
+            else if (theme.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+            {
+                materialTheme.SetBaseTheme(BaseTheme.Inherit);
+            }
+
+            _paletteHelper.SetTheme(materialTheme);
         }
 
         public static void RestartApp()
