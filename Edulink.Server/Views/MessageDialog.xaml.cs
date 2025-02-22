@@ -1,7 +1,7 @@
-﻿using Edulink.Server.ViewModels;
+﻿using Edulink.ViewModels;
 using System.Windows;
 
-namespace Edulink.Server
+namespace Edulink.Views
 {
     /// <summary>
     /// Interaction logic for MessageBoxDialog.xaml
@@ -14,17 +14,17 @@ namespace Edulink.Server
         public MessageDialog(string message, string title = null, MessageDialogButton button = MessageDialogButton.Ok, MessageDialogIcon icon = MessageDialogIcon.None)
         {
             InitializeComponent();
-            MessageDialogViewModel messageDialogViewModel = new MessageDialogViewModel(message, title, button, icon);
-            messageDialogViewModel.RequestClose += OnRequestClose;
-            DataContext = messageDialogViewModel;
+            MessageDialogViewModel viewModel = new MessageDialogViewModel(message, title, button, icon);
+            viewModel.RequestClose += OnRequestClose;
+            DataContext = viewModel;
         }
 
         private void OnRequestClose(object sender, bool dialogResult)
         {
             if (sender is MessageDialogViewModel viewModel)
             {
-                ButtonResult = viewModel.MessageDialog.ButtonResult;
-                ReplyResult = viewModel.MessageDialog.ReplyResult;
+                ButtonResult = viewModel.ButtonResult;
+                ReplyResult = viewModel.ReplyResult;
                 DialogResult = dialogResult;
                 Close();
             }

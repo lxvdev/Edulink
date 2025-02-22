@@ -1,8 +1,8 @@
-﻿using Edulink.Server.ViewModels;
+﻿using Edulink.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Edulink.Server
+namespace Edulink.Views
 {
     /// <summary>
     /// Interaction logic for InputDialog.xaml
@@ -12,27 +12,29 @@ namespace Edulink.Server
         public InputDialogButtonResult ButtonResult { get; private set; }
         public string InputValue { get; private set; }
 
+        private InputDialogViewModel _viewModel;
+
         public InputDialog(string message, string title)
         {
             InitializeComponent();
-            InputDialogViewModel inputDialogViewModel = new InputDialogViewModel(message, title);
-            inputDialogViewModel.RequestClose += OnRequestClose;
-            DataContext = inputDialogViewModel;
+            _viewModel = new InputDialogViewModel(message, title);
+            _viewModel.RequestClose += OnRequestClose;
+            DataContext = _viewModel;
 
             InputTextBox.Focus();
         }
 
-        private void InputTextBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             if (!(e.Key == Key.Enter))
                 return;
 
-            if (DataContext is InputDialogViewModel viewModel)
+            if (_viewModel != null)
             {
-                if (!viewModel.OkCommand.CanExecute(null))
+                if (!_viewModel.OkCommand.CanExecute(null))
                     return;
 
-                viewModel.OkCommand.Execute(null);
+                _viewModel.OkCommand.Execute(null);
             }
         }
 
@@ -62,12 +64,12 @@ namespace Edulink.Server
     public class InputDialogResult
     {
         public InputDialogButtonResult ButtonResult { get; set; }
-        public string ReplyResult { get; set; }
+        public string InputResult { get; set; }
 
         public InputDialogResult(InputDialogButtonResult buttonResult, string reply = null)
         {
             ButtonResult = buttonResult;
-            ReplyResult = reply;
+            InputResult = reply;
         }
     }
 

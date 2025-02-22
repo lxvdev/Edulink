@@ -1,23 +1,23 @@
-﻿using Edulink.Server.Models;
-using Edulink.Server.ViewModels;
+﻿using Edulink.Models;
+using Edulink.ViewModels;
 using System.Drawing;
 using System.Windows;
 
-namespace Edulink.Server
+namespace Edulink.Views
 {
     /// <summary>
     /// Interaction logic for DesktopPreviewDialog.xaml
     /// </summary>
-    public partial class DesktopPreviewDialog : Window
+    public partial class DesktopDialog : Window
     {
-        private DesktopPreviewDialogViewModel _viewModel;
+        private DesktopDialogViewModel _viewModel;
 
         public Client Client => _viewModel.Client;
 
-        public DesktopPreviewDialog(Client client)
+        public DesktopDialog(Client client)
         {
             InitializeComponent();
-            _viewModel = new DesktopPreviewDialogViewModel(client);
+            _viewModel = new DesktopDialogViewModel(client);
             _viewModel.RequestClose += (s, e) => Close();
             _viewModel.RequestFocus += (s, e) => Focus();
             DataContext = _viewModel;

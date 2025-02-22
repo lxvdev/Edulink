@@ -1,40 +1,39 @@
 ﻿<Window
-    x:Class="Edulink.Server.SettingsWindow"
+    x:Class="Edulink.Views.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Edulink.Server"
+    xmlns:local="clr-namespace:Edulink"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vm="clr-namespace:Edulink.Server.ViewModels"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
     Title="Settings"
     Width="800"
     Height="450"
-    d:Height="600"
+    d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:Height="700"
     FontFamily="{StaticResource Inter}"
     Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.DataContext>
-        <vm:SettingsViewModel />
-    </Window.DataContext>
     <Grid Margin="0,10,0,10">
-        <ScrollViewer Margin="0,0,0,44" Focusable="False">
+        <ScrollViewer Margin="0,0,0,42" Focusable="False">
             <StackPanel Margin="10,0,10,0">
                 <!--  Port  -->
                 <StackPanel Margin="0,0,0,5">
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Port.Header}" />
+                        Text="{DynamicResource Settings.Connection.Header}" />
 
                     <TextBox
+                        x:Name="PortTextBox"
                         Margin="0,0,0,5"
                         Padding="16,16,16,8"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        materialDesign:HintAssist.Hint="7153"
-                        materialDesign:HintAssist.IsFloating="False"
+                        materialDesign:HintAssist.Hint="{DynamicResource Settings.Port.Hint}"
                         materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
                         materialDesign:ValidationAssist.UsePopup="True"
                         MaxLength="4"
@@ -82,7 +81,7 @@
                     <Button
                         Margin="0,0,0,5"
                         HorizontalAlignment="Left"
-                        Command="{Binding RestartCommand}"
+                        Command="{Binding RestartApplicationCommand}"
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ApplicationOutline" />
@@ -119,7 +118,7 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Close" />
-                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.Exit}" />
+                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.ExitApplication}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -140,6 +139,24 @@
                         <ComboBoxItem Content="Español (España)" Tag="es-ES" />
                         <ComboBoxItem Content="Română (România)" Tag="ro-RO" />
                         <ComboBoxItem Content="Polski (Polska)" Tag="pl-PL" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!--  Theme  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{DynamicResource Settings.Theme.Header}" />
+
+                    <ComboBox
+                        x:Name="ThemeComboBox"
+                        SelectedValue="{Binding Theme, Mode=TwoWay}"
+                        SelectedValuePath="Tag"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
+                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Auto}" Tag="Auto" />
+                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Light}" Tag="Light" />
+                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Dark}" Tag="Dark" />
                     </ComboBox>
                 </StackPanel>
 
