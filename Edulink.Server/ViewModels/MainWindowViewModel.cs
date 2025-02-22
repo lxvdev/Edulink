@@ -1,6 +1,8 @@
-﻿using Edulink.Server.Communication.Models;
-using Edulink.Server.Models;
-using Edulink.Server.MVVM;
+﻿using Edulink.Communication.Models;
+using Edulink.Core;
+using Edulink.Models;
+using Edulink.MVVM;
+using Edulink.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,31 +15,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 
-namespace Edulink.Server.ViewModels
+namespace Edulink.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public RelayCommand LinkCommand => new RelayCommand(async execute => await OpenLinkAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand MessageCommand => new RelayCommand(async execute => await SendMessageAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand ViewDesktopCommand => new RelayCommand(async execute => await ViewDesktopAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand RestartApplicationCommand => new RelayCommand(async execute => await RestartApplicationAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand ShutdownCommand => new RelayCommand(async execute => await ShutdownComputerAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand RestartCommand => new RelayCommand(async execute => await RestartComputerAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand LockscreenCommand => new RelayCommand(async execute => await LockscreenAsync(), canExecute => SelectedClients.Any());
-        public RelayCommand UpdateCommand => new RelayCommand(async execute => await UpdateAsync(), canExecute => SelectedClients.Any());
-
-        public MainWindowViewModel(Core.Server server)
-        {
-            _clients.CollectionChanged += Clients_CollectionChanged;
-            server.ClientConnected += Server_ClientConnected;
-            server.ClientDisconnected += Server_ClientDisconnected;
-
-            ApplySorting();
-            StartPreviewUpdates();
-        }
-
-        // Clients
         private ObservableCollection<Client> _clients = new ObservableCollection<Client>();
         public ObservableCollection<Client> Clients
         {
@@ -76,9 +59,21 @@ namespace Edulink.Server.ViewModels
 
         public bool HasClients => Clients.Any();
 
+        public int ShowMainContent => HasClients ? 1 : 0;
+
         public int ClientsCount => Clients.Count;
 
-        // Sorting
+        public MainWindowViewModel(Server server)
+        {
+            _clients.CollectionChanged += Clients_CollectionChanged;
+            server.ClientConnected += Server_ClientConnected;
+            server.ClientDisconnected += Server_ClientDisconnected;
+
+            ApplySorting();
+            StartPreviewUpdates();
+        }
+
+        #region Sorting
         public ICollectionView ClientsCollectionView => CollectionViewSource.GetDefaultView(Clients);
 
         private string _sortProperty = nameof(Client.Name);
@@ -113,36 +108,33 @@ namespace Edulink.Server.ViewModels
                 ClientsCollectionView.SortDescriptions.Add(new SortDescription(SortProperty, SortDirection));
             }
         }
+        #endregion
 
-        // Preview updates
+        #region Preview updates
         // TODO: Stop or start preview timer instantly on setting change
         private Timer _previewTimer;
         public void StartPreviewUpdates()
         {
-            if (App.SettingsManager.Settings.PreviewEnabled && App.SettingsManager.Settings.PreviewFrequency > 0)
+            if (App.SettingsManager.Settings.PreviewEnabled && App.SettingsManager.Settings.PreviewFrequency > 1000)
             {
                 _previewTimer = new Timer(PreviewTimerCallback, null, 0, (int)App.SettingsManager.Settings.PreviewFrequency);
             }
         }
 
-        private Rectangle DesktopPreviewResolution { get; } = new Rectangle(0, 0, 240, 115);
+        private Rectangle DesktopPreviewResolution { get; } = new Rectangle(0, 0, 240, 135);
         private void PreviewTimerCallback(object state)
         {
-            _ = Task.Run(async () =>
-            {
-                await Task.WhenAll(Clients
-                    .Where(client => client.IsVisible)
-                    .Select(async client => await RequestPreview(client)));
-            });
+            Clients.Where(client => client.IsVisible && !client.IsExcludedFromPreview).ToList()
+                   .ForEach(client => RequestPreview(client));
         }
 
-        private async Task RequestPreview(Client client)
+        private void RequestPreview(Client client)
         {
-            if (App.SettingsManager.Settings.PreviewEnabled && !client.IsExcludedFromPreview)
+            if (App.SettingsManager.Settings.PreviewEnabled)
             {
-                await client.Helper.SendCommandAsync(new EdulinkCommand
+                _ = client.Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    Command = "PREVIEW",
+                    Command = Commands.Preview,
                     Parameters = new Dictionary<string, string>
                     {
                         { "Width", DesktopPreviewResolution.Width.ToString() },
@@ -151,18 +143,25 @@ namespace Edulink.Server.ViewModels
                 });
             }
         }
+        #endregion
 
-        // Property updates
+        #region Property updates
         private void Clients_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(HasClients));
+            OnPropertyChanged(nameof(ShowMainContent));
 
             if (e.NewItems != null)
             {
                 foreach (Client client in e.NewItems)
                 {
                     client.PropertyChanged += Client_PropertyChanged;
-                    _ = Task.Run(async () => await RequestPreview(client));
+                    // I dont like this but it works
+                    //Task.Delay(200).ContinueWith(task => RequestPreview(client));
+                    _ = Task.Run(() =>
+                    {
+                        RequestPreview(client);
+                    });
                 }
             }
 
@@ -187,22 +186,24 @@ namespace Edulink.Server.ViewModels
                 OnPropertyChanged(nameof(SelectedClients));
             }
         }
+        #endregion
 
-        // Handle connection/disconnection
-        private void Server_ClientConnected(object sender, Core.Server.ClientConnectedEventArgs e)
+        #region Handle connection/disconnection
+        private void Server_ClientConnected(object sender, Server.ClientConnectedEventArgs e)
         {
             _clients.Add(e.Client);
         }
 
-        private void Server_ClientDisconnected(object sender, Core.Server.ClientDisconnectedEventArgs e)
+        private void Server_ClientDisconnected(object sender, Server.ClientDisconnectedEventArgs e)
         {
             _clients.Remove(e.Client);
         }
+        #endregion
 
-        // Commands
+        #region Commands
         private async Task<bool> SendCommandAsync(EdulinkCommand command, List<Client> clients = null)
         {
-            if (clients == null || !clients.Any())
+            if (clients?.Any() != true)
             {
                 MessageDialog.Show((string)Application.Current.TryFindResource("Message.Content.NoClientsSelected"),
                                    MessageDialogTitle.Error,
@@ -210,29 +211,29 @@ namespace Edulink.Server.ViewModels
                 return false;
             }
 
-            foreach (Client client in clients)
-            {
-                await client.Helper.SendCommandAsync(new EdulinkCommand { Command = command.Command, Parameters = command.Parameters });
-            }
+            await Task.WhenAll(clients.Select(client =>
+                    client.Helper.SendCommandAsync(new EdulinkCommand { Command = command.Command, Parameters = command.Parameters })));
 
             return true;
         }
 
-        private async Task OpenLinkAsync()
+        #region Link command
+        public ICommand LinkCommand => new RelayCommand(execute => SendLink(), canExecute => SelectedClients.Any());
+        private void SendLink()
         {
-            InputDialogResult urlInputDialogResult = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.OpenLink"),
-                                                                      (string)Application.Current.TryFindResource("Input.Title.OpenLink"));
+            InputDialogResult urlInputDialogResult = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendLink"),
+                                                                      (string)Application.Current.TryFindResource("Input.Title.SendLink"));
 
-            if (urlInputDialogResult.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(urlInputDialogResult.ReplyResult))
+            if (urlInputDialogResult.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(urlInputDialogResult.InputResult))
             {
-                await SendCommandAsync(
-                    new EdulinkCommand
+                _ = SendCommandAsync(new EdulinkCommand
+                {
+                    Command = Commands.Link,
+                    Parameters =
                     {
-                        Command = "LINK",
-                        Parameters = {
-                            { "URL", PrepareUrl(urlInputDialogResult.ReplyResult) }
-                        }
-                    }, SelectedClients);
+                        { "URL", PrepareUrl(urlInputDialogResult.InputResult) }
+                    }
+                }, SelectedClients);
             }
         }
 
@@ -255,36 +256,39 @@ namespace Edulink.Server.ViewModels
 
             return url;
         }
+        #endregion
 
-        private async Task SendMessageAsync()
+        #region Message command
+        public ICommand MessageCommand => new RelayCommand(execute => SendMessage(), canExecute => SelectedClients.Any());
+        private void SendMessage()
         {
             InputDialogResult messageInputDialog = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendMessage"),
                                                                     (string)Application.Current.TryFindResource("Input.Title.SendMessage"));
 
-            if (messageInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(messageInputDialog.ReplyResult))
+            if (messageInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(messageInputDialog.InputResult))
             {
-                await SendCommandAsync(new EdulinkCommand
+                _ = SendCommandAsync(new EdulinkCommand
                 {
-                    Command = "MESSAGE",
+                    Command = Commands.Message,
                     Parameters = {
-                        { "Message", messageInputDialog.ReplyResult }
+                        { "Message", messageInputDialog.InputResult }
                     }
                 }, SelectedClients);
             }
         }
+        #endregion
 
-        private async Task ViewDesktopAsync()
+        #region View desktop command
+        public ICommand DesktopCommand => new RelayCommand(execute => ViewDesktop(), canExecute => SelectedClients.Any());
+        private void ViewDesktop()
         {
-            foreach (Client client in SelectedClients)
-            {
-                await RequestDesktopPreviewAsync(client);
-            }
+            SelectedClients.ForEach(async client => await RequestDesktopAsync(client));
         }
 
-        public List<DesktopPreviewDialog> openDesktopPreviewDialogs = new List<DesktopPreviewDialog>();
-        private async Task RequestDesktopPreviewAsync(Client client)
+        public List<DesktopDialog> openDesktopDialogs = new List<DesktopDialog>();
+        private async Task RequestDesktopAsync(Client client)
         {
-            DesktopPreviewDialog existingDialog = openDesktopPreviewDialogs.FirstOrDefault(dialog => dialog.Client == client);
+            DesktopDialog existingDialog = openDesktopDialogs.FirstOrDefault(dialog => dialog.Client == client);
 
             if (existingDialog != null)
             {
@@ -292,38 +296,66 @@ namespace Edulink.Server.ViewModels
             }
             else
             {
-                DesktopPreviewDialog desktopPreviewDialog = new DesktopPreviewDialog(client);
-                openDesktopPreviewDialogs.Add(desktopPreviewDialog);
-                desktopPreviewDialog.Closed += (s, _) => openDesktopPreviewDialogs.Remove(desktopPreviewDialog);
+                DesktopDialog desktopPreviewDialog = new DesktopDialog(client);
+                openDesktopDialogs.Add(desktopPreviewDialog);
+                desktopPreviewDialog.Closed += (s, _) => openDesktopDialogs.Remove(desktopPreviewDialog);
                 desktopPreviewDialog.Show();
             }
 
-            await client.Helper.SendCommandAsync(new EdulinkCommand { Command = "DESKTOP" });
+            await client.Helper.SendCommandAsync(new EdulinkCommand { Command = Commands.Desktop });
+        }
+        #endregion
+
+        public ICommand SimpleCommand => new RelayCommand(execute => _ = SendCommandAsync(new EdulinkCommand { Command = (string)execute }, SelectedClients), canExecute => SelectedClients.Any());
+
+        public ICommand BlockInputCommand => new RelayCommand(execute => HandleBlockInput(bool.Parse((string)execute)), canExecute => SelectedClients.Any());
+        private void HandleBlockInput(bool block)
+        {
+            _ = SendCommandAsync(new EdulinkCommand
+            {
+                Command = Commands.BlockInput,
+                Parameters = new Dictionary<string, string>
+                {
+                    { "Block", block.ToString() }
+                }
+            }, SelectedClients);
         }
 
-        private async Task RestartApplicationAsync()
+        public ICommand ExcludePreviewCommand => new RelayCommand(execute => ExcludePreview(bool.Parse((string)execute)));
+        private void ExcludePreview(bool exclude)
         {
-            await SendCommandAsync(new EdulinkCommand { Command = "RESTARTAPP" }, SelectedClients);
+            foreach (Client client in SelectedClients.Where(c => c.IsExcludedFromPreview == !exclude))
+            {
+                client.IsExcludedFromPreview = exclude;
+                if (exclude)
+                {
+                    client.Preview = null;
+                }
+                else
+                {
+                    RequestPreview(client);
+                }
+            }
         }
 
-        private async Task ShutdownComputerAsync()
+        public ICommand RenameCommand => new RelayCommand(execute => Rename(), canExecute => SelectedClients.Any());
+        private void Rename()
         {
-            await SendCommandAsync(new EdulinkCommand { Command = "SHUTDOWN" }, SelectedClients);
+            InputDialogResult renameInputDialog = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.RenameComputer"),
+                                                                   (string)Application.Current.TryFindResource("Input.Title.RenameComputer"));
+
+            if (renameInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(renameInputDialog.InputResult))
+            {
+                _ = SendCommandAsync(new EdulinkCommand
+                {
+                    Command = Commands.RenameComputer,
+                    Parameters = {
+                        { "Name", renameInputDialog.InputResult }
+                    }
+                }, SelectedClients);
+            }
         }
 
-        private async Task RestartComputerAsync()
-        {
-            await SendCommandAsync(new EdulinkCommand { Command = "RESTART" }, SelectedClients);
-        }
-
-        private async Task LockscreenAsync()
-        {
-            await SendCommandAsync(new EdulinkCommand { Command = "LOCKSCREEN" }, SelectedClients);
-        }
-
-        private async Task UpdateAsync()
-        {
-            await SendCommandAsync(new EdulinkCommand { Command = "UPDATE" }, SelectedClients);
-        }
+        #endregion
     }
 }
