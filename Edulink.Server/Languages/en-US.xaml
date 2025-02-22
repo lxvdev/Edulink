@@ -10,6 +10,8 @@
     <system:String x:Key="Main.Menu.Help">_Help</system:String>
     <system:String x:Key="Main.Menu.Help.About">_About</system:String>
 
+    <system:String x:Key="Main.WaitingForComputers">Waiting for computers...</system:String>
+
     <system:String x:Key="Main.ConnectedComputers">Connected computers ({0})</system:String>
 
     <system:String x:Key="Main.SortBy">Sort by</system:String>
@@ -18,14 +20,17 @@
     <system:String x:Key="Main.SortBy.ConnectionTime">Conection time</system:String>
 
     <system:String x:Key="Main.Commands.SendLink">Send link</system:String>
-    <system:String x:Key="Main.Commands.ShutdownComputer">Shut down computer</system:String>
     <system:String x:Key="Main.Commands.SendMessage">Send message</system:String>
     <system:String x:Key="Main.Commands.ViewDesktop">View desktop</system:String>
     <system:String x:Key="Main.Commands.RestartApplication">Restart application</system:String>
-    <system:String x:Key="Main.Commands.LockScreen">Lock screen</system:String>
     <system:String x:Key="Main.Commands.ResetPassword">Reset password</system:String>
     <system:String x:Key="Main.Commands.RestartComputer">Restart computer</system:String>
-    <system:String x:Key="Main.Commands.ChangeName">Change name</system:String>
+    <system:String x:Key="Main.Commands.ShutdownComputer">Shut down computer</system:String>
+    <system:String x:Key="Main.Commands.RenameComputer">Rename computer</system:String>
+    <system:String x:Key="Main.Commands.LockScreen">Lock screen</system:String>
+    <system:String x:Key="Main.Commands.LogOff">Log Off</system:String>
+    <system:String x:Key="Main.Commands.BlockInput">Block input</system:String>
+    <system:String x:Key="Main.Commands.UnblockInput">Unblock input</system:String>
     <system:String x:Key="Main.Commands.UpdateApplication">Update application</system:String>
 
     <system:String x:Key="Main.Commands.ExcludeFromPreview">Exclude from preview</system:String>
@@ -42,7 +47,9 @@
     <!--  Settings window  -->
     <system:String x:Key="Settings.Title">Settings</system:String>
 
-    <system:String x:Key="Settings.Port.Header">Port</system:String>
+    <system:String x:Key="Settings.Connection.Header">Connection</system:String>
+
+    <system:String x:Key="Settings.Port.Hint">Port</system:String>
 
     <system:String x:Key="Settings.Preview.Header">Preview</system:String>
     <system:String x:Key="Settings.Preview.Enable">Enable</system:String>
@@ -52,7 +59,7 @@
     <system:String x:Key="Settings.Miscellaneous.RestartApplication">Restart application</system:String>
     <system:String x:Key="Settings.Miscellaneous.ResetSettings">Reset settings</system:String>
     <system:String x:Key="Settings.Miscellaneous.Save">Save</system:String>
-    <system:String x:Key="Settings.Miscellaneous.Exit">Exit application</system:String>
+    <system:String x:Key="Settings.Miscellaneous.ExitApplication">Exit application</system:String>
 
     <system:String x:Key="Settings.Language.Header">Language</system:String>
 
@@ -97,6 +104,8 @@
     <system:String x:Key="Input.Content.SendLink">Enter your link here</system:String>
     <system:String x:Key="Input.Title.SendMessage">Send message</system:String>
     <system:String x:Key="Input.Content.SendMessage">Enter your message here</system:String>
+    <system:String x:Key="Input.Title.RenameComputer">Rename computer</system:String>
+    <system:String x:Key="Input.Content.RenameComputer">Enter the new name here</system:String>
 
     <!--  About dialog  -->
     <system:String x:Key="About.Title">About</system:String>
