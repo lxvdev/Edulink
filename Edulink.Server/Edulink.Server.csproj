@@ -94,7 +94,6 @@
     <None Include="Classes\DarkTitleBar.cs" />
     <None Include="Classes\ThemeManager.cs" />
     <Compile Include="Converters\BooleanToSortDirectionConverter.cs" />
-    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Models\Commands.cs" />
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
