@@ -1,14 +1,14 @@
-﻿using Edulink.Server.Communication;
-using Edulink.Server.Communication.Classes;
-using Edulink.Server.Communication.Models;
-using Edulink.Server.Models;
+﻿using Edulink.Communication;
+using Edulink.Communication.Classes;
+using Edulink.Communication.Models;
+using Edulink.Models;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Edulink.Server.Core
+namespace Edulink.Core
 {
     public class Server : IDisposable
     {
