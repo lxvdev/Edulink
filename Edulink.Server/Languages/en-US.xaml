@@ -17,7 +17,7 @@
     <system:String x:Key="Main.SortBy">Sort by</system:String>
     <system:String x:Key="Main.SortBy.Name">Name</system:String>
     <system:String x:Key="Main.SortBy.Version">Version</system:String>
-    <system:String x:Key="Main.SortBy.ConnectionTime">Conection time</system:String>
+    <system:String x:Key="Main.SortBy.ConnectionTime">Connection time</system:String>
 
     <system:String x:Key="Main.Commands.SendLink">Send link</system:String>
     <system:String x:Key="Main.Commands.SendMessage">Send message</system:String>
