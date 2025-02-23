@@ -59,7 +59,7 @@
     <system:String x:Key="Settings.Miscellaneous.RestartApplication">Uruchom aplikację ponownie</system:String>
     <system:String x:Key="Settings.Miscellaneous.ResetSettings">Zresetuj ustawienia</system:String>
     <system:String x:Key="Settings.Miscellaneous.Save">Zapisz</system:String>
-    <system:String x:Key="Settings.Miscellaneous.Exit">Wyjdź z aplikacji</system:String>
+    <system:String x:Key="Settings.Miscellaneous.ExitApplication">Wyjdź z aplikacji</system:String>
 
     <system:String x:Key="Settings.Language.Header">Język</system:String>
 
