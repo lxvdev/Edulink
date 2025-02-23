@@ -26,21 +26,19 @@
     <system:String x:Key="Main.Commands.ResetPassword">Zresetuj hasło</system:String>
     <system:String x:Key="Main.Commands.RestartComputer">Uruchom komputer ponownie</system:String>
     <system:String x:Key="Main.Commands.ShutdownComputer">Wyłącz komputer</system:String>
-    <system:String x:Key="Main.Commands.ChangeName">Zmień nazwę komputera</system:String>
+    <system:String x:Key="Main.Commands.RenameComputer">Zmień nazwę komputera</system:String>
     <system:String x:Key="Main.Commands.LockScreen">Zablokuj ekran</system:String>
     <system:String x:Key="Main.Commands.LogOff">Wyloguj</system:String>
     <system:String x:Key="Main.Commands.BlockInput">Zablokuj wprowadzanie tekstu</system:String>
     <system:String x:Key="Main.Commands.UnblockInput">Odblokuj wprowadzanie tekstu</system:String>
     <system:String x:Key="Main.Commands.UpdateApplication">Zaaktualizuj aplikację</system:String>
 
-
-
     <system:String x:Key="Main.Commands.ExcludeFromPreview">Wyklucz z podglądu</system:String>
     <system:String x:Key="Main.Commands.IncludeOnPreview">Uwzględnij w podglądzie</system:String>
 
     <system:String x:Key="Main.AllComputers">Wszystkie połączone komputery</system:String>
 
-  <!--  Client toolTip  -->
+    <!--  Client toolTip  -->
     <system:String x:Key="Main.List.ToolTip.Name">Nazwa: {0}</system:String>
     <system:String x:Key="Main.List.ToolTip.Version">Wersja: {0}</system:String>
     <system:String x:Key="Main.List.ToolTip.ConnectionTime">Połączono o godzinie {0:HH:mm:ss}</system:String>
@@ -89,11 +87,11 @@
 
     <!--  MessageBox dialog content  -->
     <!--  MainWindow.xaml.cs  -->
-    <system:String x:Key="Message.Content.SelectAComputer">Proszę wybrać komputer lub zaznaczyć 'Wszystkie połączone komputery'.</system:String>  
-    <system:String x:Key="Message.Content.UnknownCommand">Nieznane polecenie.</system:String>  
-    <system:String x:Key="Message.Content.NoClientsSelected">Nie wybrano żadnego urządzenia klienckiego.</system:String>  
-    <system:String x:Key="Message.Content.NoClientsConnected">Żadne urządzenie klienckie nie jest obecnie połączone.</system:String>  
-    <system:String x:Key="Message.Content.CouldntInitializeServer">Nie można rozpocząć połączenia z serwerem. Proszę zmienić ustawienia.</system:String>  
+    <system:String x:Key="Message.Content.SelectAComputer">Proszę wybrać komputer lub zaznaczyć 'Wszystkie połączone komputery'.</system:String>
+    <system:String x:Key="Message.Content.UnknownCommand">Nieznane polecenie.</system:String>
+    <system:String x:Key="Message.Content.NoClientsSelected">Nie wybrano żadnego urządzenia klienckiego.</system:String>
+    <system:String x:Key="Message.Content.NoClientsConnected">Żadne urządzenie klienckie nie jest obecnie połączone.</system:String>
+    <system:String x:Key="Message.Content.CouldntInitializeServer">Nie można rozpocząć połączenia z serwerem. Proszę zmienić ustawienia.</system:String>
 
     <!--  MessageDialog.xaml.cs  -->
     <system:String x:Key="Message.Title.MessageFrom">Wiadomość od {0}</system:String>
