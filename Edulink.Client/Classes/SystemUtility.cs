@@ -12,10 +12,10 @@ namespace Edulink.Classes
         public static extern bool Lockscreen();
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
+        private static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
 
-        public const uint EWX_LOGOFF = 0x00000000; // Log off the user
-        public const uint EWX_FORCE = 0x00000004; // Force running applications to close
+        private const uint EWX_LOGOFF = 0x00; // Log off the user
+        private const uint EWX_FORCE = 0x04; // Force running applications to close
 
         public static Bitmap CaptureScreenshot(int width = 0, int height = 0)
         {
@@ -85,7 +85,6 @@ namespace Edulink.Classes
             {
                 FileName = "shutdown",
                 Arguments = "/s /f /t 0",
-                RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
             });
@@ -97,7 +96,6 @@ namespace Edulink.Classes
             {
                 FileName = "shutdown",
                 Arguments = "/r /t 0",
-                RedirectStandardOutput = true,
                 UseShellExecute = false,
                 CreateNoWindow = true,
             });
