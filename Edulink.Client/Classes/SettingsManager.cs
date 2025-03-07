@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Edulink.Models;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows;
 using System.Xml.Serialization;
 
 namespace Edulink.Classes
@@ -12,38 +13,39 @@ namespace Edulink.Classes
         private readonly string _appDataFolder;
         private readonly string _settingsFile;
 
-        public AppSettings Settings { get; private set; }
+        public Settings Settings { get; set; }
 
         public SettingsManager(string settingsFolder = null, string fileName = null)
         {
             _appName = Assembly.GetExecutingAssembly().GetName().Name;
-            _appDataFolder = settingsFolder ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), _appName);
+            _appDataFolder = settingsFolder ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), _appName);
             _settingsFile = Path.Combine(_appDataFolder, fileName ?? "settings.xml");
 
             Load();
         }
 
-        private void Load()
+        public void Load(string path = null)
         {
+            string settingsFile = path ?? _settingsFile;
             try
             {
-                if (File.Exists(_settingsFile))
+                if (File.Exists(settingsFile))
                 {
-                    using (StreamReader reader = new StreamReader(_settingsFile))
+                    using (StreamReader reader = new StreamReader(settingsFile))
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
-                        Settings = (AppSettings)serializer.Deserialize(reader);
+                        XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                        Settings = (Settings)serializer.Deserialize(reader);
                     }
                 }
                 else
                 {
-                    Settings = new AppSettings();
+                    Settings = new Settings();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading settings: {ex.Message}");
-                Settings = Settings ?? new AppSettings();
+                Debug.WriteLine($"Error loading settings: {ex.Message}");
+                Settings = Settings ?? new Settings();
             }
         }
 
@@ -58,31 +60,38 @@ namespace Edulink.Classes
 
                 using (StreamWriter writer = new StreamWriter(_settingsFile))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(AppSettings));
+                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                     serializer.Serialize(writer, Settings);
                 }
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving settings: {ex.Message}");
+                Debug.WriteLine($"Error saving settings: {ex.Message}");
+                string tempSettings = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name, "settings_temp.xml");
+                using (StreamWriter writer = new StreamWriter(tempSettings))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                    serializer.Serialize(writer, Settings);
+                }
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = Process.GetCurrentProcess().MainModule.FileName,
+                    Arguments = $"--apply-settings \"{tempSettings}\"",
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
+
+                Process.Start(psi);
             }
         }
 
         public void Reset()
         {
-            Settings = new AppSettings();
+            Settings = new Settings();
             Save();
-            Console.WriteLine("Settings have been reset to default values.");
-        }
-
-        public class AppSettings
-        {
-            public string Name { get; set; } = null;
-            public string IPAddress { get; set; } = null;
-            public int Port { get; set; } = 7153;
-            public string Language { get; set; } = null;
-            public string Password { get; set; } = null;
+            Debug.WriteLine("Settings have been reset to default values.");
         }
     }
 }
