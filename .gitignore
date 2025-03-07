@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /.tmp.driveupload
 /.vscode
+/Edulink.Client.Setup/Output
