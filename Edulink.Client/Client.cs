@@ -1,12 +1,13 @@
-﻿using Edulink.TCPHelper;
-using Edulink.TCPHelper.Classes;
+﻿using Edulink.Communication;
+using Edulink.Communication.Models;
+using Edulink.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Edulink.Client
+namespace Edulink
 {
     public class Client : IDisposable
     {
@@ -37,7 +38,7 @@ namespace Edulink.Client
 
                 await Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    Command = "CONNECT",
+                    Command = Commands.Connect,
                     Parameters = new Dictionary<string, string>
                     {
                         { "Name", name },
@@ -87,6 +88,15 @@ namespace Edulink.Client
                     break;
                 }
             }
+        }
+
+        public void Disconnect()
+        {
+            //await Helper.SendCommandAsync(new EdulinkCommand
+            //{
+            //    Command = Commands.Disconnect
+            //});
+            Dispose();
         }
 
         public void Dispose()
