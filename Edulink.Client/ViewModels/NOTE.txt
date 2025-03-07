@@ -1,0 +1,1 @@
+Some files inside this folder are located in the server project. If you want to see them here, you have to load the project in Visual Studio or you can just navigate to the server project.

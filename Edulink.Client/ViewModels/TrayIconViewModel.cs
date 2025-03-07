@@ -1,16 +1,18 @@
-﻿using Edulink.Client;
-using Edulink.Commands;
+﻿using Edulink.MVVM;
+using Edulink.Views;
+using System;
 using System.ComponentModel;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
+using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class TrayIconViewModel : INotifyPropertyChanged
+    public class TrayIconViewModel : ViewModelBase
     {
-        private string _connectionStatus;
-
-        public string ConnectionStatus
+        private bool _connectionStatus = false;
+        public bool ConnectionStatus
         {
             get => _connectionStatus;
             set
@@ -19,46 +21,107 @@ namespace Edulink.ViewModels
                 {
                     _connectionStatus = value;
                     OnPropertyChanged(nameof(ConnectionStatus));
+                    OnPropertyChanged(nameof(ConnectionStatusText));
                 }
             }
         }
 
-        public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
-        //public string ConnectionStatus = (string)App.Current.TryFindResource((bool)(App.Client?.Connected) ? "TrayContextMenu.Status.Connected" : "TrayContextMenu.Status.Disconnected");
-
-        public ICommand SettingsCommand => new RelayCommand(OpenSettings);
-        public ICommand AboutCommand => new RelayCommand(OpenAbout);
-        public ICommand ExitCommand => new RelayCommand(ExitApplication);
-
-        private void OpenSettings()
+        public string UpdaterStatus
         {
-            if (App.VerifyAdminRights())
+            get
             {
-                SettingsWindow settingsWindow = new SettingsWindow();
-                settingsWindow.Show();
+                if (UpdateAvailable == true)
+                {
+                    return "TrayContextMenu.Updater.Available";
+                }
+                else if (UpdateAvailable == false)
+                {
+                    return "TrayContextMenu.Updater.None";
+                }
+                else
+                {
+                    return "TrayContextMenu.Updater";
+                }
             }
         }
 
-        private void OpenAbout()
+        public string ConnectionStatusText => _connectionStatus ? "TrayContextMenu.Connection.Status.Connected" : "TrayContextMenu.Connection.Status.Disconnected";
+
+        public string ComputerName => App.SettingsManager.Settings.Name;
+
+        public bool? UpdateAvailable => ((App)Application.Current).IsUpdateAvailable;
+        public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
+
+        public TrayIconViewModel()
         {
-            AboutDialog aboutDialog = new AboutDialog();
-            aboutDialog.Show();
+            LocalizeDictionary.Instance.PropertyChanged += LocalizeDictionary_PropertyChanged;
+            App.IsUpdateAvailableChanged += App_IsUpdateAvailableChanged;
         }
 
+        private void App_IsUpdateAvailableChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(UpdateAvailable));
+            OnPropertyChanged(nameof(UpdaterStatus));
+        }
+
+        private void LocalizeDictionary_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(LocalizeDictionary.Instance.Culture))
+            {
+                OnPropertyChanged(nameof(ConnectionStatusText));
+                OnPropertyChanged(nameof(UpdaterStatus));
+            }
+        }
+
+        SettingsWindow settingsWindow;
+
+        public ICommand SettingsCommand => new RelayCommand(execute => OpenSettings());
+        private void OpenSettings()
+        {
+            if (App.ValidateCredentials())
+            {
+                if (settingsWindow == null)
+                {
+                    settingsWindow = new SettingsWindow();
+                    settingsWindow.Closing += (sender, e) => settingsWindow = null;
+                    settingsWindow.Show();
+                }
+            }
+        }
+
+        UpdaterDialog updaterDialog;
+
+        public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
+        private void OpenUpdater()
+        {
+            if (updaterDialog == null)
+            {
+                updaterDialog = new UpdaterDialog();
+                updaterDialog.Closing += (sender, e) => updaterDialog = null;
+                updaterDialog.Show();
+            }
+        }
+
+        AboutDialog aboutDialog;
+
+        public ICommand AboutCommand => new RelayCommand(execute => OpenAbout());
+        private void OpenAbout()
+        {
+            if (aboutDialog == null)
+            {
+                aboutDialog = new AboutDialog();
+                aboutDialog.Closing += (sender, e) => aboutDialog = null;
+                aboutDialog.Show();
+            }
+        }
+
+        public ICommand ExitCommand => new RelayCommand(execute => ExitApplication());
         private void ExitApplication()
         {
-            if (App.VerifyAdminRights())
+            if (App.ValidateCredentials())
             {
                 App.CloseApp();
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
     }
 }
