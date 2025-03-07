@@ -182,10 +182,7 @@ namespace Edulink
                     {
                         Process.Start(processStartInfo);
                     }
-                    catch (Exception)
-                    {
-                        RestartAsAdmin(arguments);
-                    }
+                    catch (Exception) { }
                 }
             }
         }
