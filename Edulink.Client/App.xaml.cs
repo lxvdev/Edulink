@@ -344,7 +344,7 @@ namespace Edulink
             _trayIconViewModel = new TrayIconViewModel();
             TaskbarIcon _taskbarIcon = new TaskbarIcon
             {
-                Icon = Edulink.Properties.Resources.EdulinkIcon,
+                Icon = Edulink.Properties.Resources.Edulink_Client,
                 ToolTipText = "Edulink",
                 DataContext = _trayIconViewModel,
                 ContextMenu = (ContextMenu)Current.TryFindResource("TrayContextMenu")
