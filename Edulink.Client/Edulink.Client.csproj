@@ -7,13 +7,15 @@
     <ProjectGuid>{3EE5EE0F-4B5C-44D3-8B85-BFB92F738A48}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Edulink</RootNamespace>
-    <AssemblyName>Edulink.Client</AssemblyName>
+    <AssemblyName>Edulink Client</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Edulink.Client.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Edulink.Client.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -47,9 +49,22 @@
     <Reference Include="Hardcodet.NotifyIcon.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=682384a853a08aad, processorArchitecture=MSIL">
       <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.2.0.1\lib\net472\Hardcodet.NotifyIcon.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=5.2.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.5.2.1\lib\net462\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=5.2.1.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.5.2.1\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -64,40 +79,100 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLocalizeExtension, Version=3.10.0.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFLocalizeExtension.3.10.0\lib\net452\WPFLocalizeExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions, Version=2.1.3.0, Culture=neutral, PublicKeyToken=c726e0262981a1eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\XAMLMarkupExtensions.2.1.3\lib\net472\XAMLMarkupExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Themes\Attached\PlaceholderHelper.cs" />
-    <Compile Include="Themes\Attached\CornerRadiusHelper.cs" />
-    <Compile Include="Themes\Controls.xaml.cs">
-      <DependentUpon>Controls.xaml</DependentUpon>
+    <Compile Include="..\Edulink.Server\Classes\Updater.cs">
+      <Link>Classes\Updater.cs</Link>
     </Compile>
-    <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbol.cs" />
-    <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbolEnum.cs" />
-    <Compile Include="Themes\Controls\MaterialSymbol\MaterialSymbolPathData.cs" />
-    <Compile Include="Themes\Converters\MarginToBorderRadiusConverter.cs" />
+    <Compile Include="..\Edulink.Server\Models\Commands.cs">
+      <Link>Models\Commands.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\Models\ReleaseDetails.cs">
+      <Link>Models\ReleaseDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\ViewModels\AboutDialogViewModel.cs">
+      <Link>ViewModels\AboutDialogViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\ViewModels\InputDialogViewModel.cs">
+      <Link>ViewModels\InputDialogViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\ViewModels\MessageDialogViewModel.cs">
+      <Link>ViewModels\MessageDialogViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\ViewModels\UpdaterDialogViewModel.cs">
+      <Link>ViewModels\UpdaterDialogViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Edulink.Server\Views\AboutDialog.xaml.cs">
+      <Link>Views\AboutDialog.xaml.cs</Link>
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\Edulink.Server\Views\InputDialog.xaml.cs">
+      <Link>Views\InputDialog.xaml.cs</Link>
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\Edulink.Server\Views\MessageDialog.xaml.cs">
+      <Link>Views\MessageDialog.xaml.cs</Link>
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="..\Edulink.Server\Views\UpdaterDialog.xaml.cs">
+      <Link>Views\UpdaterDialog.xaml.cs</Link>
+      <DependentUpon>UpdaterDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\InputBlocker.cs" />
+    <Compile Include="Classes\IPAddressProvider.cs" />
+    <Compile Include="Classes\LocalizationConfig.cs" />
+    <Compile Include="Classes\LocalizedStrings.cs" />
+    <Compile Include="Languages\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Settings.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
+    <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="ViewModels\FirstStepsWindowViewModel.cs" />
+    <Compile Include="ViewModels\PasswordDialogViewModel.cs" />
+    <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\TrayIconViewModel.cs" />
-    <Page Include="Dialogs\AboutDialog.xaml">
+    <Page Include="..\Edulink.Server\Views\AboutDialog.xaml">
+      <Link>Views\AboutDialog.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\PasswordDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\InputDialog.xaml">
+    <Page Include="..\Edulink.Server\Views\InputDialog.xaml">
+      <Link>Views\InputDialog.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\NetworkScanner.xaml">
+    <Page Include="..\Edulink.Server\Views\MessageDialog.xaml">
+      <Link>Views\MessageDialog.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\Edulink.Server\Views\UpdaterDialog.xaml">
+      <Link>Views\UpdaterDialog.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TrayContextMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FirstStepsWindow.xaml">
+    <Page Include="Views\PasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirstStepsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,59 +192,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\MessageDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsWindow.xaml">
+    <Page Include="Views\SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Dialogs\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Themes\Attached\IconHelper.cs" />
-    <Compile Include="Themes\Attached\PasswordBoxHelper.cs" />
     <Compile Include="Classes\HashUtility.cs" />
-    <Compile Include="Dialogs\PasswordDialog.xaml.cs">
+    <Compile Include="Views\PasswordDialog.xaml.cs">
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\SettingsManager.cs" />
     <Compile Include="Classes\SystemUtility.cs" />
     <Compile Include="Classes\TaskSchedulerHelper.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="Dialogs\InputDialog.xaml.cs">
-      <DependentUpon>InputDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\NetworkScanner.xaml.cs">
-      <DependentUpon>NetworkScanner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FirstStepsWindow.xaml.cs">
+    <Compile Include="Views\FirstStepsWindow.xaml.cs">
       <DependentUpon>FirstStepsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\MessageDialog.xaml.cs">
-      <DependentUpon>MessageDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsWindow.xaml.cs">
+    <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Themes\Controls.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Controls\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\LightTheme.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -185,12 +230,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Languages\Strings.en-US.resx" />
+    <EmbeddedResource Include="Languages\Strings.es-ES.resx" />
+    <EmbeddedResource Include="Languages\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Strings.ro-RO.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Resource Include="Themes\Fonts\Inter.ttf" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -200,17 +251,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Edulink.TCPHelper\Edulink.TcpHelper.csproj">
-      <Project>{666d8108-ae32-4161-8941-6fe5e490a837}</Project>
-      <Name>Edulink.TcpHelper</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Edulink.Updater.Service\Edulink.Updater.Service.csproj">
-      <Project>{02aa9670-0474-46d0-b2f8-35d32a90d8bf}</Project>
-      <Name>Edulink.Updater.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -236,14 +276,40 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Edulink.Client.ico" />
+    <Resource Include="Resources\Edulink.Client.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Edulink.Communication\Edulink.Communication.csproj">
+      <Project>{666d8108-ae32-4161-8941-6fe5e490a837}</Project>
+      <Name>Edulink.Communication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Views\NOTE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ViewModels\NOTE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Models\NOTE.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>schtasks /run /TN "StopEdulinkClient"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets'))" />
+  </Target>
 </Project>
