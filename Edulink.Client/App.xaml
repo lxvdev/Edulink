@@ -1,47 +1,31 @@
-﻿<Application x:Class="Edulink.Client.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Edulink.Client"
-             xmlns:tb="http://www.hardcodet.net/taskbar"
-             xmlns:vm="clr-namespace:Edulink.ViewModels"
-             xmlns:i="clr-namespace:Edulink.Controls.MaterialSymbol"
-             ShutdownMode="OnExplicitShutdown">
+﻿<Application
+    x:Class="Edulink.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
+            <!--  Fun fact, this doesn't work  -->
             <FontFamily x:Key="Inter">pack://application:,,,/Themes/Fonts/#Inter</FontFamily>
-            <ContextMenu x:Key="TrayContextMenu" FontFamily="{StaticResource Inter}" MinWidth="160">
-                <MenuItem Header="{DynamicResource TrayContextMenu.Settings}" Command="{Binding SettingsCommand}">
-                    <MenuItem.Icon>
-                        <i:MaterialSymbol Kind="Settings"
-                                          SymbolSize="16"
-                                          Height="16" Width="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{DynamicResource TrayContextMenu.About}" Command="{Binding AboutCommand}">
-                    <MenuItem.Icon>
-                        <i:MaterialSymbol Kind="Info"
-                                          SymbolSize="16"
-                                          Height="16" Width="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator/>
-                <MenuItem x:Name="ConnectionStatus" Header="{Binding ConnectionStatus}" FontWeight="Light" Padding="6,0" IsEnabled="False"/>
-                <MenuItem Header="{Binding Version}" FontWeight="Light" Padding="6,0" IsEnabled="False"/>
-                <Separator/>
-                <MenuItem Header="{DynamicResource TrayContextMenu.Exit}" FontWeight="Bold" Command="{Binding ExitCommand}">
-                    <MenuItem.Icon>
-                        <i:MaterialSymbol Kind="Close"
-                                          SymbolSize="12"
-                                          Height="16" Width="16"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
 
+            <!--  Theme settings  -->
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Controls.xaml"/>
-                <ResourceDictionary Source="Themes/Controls/Generic.xaml"/>
-                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
-                <ResourceDictionary Source="Languages/en-US.xaml"/>
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="Indigo"
+                    SecondaryColor="Indigo">
+                    <materialDesign:BundledTheme.ColorAdjustment>
+                        <materialDesign:ColorAdjustment
+                            Colors="All"
+                            Contrast="Medium"
+                            DesiredContrastRatio="4.5" />
+                    </materialDesign:BundledTheme.ColorAdjustment>
+                </materialDesign:BundledTheme>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+                <ResourceDictionary Source="/Resources/TrayContextMenu.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
