@@ -1,122 +1,191 @@
 ﻿using Edulink.Classes;
-using Edulink.TCPHelper.Classes;
+using Edulink.Communication.Models;
+using Edulink.Models;
 using Edulink.ViewModels;
+using Edulink.Views;
 using Hardcodet.Wpf.TaskbarNotification;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.IO.Pipes;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WPFLocalizeExtension.Engine;
 
-namespace Edulink.Client
+namespace Edulink
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        private static Mutex mutex;
-        public static SettingsManager SettingsManager = new SettingsManager(AppDomain.CurrentDomain.BaseDirectory);
+        public static SettingsManager SettingsManager = new SettingsManager();
         public static Client Client;
 
-        private static TaskbarIcon _taskbarIcon;
+        private readonly PaletteHelper _paletteHelper = new PaletteHelper();
+
         private TrayIconViewModel _trayIconViewModel;
 
-        private static System.Windows.Forms.NotifyIcon _notifyIcon;
-        private static System.Windows.Forms.ToolStripLabel statusToolStripLabel;
-
+        private static Mutex mutex;
         bool allowMultipleInstances = false; // Change before releasing: For debugging
+
+        #region Update properties
+        public static event EventHandler IsUpdateAvailableChanged;
+
+        private bool? _isUpdateAvailable = null;
+        public bool? IsUpdateAvailable
+        {
+            get => _isUpdateAvailable;
+            set
+            {
+                if (_isUpdateAvailable != value)
+                {
+                    _isUpdateAvailable = value;
+                    IsUpdateAvailableChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+        #endregion
+
+        public App()
+        {
+            // Set up culture
+            LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+            LocalizeDictionary.Instance.Culture = !string.IsNullOrEmpty(SettingsManager.Settings.Language) ? new CultureInfo(SettingsManager.Settings.Language) : CultureInfo.InstalledUICulture;
+        }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            bool createdNew;
-            mutex = new Mutex(true, "Edulink_Client_Mutex", out createdNew);
+            bool isPrimaryInstance;
 
-            if (!createdNew && !allowMultipleInstances)
+            if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
-                MessageDialog.Show((string)Current.TryFindResource("Message.Content.AnotherInstanceIsAlreadyRunning"), null, MessageDialogButtons.Ok, MessageDialogType.Information);
-                CloseApp();
+                SettingsManager.Load(e.Args[1]);
+                SettingsManager.Save(true);
+                Environment.Exit(0);
+                return;
+            }
+            else if (e.Args.Length >= 1 && e.Args[0] == "--create-task")
+            {
+                CheckApplicationTask();
+                Environment.Exit(0);
+                return;
+            }
+            else if (e.Args.Length >= 1 && e.Args[0] == "--startup")
+            {
+                // Foolproof way to check if the application is already running because anyone with the enough knowledge can bypass the mutex
+                Process process = Process.GetCurrentProcess();
+
+                string currentProcessPath = process.MainModule.FileName;
+
+                bool isAlreadyRunning = Process.GetProcesses()
+                    .Where(p => p.Id != process.Id)
+                    .Any(p =>
+                    {
+                        try
+                        {
+                            return p.MainModule.FileName.Equals(currentProcessPath, StringComparison.OrdinalIgnoreCase);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    });
+
+                if (isAlreadyRunning)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
             }
             else
             {
-                CheckApplicationTask();
-                base.OnStartup(e);
-                SetLanguageDictionary(SettingsManager.Settings.Language);
-                InitializeTrayIcon();
-                //InitializeContextMenuStrip();
-                if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null || SettingsManager.Settings?.Port > 9999)
+                try
                 {
-                    FirstStepsWindow firstStepsWindow = new FirstStepsWindow();
-                    firstStepsWindow.ShowDialog();
+                    mutex = new Mutex(true, "EdulinkClientMutex", out isPrimaryInstance);
+
+                    if (!isPrimaryInstance && !allowMultipleInstances)
+                    {
+                        MessageDialog.ShowLocalized("Message.Content.AlreadyRunning", MessageDialogTitle.Information, MessageDialogButton.Ok, MessageDialogIcon.Information);
+                        Environment.Exit(0);
+                        return;
+                    }
                 }
-                await ConnectionLoopAsync();
+                catch (AbandonedMutexException)
+                {
+                    isPrimaryInstance = true;
+                }
             }
+
+            CheckApplicationTask();
+
+            base.OnStartup(e);
+
+            ApplyTheme(SettingsManager.Settings.Theme);
+
+            if (SettingsManager.Settings.CheckForUpdates)
+            {
+                _ = CheckForUpdates();
+            }
+
+            InitializeTrayIcon();
+
+            if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null)
+            {
+                FirstStepsWindow firstStepsWindow = new FirstStepsWindow();
+                firstStepsWindow.ShowDialog();
+            }
+            await ConnectionLoopAsync();
         }
 
-        // Old startup method
+        private async Task CheckForUpdates()
+        {
+            IsUpdateAvailable = null;
 
-        //private void CheckBoot()
-        //{
-        //    string appLocation = Assembly.GetEntryAssembly().Location;
-        //    string appName = Assembly.GetExecutingAssembly().GetName().Name;
-
-        //    bool SetRegistryKey(RegistryKey baseKey, string key, string value)
-        //    {
-        //        try
-        //        {
-        //            using (RegistryKey regKey = baseKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
-        //            {
-        //                if (regKey != null)
-        //                {
-        //                    // Set the value in the registry
-        //                    regKey.SetValue(appName, appLocation);
-        //                    return true; // Successful write
-        //                }
-        //            }
-        //        }
-        //        catch (UnauthorizedAccessException)
-        //        {
-        //            // Handle the case where writing is not permitted due to lack of privileges
-        //            return false; // Failed due to permissions
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            // Log or display any other exceptions
-        //            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //        return false; // Failed for some other reason
-        //    }
-
-        //    // Try to set the registry key in LocalMachine
-        //    if (!SetRegistryKey(Registry.LocalMachine, appName, appLocation))
-        //    {
-        //        // If setting the key fails, restart the app with admin privileges
-        //        RestartAsAdmin();
-        //    }
-        //}
+            ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
+            IsUpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+        }
 
         public void CheckApplicationTask()
         {
             string taskName = "EdulinkClientTask";
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
             using (TaskSchedulerHelper taskScheduler = new TaskSchedulerHelper())
             {
                 try
                 {
-                    if (taskScheduler.TaskExistsWithCorrectPath(taskName, Assembly.GetExecutingAssembly().Location) == false)
+                    if (taskScheduler.TaskExistsWithCorrectPath(taskName, exePath) == false)
                     {
-                        taskScheduler.CreateLoginTask(taskName, "A task for starting Edulink Client on logon.", Assembly.GetExecutingAssembly().Location);
+                        taskScheduler.CreateLoginTask(taskName, "A task for starting Edulink Client on logon.", exePath, false, "--startup");
                     }
                 }
                 catch (Exception)
                 {
-                    RestartAsAdmin();
+                    string arguments = "--create-task";
+
+                    ProcessStartInfo processStartInfo = new ProcessStartInfo()
+                    {
+                        FileName = Assembly.GetExecutingAssembly().Location,
+                        UseShellExecute = true,
+                        Arguments = arguments,
+                        Verb = "runas"
+                    };
+
+                    try
+                    {
+                        Process.Start(processStartInfo);
+                    }
+                    catch (Exception)
+                    {
+                        RestartAsAdmin(arguments);
+                    }
                 }
             }
         }
@@ -132,14 +201,14 @@ namespace Edulink.Client
                         if (await Client.ConnectAsync())
                         {
                             Console.WriteLine("Connected to server");
-                            _trayIconViewModel.ConnectionStatus = (string)Current.TryFindResource("TrayContextMenu.Status.Connected");
+                            _trayIconViewModel.ConnectionStatus = true;
                             Client.CommandReceived += Client_CommandReceivedAsync;
                             await Client.ListenForCommandsAsync();
                         }
                         else
                         {
                             Console.WriteLine("Failed to connect. Retrying in 5 seconds...");
-                            _trayIconViewModel.ConnectionStatus = (string)Current.TryFindResource("TrayContextMenu.Status.Disconnected");
+                            _trayIconViewModel.ConnectionStatus = false;
                             Client.CommandReceived -= Client_CommandReceivedAsync;
                         }
                     }
@@ -154,71 +223,65 @@ namespace Edulink.Client
             }
         }
 
+        private InputBlocker _inputBlocker = new InputBlocker();
         private async void Client_CommandReceivedAsync(object sender, EdulinkCommand command)
         {
             try
             {
                 switch (command.Command)
                 {
-                    case "LINK":
-                        SystemUtility.OpenLink(command.Parameters["Link"]);
+                    case Commands.Link:
+                        SystemUtility.OpenLink(command.Parameters["URL"]);
                         break;
-                    case "MESSAGE":
-                        _ = Current.Dispatcher.Invoke(async () =>
-                        {
-                            MessageDialogResult messageDialogResult = MessageDialog.Show(command.Parameters["Message"],
-                                                                                         (string)Current.TryFindResource("Message.TitleBar"),
-                                                                                         MessageDialogButtons.OkReply, MessageDialogType.Information);
-
-                            if (messageDialogResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
-                            {
-                                await Client.Helper.SendCommandAsync(new EdulinkCommand
-                                {
-                                    Command = command.Command,
-                                    Parameters = new Dictionary<string, string>
-                                {
-                                    { "Message", messageDialogResult.ReplyResult }
-                                }
-                                });
-                            }
-                        });
+                    case Commands.Message:
+                        HandleMessage(command);
                         break;
-                    case "DESKTOP":
-                    case "PREVIEW":
-                        int width = command.Parameters.ContainsKey("Width") ? int.Parse(command.Parameters["Width"]) : 0;
-                        int height = command.Parameters.ContainsKey("Height") ? int.Parse(command.Parameters["Height"]) : 0;
-
-                        using (Bitmap bitmap = SystemUtility.CaptureScreenshot(width, height))
-                        {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                                byte[] bitmapData = ms.ToArray();
-
-                                await Client.Helper.SendCommandAsync(new EdulinkCommand { Command = command.Command, Content = bitmapData });
-                            }
-                        }
+                    case Commands.Desktop:
+                    case Commands.Preview:
+                        HandleDesktop(command);
                         break;
-                    case "RESTARTAPP":
+                    case Commands.RestartApplication:
                         App.RestartApp();
                         break;
-                    case "SHUTDOWN":
+                    case Commands.Shutdown:
                         SystemUtility.ShutdownComputer();
                         break;
-                    case "RESTART":
+                    case Commands.Restart:
                         SystemUtility.RestartComputer();
                         break;
-                    case "LOCKSCREEN":
+                    case Commands.LockScreen:
                         SystemUtility.Lockscreen();
                         break;
-                    case "LOGOFF":
+                    case Commands.LogOff:
                         SystemUtility.LogOffUser();
                         break;
-                    case "CHANGENAME":
-                        SettingsManager.Settings.Name = command.Parameters["Name"];
+                    case Commands.ResetPassword:
+                        SettingsManager.Settings.Password = null;
+                        SettingsManager.Save();
                         break;
-                    case "UPDATE":
-                        _ = Task.Run(() => StartUpdate());
+                    case Commands.BlockInput:
+                        if (bool.TryParse(command.Parameters["Block"], out bool block))
+                        {
+                            _inputBlocker.BlockKeyboard(block);
+                            _inputBlocker.BlockMouse(block);
+                        }
+                        break;
+                    case Commands.RenameComputer:
+                        SettingsManager.Settings.Name = command.Parameters["Name"];
+                        SettingsManager.Save();
+                        RestartApp();
+                        break;
+                    case Commands.Update:
+                        ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
+                        IsUpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+                        if (IsUpdateAvailable == true)
+                        {
+                            UpdaterDialog updateDialog = new UpdaterDialog(releaseDetails, true);
+                            updateDialog.Show();
+                        }
+                        break;
+                    case Commands.Disconnect:
+                        Client.Dispose();
                         break;
                 }
             }
@@ -229,47 +292,45 @@ namespace Edulink.Client
             }
         }
 
-        private async Task StartUpdate()
+        private readonly MemoryStream _reusableMemoryStream = new MemoryStream();
+        private void HandleDesktop(EdulinkCommand command)
         {
-            using (NamedPipeClientStream namedPipeClient = new NamedPipeClientStream(".", "EdulinkUpdaterPipe", PipeDirection.Out))
+            int width = command.Parameters.ContainsKey("Width") ? int.Parse(command.Parameters["Width"]) : 0;
+            int height = command.Parameters.ContainsKey("Height") ? int.Parse(command.Parameters["Height"]) : 0;
+
+            using (Bitmap bitmap = SystemUtility.CaptureScreenshot(width, height))
             {
-                Task connectTask = Task.Run(() => namedPipeClient.Connect());
-                if (await Task.WhenAny(connectTask, Task.Delay(15000)) == connectTask)
+                _reusableMemoryStream.SetLength(0);
+
+                bitmap.Save(_reusableMemoryStream, System.Drawing.Imaging.ImageFormat.Png);
+
+                byte[] bitmapData = _reusableMemoryStream.ToArray();
+
+                _ = Client.Helper.SendCommandAsync(new EdulinkCommand { Command = command.Command, Content = bitmapData });
+            }
+        }
+
+        private void HandleMessage(EdulinkCommand command)
+        {
+
+            MessageDialogResult messageDialogResult = MessageDialog.Show(command.Parameters["Message"],
+                                                                         LocalizedStrings.Instance["Message.Title.MessageFromTeacher"],
+                                                                         MessageDialogButton.OkReply, MessageDialogIcon.None);
+
+            if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
+            {
+                _ = Client.Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    using (StreamWriter writer = new StreamWriter(namedPipeClient) { AutoFlush = true })
+                    Command = command.Command,
+                    Parameters = new Dictionary<string, string>
                     {
-                        await writer.WriteLineAsync("UPDATE");
+                        { "Message", messageDialogResult.ReplyResult }
                     }
-                    CloseApp();
-                }
-                else
-                {
-                    MessageBox.Show("Connection to service timed out. Make sure the service is running.", "Connection Timeout", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                });
             }
         }
 
-        private void RestartAsAdmin()
-        {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo()
-            {
-                FileName = Assembly.GetExecutingAssembly().Location,
-                UseShellExecute = true,
-                Verb = "runas"
-            };
-
-            try
-            {
-                Process.Start(processStartInfo);
-                CloseApp();
-            }
-            catch (Exception ex)
-            {
-                MessageDialog.Show((string)Current.TryFindResource("Message.Content.FailedToRestartAsAdmin"), null, MessageDialogButtons.Ok, MessageDialogType.Error);
-            }
-        }
-
-        public static bool VerifyAdminRights()
+        public static bool ValidateCredentials()
         {
             if (PasswordDialog.Show(PasswordDialogType.EnterPassword) is bool result)
             {
@@ -281,111 +342,39 @@ namespace Edulink.Client
         private void InitializeTrayIcon()
         {
             _trayIconViewModel = new TrayIconViewModel();
-            _taskbarIcon = new TaskbarIcon
+            TaskbarIcon _taskbarIcon = new TaskbarIcon
             {
-                Icon = Edulink.Properties.Resources.Edulink_Client,
+                Icon = Edulink.Properties.Resources.EdulinkIcon,
                 ToolTipText = "Edulink",
                 DataContext = _trayIconViewModel,
                 ContextMenu = (ContextMenu)Current.TryFindResource("TrayContextMenu")
             };
         }
 
-        // Can someone help me fix this? It just doesnt feel right and theres a memory leak :(
-        public static void SetLanguageDictionary(string locale = null)
+        private void ApplyTheme(string theme)
         {
-            ResourceDictionary dictionary = new ResourceDictionary();
-            if (locale != null)
-            {
-                try
-                {
-                    dictionary.Source = new Uri($"..\\Languages\\{locale}.xaml", UriKind.Relative);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Could not find the specified language.");
-                }
+            Theme materialTheme = _paletteHelper.GetTheme();
 
-            }
-            else
+            if (theme.Equals("Dark", StringComparison.OrdinalIgnoreCase))
             {
-                switch (CultureInfo.InstalledUICulture.ToString())
-                {
-
-                    case "en-US":
-                        dictionary.Source = new Uri("..\\Languages\\en-US.xaml", UriKind.Relative);
-                        SettingsManager.Settings.Language = CultureInfo.InstalledUICulture.ToString();
-                        break;
-                    case "es-ES":
-                        dictionary.Source = new Uri("..\\Languages\\es-ES.xaml", UriKind.Relative);
-                        SettingsManager.Settings.Language = CultureInfo.InstalledUICulture.ToString();
-                        break;
-                    case "ro-RO":
-                        dictionary.Source = new Uri("..\\Languages\\ro-RO.xaml", UriKind.Relative);
-                        SettingsManager.Settings.Language = CultureInfo.InstalledUICulture.ToString();
-                        break;
-                    case "pl-PL":
-                        dictionary.Source = new Uri("..\\Languages\\pl-PL.xaml", UriKind.Relative);
-                        SettingsManager.Settings.Language = CultureInfo.InstalledUICulture.ToString();
-                        break;
-                    default:
-                        dictionary.Source = new Uri("..\\Languages\\en-US.xaml", UriKind.Relative);
-                        SettingsManager.Settings.Language = "en-US";
-                        break;
-                }
+                materialTheme.SetBaseTheme(BaseTheme.Dark);
             }
-            Current.Resources.MergedDictionaries.Add(dictionary);
+            else if (theme.Equals("Light", StringComparison.OrdinalIgnoreCase))
+            {
+                materialTheme.SetBaseTheme(BaseTheme.Light);
+            }
+            else if (theme.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+            {
+                materialTheme.SetBaseTheme(BaseTheme.Inherit);
+            }
+
+            _paletteHelper.SetTheme(materialTheme);
         }
-
-        // Old contextmenu
-
-        //private static void InitializeContextMenuStrip()
-        //{
-        //    _notifyIcon?.Dispose();
-        //    _notifyIcon = new System.Windows.Forms.NotifyIcon
-        //    {
-        //        Icon = Edulink.Properties.Resources.Edulink_Client,
-        //        Text = "Edulink",
-        //        ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip { ShowImageMargin = false },
-        //        Visible = true,
-        //    };
-        //    _notifyIcon.ContextMenuStrip.Items.Add((string)Current.Resources["ToolStripSettings"], null, (s, _) =>
-        //    {
-        //        if (VerifyAdminRights())
-        //        {
-        //            SettingsWindow settingsWindow = new SettingsWindow();
-        //            settingsWindow.Show();
-        //        }
-        //    });
-
-        //    _notifyIcon.ContextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripSeparator());
-        //    _notifyIcon.ContextMenuStrip.Items.Add((string)Current.Resources["ToolStripAbout"], null, (s, _) =>
-        //    {
-        //        Current.Dispatcher.Invoke(() =>
-        //        {
-        //            AboutDialog aboutWindow = new AboutDialog();
-        //            aboutWindow.ShowDialog();
-        //        });
-        //    });
-        //    _notifyIcon.ContextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripSeparator());
-
-        //    statusToolStripLabel = new System.Windows.Forms.ToolStripLabel { Text = (string)Current.Resources["ToolStripStatusDisconnected"] };
-
-        //    _notifyIcon.ContextMenuStrip.Items.Add(statusToolStripLabel);
-        //    _notifyIcon.ContextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripLabel { Text = "V" + Assembly.GetExecutingAssembly().GetName().Version, ForeColor = System.Drawing.Color.Gray });
-        //    _notifyIcon.ContextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripSeparator());
-        //    _notifyIcon.ContextMenuStrip.Items.Add((string)Current.Resources["ToolStripExit"], null, (s, _) =>
-        //    {
-        //        if (VerifyAdminRights())
-        //        {
-        //            CloseApp();
-        //        }
-        //    });
-        //}
 
         public static void RestartApp()
         {
-            Process.Start(ResourceAssembly.Location);
             Current.Shutdown();
+            Process.Start(ResourceAssembly.Location);
         }
 
         public static void CloseApp()
@@ -395,8 +384,17 @@ namespace Edulink.Client
 
         protected override void OnExit(ExitEventArgs e)
         {
-            mutex?.ReleaseMutex();
-            mutex?.Dispose();
+            try
+            {
+                mutex?.ReleaseMutex();
+                mutex?.Dispose();
+                Client?.Disconnect();
+                _inputBlocker?.Dispose();
+            }
+            catch (Exception)
+            {
+                // There's nothing we can do
+            }
             base.OnExit(e);
         }
     }
