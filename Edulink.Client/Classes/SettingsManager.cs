@@ -49,7 +49,7 @@ namespace Edulink.Classes
             }
         }
 
-        public void Save()
+        public void Save(bool noRetry = false)
         {
             try
             {
@@ -67,8 +67,19 @@ namespace Edulink.Classes
             }
             catch (Exception ex)
             {
+                if (noRetry)
+                {
+                    return;
+                }
                 Debug.WriteLine($"Error saving settings: {ex.Message}");
-                string tempSettings = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name, "settings_temp.xml");
+                string tempPath = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name);
+                string tempSettings = Path.Combine(tempPath, "settings_temp.xml");
+
+                if (!Directory.Exists(tempPath))
+                {
+                    Directory.CreateDirectory(tempPath);
+                }
+
                 using (StreamWriter writer = new StreamWriter(tempSettings))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
