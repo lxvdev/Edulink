@@ -8,12 +8,14 @@ namespace Edulink.Classes
     public class TaskSchedulerHelper : IDisposable
     {
         TaskSchedulerClass schedulerClass;
+
         public TaskSchedulerHelper()
         {
             schedulerClass = new TaskSchedulerClass();
             schedulerClass.Connect();
 
         }
+
         public void CreateLoginTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string arguments = null)
         {
             try
@@ -29,8 +31,14 @@ namespace Edulink.Classes
                 taskDefinition.Principal.LogonType = _TASK_LOGON_TYPE.TASK_LOGON_INTERACTIVE_TOKEN;
                 taskDefinition.Principal.RunLevel = runWithHighestPrivileges ? _TASK_RUNLEVEL.TASK_RUNLEVEL_HIGHEST : _TASK_RUNLEVEL.TASK_RUNLEVEL_LUA;
 
+                // Try to start Edulink on user logon
                 ILogonTrigger logonTrigger = (ILogonTrigger)taskDefinition.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_LOGON);
                 logonTrigger.UserId = null;
+
+                // Try to start Edulink on lockscreen unlock
+                ISessionStateChangeTrigger unlockTrigger = (ISessionStateChangeTrigger)taskDefinition.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_SESSION_STATE_CHANGE);
+                unlockTrigger.StateChange = _TASK_SESSION_STATE_CHANGE_TYPE.TASK_SESSION_UNLOCK;
+                unlockTrigger.UserId = null;
 
                 IExecAction execAction = (IExecAction)taskDefinition.Actions.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
                 execAction.Path = exePath;
@@ -64,6 +72,7 @@ namespace Edulink.Classes
                 throw new Exception($"Error creating task: {ex.Message}");
             }
         }
+
         public void CreateManualTask(string taskName, string description, string exePath, bool runWithHighestPrivileges = false, string arguments = null)
         {
             try
@@ -110,6 +119,7 @@ namespace Edulink.Classes
                 throw new Exception($"Error creating task: {ex.Message}");
             }
         }
+
         public void DeleteTask(string taskName)
         {
             try
@@ -124,6 +134,7 @@ namespace Edulink.Classes
                 throw new Exception($"Error deleting task: {ex.Message}");
             }
         }
+
         public bool TaskExistsWithCorrectPath(string taskName, string expectedExePath)
         {
             try
@@ -162,6 +173,7 @@ namespace Edulink.Classes
                 return false;
             }
         }
+
         public void UpdateTask(string taskName, string newExePath, bool runWithHighestPrivileges = false, string newArgs = null)
         {
             try
