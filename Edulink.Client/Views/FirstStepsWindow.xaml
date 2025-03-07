@@ -1,0 +1,233 @@
+﻿<Window
+    x:Class="Edulink.Views.FirstStepsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="https://github.com/XAMLMarkupExtensions/WPFLocalizationExtension"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
+    Title="{lex:Loc FirstSteps.Title}"
+    Width="800"
+    Height="450"
+    MinWidth="550"
+    MinHeight="300"
+    d:DataContext="{d:DesignInstance vm:FirstStepsWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+    FontFamily="{StaticResource Inter}"
+    Style="{StaticResource MaterialDesignWindow}"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Branding  -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <Image
+                Width="32"
+                Height="32"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="/Resources/Edulink.Client.ico" />
+            <TextBlock
+                Margin="0,4,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="32"
+                FontWeight="Normal"
+                Text="Edulink" />
+        </StackPanel>
+
+        <!--  Setup  -->
+        <Grid Grid.Row="1">
+            <materialDesign:Transitioner
+                d:SelectedIndex="1"
+                Focusable="False"
+                SelectedIndex="0">
+
+                <!--  Welcome  -->
+                <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <materialDesign:TransitionerSlide.ForwardWipe>
+                        <materialDesign:SlideWipe />
+                    </materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:TransitionerSlide.BackwardWipe>
+                        <materialDesign:SlideOutWipe />
+                    </materialDesign:TransitionerSlide.BackwardWipe>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            Margin="0,0,0,20"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="{lex:Loc FirstSteps.Welcome}" />
+                        <Button
+                            MinWidth="80"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                            IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{lex:Loc FirstSteps.Welcome.GetStarted}" />
+                                <materialDesign:PackIcon Margin="8,0,-4,0" Kind="ArrowForward" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </materialDesign:TransitionerSlide>
+
+                <!--  Name  -->
+                <materialDesign:TransitionerSlide Background="{DynamicResource MaterialDesign.Brush.Background}" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <materialDesign:TransitionerSlide.ForwardWipe>
+                        <materialDesign:SlideWipe />
+                    </materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:TransitionerSlide.BackwardWipe>
+                        <materialDesign:SlideOutWipe />
+                    </materialDesign:TransitionerSlide.BackwardWipe>
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Margin="0,0,0,5" Text="{lex:Loc FirstSteps.Computer.Name.Description}" />
+                            <TextBox
+                                x:Name="NameTextBox"
+                                materialDesign:HintAssist.Hint="{lex:Loc FirstSteps.Computer.Name}"
+                                Style="{StaticResource MaterialDesignFilledTextBox}"
+                                Text="{Binding Name, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <Button
+                                materialDesign:ElevationAssist.Elevation="Dp0"
+                                Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowForward,
+                                                                  Size=24}"
+                                IsEnabled="{Binding HasErrors, Converter={StaticResource InvertBooleanConverter}}"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:TransitionerSlide>
+
+                <!--  Connection  -->
+                <materialDesign:TransitionerSlide Background="{DynamicResource MaterialDesign.Brush.Background}" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <materialDesign:TransitionerSlide.ForwardWipe>
+                        <materialDesign:SlideWipe />
+                    </materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:TransitionerSlide.BackwardWipe>
+                        <materialDesign:SlideOutWipe />
+                    </materialDesign:TransitionerSlide.BackwardWipe>
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Margin="0,0,0,5" Text="{lex:Loc FirstSteps.Connection.Description}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,5,0">
+
+                                    <TextBox
+                                        x:Name="IPAddressTextBox"
+                                        materialDesign:HintAssist.Hint="{lex:Loc FirstSteps.Connection.IPAddress}"
+                                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                                        Text="{Binding IPAddress, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBox
+                                        x:Name="PortTextBox"
+                                        materialDesign:HintAssist.Hint="{lex:Loc FirstSteps.Connection.Port}"
+                                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                                        Tag="7153"
+                                        Text="{Binding Port, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <Button
+                                Width="40"
+                                Height="40"
+                                Margin="0,0,5,0"
+                                Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowBack,
+                                                                  Size=24}"
+                                IsEnabled="{Binding HasErrors, Converter={StaticResource InvertBooleanConverter}}"
+                                Style="{StaticResource MaterialDesignIconButton}" />
+                            <Button
+                                materialDesign:ElevationAssist.Elevation="Dp0"
+                                Command="{x:Static materialDesign:Transitioner.MoveNextCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowForward,
+                                                                  Size=24}"
+                                IsEnabled="{Binding HasErrors, Converter={StaticResource InvertBooleanConverter}}"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                        </StackPanel>
+                    </Grid>
+
+                </materialDesign:TransitionerSlide>
+
+                <!--  Password  -->
+                <materialDesign:TransitionerSlide Background="{DynamicResource MaterialDesign.Brush.Background}" OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn}">
+                    <materialDesign:TransitionerSlide.ForwardWipe>
+                        <materialDesign:SlideWipe />
+                    </materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:TransitionerSlide.BackwardWipe>
+                        <materialDesign:SlideOutWipe />
+                    </materialDesign:TransitionerSlide.BackwardWipe>
+                    <Grid>
+                        <StackPanel>
+                            <TextBlock Margin="0,0,0,5" Text="{lex:Loc FirstSteps.Password.Description}" />
+                            <Button HorizontalAlignment="Left" Command="{Binding PasswordCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Key" />
+                                    <TextBlock Text="{Binding PasswordButtonText, Converter={lex:TranslateConverter}}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+                            <Button
+                                Width="40"
+                                Height="40"
+                                Margin="0,0,5,0"
+                                Command="{x:Static materialDesign:Transitioner.MovePreviousCommand}"
+                                Content="{materialDesign:PackIcon Kind=ArrowBack,
+                                                                  Size=24}"
+                                Style="{StaticResource MaterialDesignIconButton}" />
+
+                        </StackPanel>
+                        <Button
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            materialDesign:ElevationAssist.Elevation="Dp0"
+                            Command="{Binding FinishCommand}"
+                            Content="{materialDesign:PackIcon Kind=Check,
+                                                              Size=32}"
+                            Style="{StaticResource MaterialDesignFloatingActionButton}" />
+                    </Grid>
+                </materialDesign:TransitionerSlide>
+            </materialDesign:Transitioner>
+        </Grid>
+    </Grid>
+</Window>

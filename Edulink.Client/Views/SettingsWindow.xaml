@@ -1,0 +1,196 @@
+﻿<Window
+    x:Class="Edulink.Views.SettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:local="clr-namespace:Edulink"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
+    Title="{lex:Loc Settings.Title}"
+    Width="800"
+    Height="450"
+    MinWidth="400"
+    MinHeight="245"
+    d:DataContext="{d:DesignInstance Type=vm:SettingsWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:Height="700"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+    FontFamily="{StaticResource Inter}"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid Margin="0,10,0,10">
+        <ScrollViewer
+            Grid.Row="1"
+            Margin="0,0,0,42"
+            Focusable="False">
+            <StackPanel Margin="10,0,10,0">
+                <!--  Connection  -->
+                <TextBlock
+                    Margin="0,0,0,5"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="{lex:Loc Settings.Connection}" />
+
+                <TextBox
+                    x:Name="NameTextBox"
+                    Margin="0,0,0,5"
+                    materialDesign:HintAssist.Hint="{lex:Loc Settings.Connection.Name}"
+                    Style="{StaticResource MaterialDesignFilledTextBox}"
+                    Text="{Binding Name, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <!--  IP Address  -->
+                    <TextBox
+                        x:Name="IPAddressTextBox"
+                        Grid.Column="0"
+                        Margin="0,0,5,0"
+                        materialDesign:HintAssist.Hint="{lex:Loc Settings.Connection.IPAddress}"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding IPAddress, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                    <!--  Port  -->
+                    <TextBox
+                        x:Name="PortTextBox"
+                        Grid.Column="1"
+                        materialDesign:HintAssist.Hint="{lex:Loc Settings.Connection.Port}"
+                        materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                        MaxLength="4"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding Port, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <!--  Miscellaneous  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{lex:Loc Settings.Miscellaneous}" />
+
+                    <Button
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Left"
+                        Command="{Binding RestartApplicationCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ApplicationOutline" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.RestartApplication}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Left"
+                        Command="{Binding ResetCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Clear" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.ResetSettings}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Left"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ContentSaveEdit" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.Save}" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Left"
+                        Command="{Binding ExitCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Close" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.ExitApplication}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!--  Password  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{lex:Loc Settings.Password}" />
+
+                    <Button
+                        x:Name="PasswordButton"
+                        Margin="0,0,0,5"
+                        HorizontalAlignment="Left"
+                        Command="{Binding PasswordCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Key" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding PasswordButtonText, Converter={lex:TranslateConverter}}" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!--  Language  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{lex:Loc Settings.Language}" />
+
+                    <ComboBox
+                        x:Name="LanguageComboBox"
+                        SelectedValue="{Binding Language, Mode=TwoWay}"
+                        SelectedValuePath="Tag"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
+                        <ComboBoxItem Content="English (United States)" Tag="en-US" />
+                        <ComboBoxItem Content="Español (España)" Tag="es-ES" />
+                        <ComboBoxItem Content="Română (România)" Tag="ro-RO" />
+                        <ComboBoxItem Content="Polski (Polska)" Tag="pl-PL" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!--  Theme  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{lex:Loc Settings.Theme}" />
+
+                    <ComboBox
+                        x:Name="ThemeComboBox"
+                        SelectedValue="{Binding Theme, Mode=TwoWay}"
+                        SelectedValuePath="Tag"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Auto}" Tag="Auto" />
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Light}" Tag="Light" />
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Dark}" Tag="Dark" />
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button
+            Margin="10,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Command="{Binding SaveAndRestartCommand}">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="16"
+                    Height="16"
+                    Margin="-4,0,8,0"
+                    Kind="ContentSave" />
+                <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.SaveAndRestart}" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
