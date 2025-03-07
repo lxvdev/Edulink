@@ -1,0 +1,40 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <ContextMenu
+        x:Key="TrayContextMenu"
+        MinWidth="160"
+        lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+        lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+        lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+        materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
+        <MenuItem
+            Header="{Binding ComputerName}"
+            Icon="{materialDesign:PackIcon Kind=DesktopWindows}"
+            IsEnabled="False" />
+        <Separator />
+        <MenuItem
+            Command="{Binding SettingsCommand}"
+            Header="{lex:Loc TrayContextMenu.Settings}"
+            Icon="{materialDesign:PackIcon Kind=Settings}" />
+        <MenuItem
+            Command="{Binding AboutCommand}"
+            Header="{lex:Loc TrayContextMenu.About}"
+            Icon="{materialDesign:PackIcon Kind=Info}" />
+        <Separator />
+        <MenuItem Header="{Binding ConnectionStatusText, Converter={lex:TranslateConverter}}" IsEnabled="False" />
+        <MenuItem
+            Command="{Binding UpdaterCommand}"
+            Header="{Binding UpdaterStatus, Converter={lex:TranslateConverter}}"
+            Icon="{materialDesign:PackIcon Kind=Update}" />
+        <Separator />
+        <MenuItem
+            Command="{Binding ExitCommand}"
+            FontWeight="Bold"
+            Header="{lex:Loc TrayContextMenu.Exit}"
+            Icon="{materialDesign:PackIcon Kind=Close}" />
+    </ContextMenu>
+</ResourceDictionary>
