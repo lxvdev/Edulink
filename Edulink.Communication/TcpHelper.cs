@@ -82,9 +82,10 @@ namespace Edulink.Communication
         {
             if (disposing)
             {
-                _stream?.Dispose();
+                Client?.Close();
                 _reader?.Dispose();
                 _writer?.Dispose();
+                _stream?.Dispose();
                 Client?.Dispose();
             }
         }

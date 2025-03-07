@@ -7,8 +7,8 @@
     <ProjectGuid>{666D8108-AE32-4161-8941-6FE5E490A837}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Edulink.TcpHelper</RootNamespace>
-    <AssemblyName>Edulink.TcpHelper</AssemblyName>
+    <RootNamespace>Edulink.Communication</RootNamespace>
+    <AssemblyName>Edulink.Communication</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
