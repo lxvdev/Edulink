@@ -1,4 +1,5 @@
-﻿using Edulink.MVVM;
+﻿using Edulink.Classes;
+using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -107,8 +108,7 @@ namespace Edulink.ViewModels
         public ICommand ReplyCommand => new RelayCommand(execute => Reply());
         private void Reply()
         {
-            InputDialogResult result = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendMessage"),
-                                                        (string)Application.Current.TryFindResource("Input.Title.SendMessage"));
+            InputDialogResult result = InputDialog.Show(LocalizedStrings.Instance["Input.Content.SendMessage"], LocalizedStrings.Instance["Input.Title.SendMessage"]);
             if (result.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(result.InputResult))
             {
                 ReplyResult = result.InputResult;
