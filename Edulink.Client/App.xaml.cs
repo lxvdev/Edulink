@@ -70,7 +70,7 @@ namespace Edulink
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
                 SettingsManager.Load(e.Args[1]);
-                SettingsManager.Save(true);
+                SettingsManager.Save(noRetry: true);
                 Environment.Exit(0);
                 return;
             }

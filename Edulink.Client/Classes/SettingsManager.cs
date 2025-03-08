@@ -31,10 +31,10 @@ namespace Edulink.Classes
             {
                 if (File.Exists(settingsFile))
                 {
-                    using (StreamReader reader = new StreamReader(settingsFile))
+                    using (FileStream fs = new FileStream(settingsFile, FileMode.Open, FileAccess.Read))
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                        Settings = (Settings)serializer.Deserialize(reader);
+                        Settings = (Settings)serializer.Deserialize(fs);
                     }
                 }
                 else
@@ -49,42 +49,37 @@ namespace Edulink.Classes
             }
         }
 
-        public void Save(bool noRetry = false)
+        public void Save(string path = null, bool noRetry = false)
         {
+            string settingsFilePath = path ?? _settingsFile;
             try
             {
-                if (!Directory.Exists(_appDataFolder))
+                string directory = Path.GetDirectoryName(settingsFilePath);
+                if (!Directory.Exists(directory))
                 {
-                    Directory.CreateDirectory(_appDataFolder);
+                    Directory.CreateDirectory(directory);
                 }
 
-                using (StreamWriter writer = new StreamWriter(_settingsFile))
+                using (FileStream fs = new FileStream(settingsFilePath, FileMode.Create, FileAccess.Write))
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                    serializer.Serialize(writer, Settings);
+                    serializer.Serialize(fs, Settings);
                 }
-
             }
             catch (Exception ex)
             {
                 if (noRetry)
                 {
+                    Debug.WriteLine($"Error saving settings (no retry): {ex.Message}");
                     return;
                 }
+
                 Debug.WriteLine($"Error saving settings: {ex.Message}");
+
                 string tempPath = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name);
                 string tempSettings = Path.Combine(tempPath, "settings_temp.xml");
 
-                if (!Directory.Exists(tempPath))
-                {
-                    Directory.CreateDirectory(tempPath);
-                }
-
-                using (StreamWriter writer = new StreamWriter(tempSettings))
-                {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
-                    serializer.Serialize(writer, Settings);
-                }
+                Save(tempSettings, noRetry: true);
 
                 ProcessStartInfo psi = new ProcessStartInfo
                 {
