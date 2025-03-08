@@ -1,0 +1,148 @@
+﻿<Window
+    x:Class="Edulink.Views.UpdaterDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:local="clr-namespace:Edulink.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
+    Title="{lex:Loc UpdaterDialog.Title}"
+    Width="580"
+    Height="280"
+    d:DataContext="{d:DesignInstance vm:UpdaterDialogViewModel,
+                                     IsDesignTimeCreatable=True}"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+    ResizeMode="NoResize"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter"
+            FalseValue="Collapsed"
+            TrueValue="Visible" />
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="InvertBooleanToVisibilityConverter"
+            FalseValue="Visible"
+            TrueValue="Collapsed" />
+        <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <StackPanel Visibility="{Binding IsUpdating, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsCheckingUpdates, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar
+                    Margin="0,0,10,0"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="{lex:Loc UpdaterDialog.ChekingUpdates}"
+                    TextWrapping="WrapWithOverflow" />
+            </StackPanel>
+
+
+            <Grid Visibility="{Binding IsCheckingUpdates, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                <!--  Up to date  -->
+                <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="{lex:Loc UpdaterDialog.UpToDate}"
+                    TextWrapping="WrapWithOverflow"
+                    Visibility="{Binding IsUpdateAvailable, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                    <materialDesign:PackIcon
+                        Width="20"
+                        Height="20"
+                        Margin="5,0,0,0"
+                        Kind="Check" />
+                </TextBlock>
+                <!--  Update available  -->
+                <TextBlock
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    TextWrapping="WrapWithOverflow"
+                    Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{lex:StringFormatConverter}">
+                            <Binding Source="{lex:Loc UpdaterDialog.UpdateAvailable}" />
+                            <Binding Path="ReleaseDetails.Version" />
+                            <Binding Path="Product" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+
+            <!--  Current version  -->
+            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" TextWrapping="WrapWithOverflow">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{lex:StringFormatConverter}">
+                        <Binding Source="{lex:Loc UpdaterDialog.CurrentVersion}" />
+                        <Binding Path="CurrentVersion" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <Grid Visibility="{Binding IsCheckingUpdates, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                <Button
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding ShowInBrowserCommand}"
+                    Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="-4,0,8,0" Kind="OpenInBrowser" />
+                        <TextBlock Text="{lex:Loc UpdaterDialog.OpenInBrowser}" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <!--  Update in progress  -->
+        <StackPanel
+            VerticalAlignment="Top"
+            Orientation="Vertical"
+            Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock
+                VerticalAlignment="Center"
+                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                Text="{lex:Loc UpdaterDialog.UpdateInProgress}" />
+            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{lex:Loc UpdaterDialog.DoNotCloseWindow}" />
+        </StackPanel>
+
+        <StackPanel VerticalAlignment="Bottom">
+
+            <!--  Status indicator  -->
+            <ProgressBar
+                Margin="0,0,0,5"
+                materialDesign:TransitionAssist.DisableTransitions="True"
+                Maximum="100"
+                Visibility="{Binding IsUpdating, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Value="{Binding Progress}" />
+            <Grid>
+                <!--  Check for updates checkbox  -->
+                <CheckBox
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    materialDesign:CheckBoxAssist.CheckBoxSize="22"
+                    Content="{lex:Loc UpdaterDialog.CheckForUpdates}"
+                    Cursor="Hand"
+                    IsChecked="{Binding CheckForUpdates}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    Visibility="{Binding IsUpdating, Converter={StaticResource InvertBooleanToVisibilityConverter}}" />
+                <!--  Update button  -->
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="5,0,0,0"
+                        Command="{Binding UpdateCommand}"
+                        Content="{lex:Loc UpdaterDialog.Update,
+                                          Converter={lex:ToUpperConverter}}"
+                        Style="{StaticResource MaterialDesignFlatButton}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
