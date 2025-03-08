@@ -1,4 +1,5 @@
-﻿using Edulink.Communication.Models;
+﻿using Edulink.Classes;
+using Edulink.Communication.Models;
 using Edulink.Models;
 using Edulink.MVVM;
 using Microsoft.Win32;
@@ -7,7 +8,6 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -17,17 +17,14 @@ namespace Edulink.ViewModels
     {
         public Client Client { get; private set; }
 
-        private string _title;
-        public string Title
+        private string _statusMessage;
+        public string StatusMessage
         {
-            get => _title;
-            private set
+            get => _statusMessage;
+            set
             {
-                if (_title != value)
-                {
-                    _title = value;
-                    OnPropertyChanged();
-                }
+                _statusMessage = value;
+                OnPropertyChanged();
             }
         }
 
@@ -57,13 +54,13 @@ namespace Edulink.ViewModels
         public DesktopDialogViewModel(Client client)
         {
             Client = client;
-            Title = $"{Client.Name} - {Application.Current.TryFindResource("Desktop.ReceivingImage")}";
+            StatusMessage = LocalizedStrings.Instance["DesktopDialog.ReceivingImage"];
         }
 
         public void UpdateScreenshot(Bitmap bitmap)
         {
             TimeStamp = DateTime.Now;
-            Title = $"{Client.Name} - {TimeStamp.ToString("dd/MM/yyyy HH:mm:ss")}";
+            StatusMessage = TimeStamp.ToString("dd/MM/yyyy HH:mm:ss");
             _desktopBitmap = AddWatermarkToBitmap(bitmap);
             DesktopImage = BitmapToBitmapImage(_desktopBitmap);
             OnPropertyChanged(nameof(IsImageNotReceived));
@@ -95,7 +92,7 @@ namespace Edulink.ViewModels
         {
             try
             {
-                Title = $"{Client.Name} - {Application.Current.TryFindResource("Desktop.ReceivingImage")}";
+                StatusMessage = LocalizedStrings.Instance["DesktopDialog.ReceivingImage"];
                 await Client.Helper.SendCommandAsync(new EdulinkCommand() { Command = Commands.Desktop });
             }
             catch (Exception)
