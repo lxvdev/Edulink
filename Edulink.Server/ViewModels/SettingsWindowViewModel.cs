@@ -3,13 +3,11 @@ using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
@@ -26,20 +24,24 @@ namespace Edulink.ViewModels
             {
                 if (_port != value)
                 {
-                    ClearErrors();
-
-                    if (string.IsNullOrWhiteSpace(value))
-                    {
-                        AddError("Port cannot be empty.");
-                    }
-                    else if (!int.TryParse(value, out int intValue) || intValue < 0)
-                    {
-                        AddError("Invalid port number.");
-                    }
-
                     _port = value;
+                    ValidatePort();
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        private void ValidatePort()
+        {
+            ClearErrors(nameof(Port));
+
+            if (string.IsNullOrWhiteSpace(_port))
+            {
+                AddError("Port cannot be empty.", nameof(Port));
+            }
+            else if (!int.TryParse(_port, out int intValue) || intValue < 0)
+            {
+                AddError("Invalid port number.", nameof(Port));
             }
         }
 
@@ -71,8 +73,8 @@ namespace Edulink.ViewModels
             }
         }
 
-        private string _language;
-        public string Language
+        private CultureInfo _language;
+        public CultureInfo Language
         {
             get => _language;
             set
@@ -80,7 +82,7 @@ namespace Edulink.ViewModels
                 if (_language != value)
                 {
                     _language = value;
-                    App.SetLanguage(value);
+                    LocalizeDictionary.Instance.Culture = value;
                     OnPropertyChanged();
                 }
             }
@@ -110,18 +112,8 @@ namespace Edulink.ViewModels
         public SettingsWindowViewModel()
         {
             LoadSettings();
-            _ipAddresses = GetIpAddresses();
-        }
-
-        private string GetIpAddresses()
-        {
-            IEnumerable<string> ips = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(nic => nic.OperationalStatus == OperationalStatus.Up)
-                .SelectMany(nic => nic.GetIPProperties().UnicastAddresses)
-                .Where(ip => ip.Address.AddressFamily == AddressFamily.InterNetwork && ip.Address.ToString() != "127.0.0.1")
-                .Select(ip => ip.Address.ToString());
-
-            return ips.Any() ? string.Join(", ", ips) : "No active network interfaces";
+            ValidatePort();
+            _ipAddresses = IPAddressProvider.GetIPAddresses();
         }
 
         public ICommand SaveAndRestartCommand => new RelayCommand(execute => Save(true), canExecute => !HasErrors);
@@ -134,7 +126,7 @@ namespace Edulink.ViewModels
                 _settingsManager.Settings.Port = int.TryParse(Port, out int port) ? port : 0;
                 _settingsManager.Settings.PreviewEnabled = PreviewEnabled;
                 _settingsManager.Settings.PreviewFrequency = PreviewFrequency;
-                _settingsManager.Settings.Language = Language;
+                _settingsManager.Settings.Language = Language.Equals(CultureInfo.InstalledUICulture) ? null : Language.ToString();
                 _settingsManager.Settings.Theme = Theme;
                 _settingsManager.Save();
 
@@ -163,7 +155,7 @@ namespace Edulink.ViewModels
             Port = _settingsManager.Settings.Port == 0 ? string.Empty : _settingsManager.Settings.Port.ToString();
             PreviewEnabled = _settingsManager.Settings.PreviewEnabled;
             PreviewFrequency = _settingsManager.Settings.PreviewFrequency;
-            Language = _settingsManager.Settings.Language;
+            Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture;
             Theme = _settingsManager.Settings.Theme;
         }
 
