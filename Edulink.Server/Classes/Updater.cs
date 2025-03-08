@@ -67,7 +67,7 @@ namespace Edulink.Classes
 
         public static bool IsUpdateAvailable(ReleaseDetails latestVersion)
         {
-            if (latestVersion.Version == null) return false;
+            if (latestVersion?.Version == null) return false;
             Version latest = latestVersion.Version;
             Version current = new Version(CurrentVersion);
             return latest > current;
