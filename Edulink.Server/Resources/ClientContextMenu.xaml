@@ -1,39 +1,76 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
-    <ContextMenu x:Key="ClientContextMenu" materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:models="clr-namespace:Edulink.Models">
+    <ContextMenu
+        x:Key="ClientContextMenu"
+        lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+        lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+        lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+        materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
         <MenuItem
             Command="{Binding LinkCommand}"
-            Header="{DynamicResource Main.Commands.SendLink}"
+            Header="{lex:Loc Main.Commands.SendLink}"
             Icon="{materialDesign:PackIcon Kind=Link}" />
         <MenuItem
             Command="{Binding MessageCommand}"
-            Header="{DynamicResource Main.Commands.SendMessage}"
+            Header="{lex:Loc Main.Commands.SendMessage}"
             Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
         <MenuItem
-            Command="{Binding ViewDesktopCommand}"
-            Header="{DynamicResource Main.Commands.ViewDesktop}"
+            Command="{Binding DesktopCommand}"
+            Header="{lex:Loc Main.Commands.ViewDesktop}"
             Icon="{materialDesign:PackIcon Kind=DesktopWindows}" />
         <MenuItem
-            Command="{Binding RestartApplicationCommand}"
-            Header="{DynamicResource Main.Commands.RestartApplication}"
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.RestartApplication}"
+            Header="{lex:Loc Main.Commands.RestartApplication}"
             Icon="{materialDesign:PackIcon Kind=ApplicationOutline}" />
         <MenuItem
-            Command="{Binding ShutdownCommand}"
-            Header="{DynamicResource Main.Commands.ShutdownComputer}"
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.Shutdown}"
+            Header="{lex:Loc Main.Commands.Shutdown}"
             Icon="{materialDesign:PackIcon Kind=Shutdown}" />
         <MenuItem
-            Command="{Binding RestartCommand}"
-            Header="{DynamicResource Main.Commands.RestartComputer}"
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.Restart}"
+            Header="{lex:Loc Main.Commands.Restart}"
             Icon="{materialDesign:PackIcon Kind=Restart}" />
         <MenuItem
-            Command="{Binding LockscreenCommand}"
-            Header="{DynamicResource Main.Commands.LockScreen}"
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.LockScreen}"
+            Header="{lex:Loc Main.Commands.LockScreen}"
             Icon="{materialDesign:PackIcon Kind=LockOutline}" />
         <MenuItem
-            Command="{Binding UpdateCommand}"
-            Header="{DynamicResource Main.Commands.UpdateApplication}"
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.LogOff}"
+            Header="{lex:Loc Main.Commands.LogOff}"
+            Icon="{materialDesign:PackIcon Kind=UserOutline}" />
+        <MenuItem
+            Command="{Binding RenameCommand}"
+            Header="{lex:Loc Main.Commands.Rename}"
+            Icon="{materialDesign:PackIcon Kind=RenameOutline}" />
+        <MenuItem
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.ResetPassword}"
+            Header="{lex:Loc Main.Commands.ResetPassword}"
+            Icon="{materialDesign:PackIcon Kind=KeyOutline}" />
+        <MenuItem
+            Command="{Binding BlockInputCommand}"
+            CommandParameter="true"
+            Header="{lex:Loc Main.Commands.BlockInput}"
+            Icon="{materialDesign:PackIcon Kind=MouseOff}" />
+        <MenuItem
+            Command="{Binding BlockInputCommand}"
+            CommandParameter="false"
+            Header="{lex:Loc Main.Commands.UnblockInput}"
+            Icon="{materialDesign:PackIcon Kind=MouseOutline}" />
+        <MenuItem
+            Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.Update}"
+            Header="{lex:Loc Main.Commands.UpdateApplication}"
             Icon="{materialDesign:PackIcon Kind=Update}" />
 
         <Separator />
@@ -41,13 +78,13 @@
         <MenuItem
             Command="{Binding ExcludePreviewCommand}"
             CommandParameter="true"
-            Header="{DynamicResource Main.Commands.ExcludeFromPreview}"
+            Header="{lex:Loc Main.Commands.ExcludeFromPreview}"
             Icon="{materialDesign:PackIcon Kind=ImageRemoveOutline}" />
 
         <MenuItem
             Command="{Binding ExcludePreviewCommand}"
             CommandParameter="false"
-            Header="{DynamicResource Main.Commands.IncludeOnPreview}"
+            Header="{lex:Loc Main.Commands.IncludeOnPreview}"
             Icon="{materialDesign:PackIcon Kind=Plus}" />
     </ContextMenu>
 </ResourceDictionary>
