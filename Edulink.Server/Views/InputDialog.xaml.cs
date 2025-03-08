@@ -1,4 +1,5 @@
-﻿using Edulink.ViewModels;
+﻿using Edulink.Classes;
+using Edulink.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
@@ -49,7 +50,7 @@ namespace Edulink.Views
             }
         }
 
-        public static InputDialogResult Show(string message, string title)
+        public static InputDialogResult Show(string message, string title = null)
         {
             InputDialog dialog = new InputDialog(message, title);
             if (dialog.ShowDialog() == true)
@@ -58,6 +59,12 @@ namespace Edulink.Views
             }
 
             return new InputDialogResult(dialog.ButtonResult);
+        }
+
+        public static InputDialogResult ShowLocalized(string messageKey, string title = null)
+        {
+            string message = LocalizedStrings.Instance[messageKey];
+            return Show(message, title);
         }
     }
 

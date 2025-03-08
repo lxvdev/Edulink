@@ -2,7 +2,9 @@
     x:Class="Edulink.Views.InputDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:local="clr-namespace:Edulink"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +15,9 @@
     MinWidth="360"
     MinHeight="120"
     MaxWidth="500"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
     FontFamily="{StaticResource Inter}"
     PreviewKeyUp="Window_PreviewKeyUp"
     ResizeMode="NoResize"
@@ -42,12 +47,14 @@
             Orientation="Horizontal">
             <Button
                 Command="{Binding CancelCommand}"
-                Content="{DynamicResource Input.Cancel}"
+                Content="{lex:Loc InputDialog.Cancel,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}" />
             <Button
                 Margin="5,0,0,0"
                 Command="{Binding OkCommand, UpdateSourceTrigger=PropertyChanged}"
-                Content="{DynamicResource Input.Ok}"
+                Content="{lex:Loc InputDialog.Ok,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}" />
         </StackPanel>
     </Grid>
