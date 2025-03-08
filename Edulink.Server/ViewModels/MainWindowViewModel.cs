@@ -158,11 +158,12 @@ namespace Edulink.ViewModels
                 {
                     client.PropertyChanged += Client_PropertyChanged;
                     // I dont like this but it works
-                    Task.Delay(200).ContinueWith(task => RequestPreview(client));
-                    //_ = Task.Run(() =>
-                    //{
-                    //    RequestPreview(client);
-                    //});
+                    //Task.Delay(200).ContinueWith(task => RequestPreview(client));
+                    // I fixed it!!!
+                    _ = Task.Run(() =>
+                    {
+                        RequestPreview(client);
+                    });
                 }
             }
 

@@ -74,11 +74,10 @@ namespace Edulink.Core
 
                 client = new Client(helper, command.Parameters["Name"], command.Parameters["Version"], updateAvailable);
 
-                ClientConnected?.Invoke(this, new ClientConnectedEventArgs(client));
-
                 await helper.SendCommandAsync(new EdulinkCommand { Command = $"WELCOME" });
                 Console.WriteLine($"{client.Name} ({client.Endpoint}) connected.");
 
+                ClientConnected?.Invoke(this, new ClientConnectedEventArgs(client));
                 await ListenForCommandsAsync(client);
             }
             catch (Exception ex)
