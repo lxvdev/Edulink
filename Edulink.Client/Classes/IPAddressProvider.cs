@@ -7,7 +7,7 @@ namespace Edulink.Classes
 {
     public class IPAddressProvider
     {
-        private static readonly List<string> _ignoredNics = new List<string> { "virtual", "VMware", "VirtualBox", "vbox" };
+        private static readonly List<string> _ignoredNics = new List<string> { "Hyper-V", "virtual", "VMware", "VirtualBox", "vbox" };
 
         public static string GetIPAddresses()
         {
