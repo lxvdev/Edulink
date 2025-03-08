@@ -1,8 +1,10 @@
-﻿using Edulink.Communication.Models;
+﻿using Edulink.Classes;
+using Edulink.Communication.Models;
 using Edulink.Core;
 using Edulink.Models;
 using Edulink.MVVM;
 using Edulink.Views;
+using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +15,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -157,11 +158,11 @@ namespace Edulink.ViewModels
                 {
                     client.PropertyChanged += Client_PropertyChanged;
                     // I dont like this but it works
-                    //Task.Delay(200).ContinueWith(task => RequestPreview(client));
-                    _ = Task.Run(() =>
-                    {
-                        RequestPreview(client);
-                    });
+                    Task.Delay(200).ContinueWith(task => RequestPreview(client));
+                    //_ = Task.Run(() =>
+                    //{
+                    //    RequestPreview(client);
+                    //});
                 }
             }
 
@@ -197,6 +198,8 @@ namespace Edulink.ViewModels
         private void Server_ClientDisconnected(object sender, Server.ClientDisconnectedEventArgs e)
         {
             _clients.Remove(e.Client);
+            App.ActiveBalloonTipType = App.BalloonTipType.ComputerDisconnected;
+            App.TaskbarIcon.ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.ComputerDisconnected"], string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.ComputerDisconnected"], e.Client?.Name ?? "???"), BalloonIcon.Info);
         }
         #endregion
 
@@ -205,9 +208,7 @@ namespace Edulink.ViewModels
         {
             if (clients?.Any() != true)
             {
-                MessageDialog.Show((string)Application.Current.TryFindResource("Message.Content.NoClientsSelected"),
-                                   MessageDialogTitle.Error,
-                                   MessageDialogButton.Ok, MessageDialogIcon.Error);
+                MessageDialog.ShowLocalized("Message.Content.NoClientsSelected", MessageDialogTitle.Error, MessageDialogButton.Ok, MessageDialogIcon.Error);
                 return false;
             }
 
@@ -221,8 +222,7 @@ namespace Edulink.ViewModels
         public ICommand LinkCommand => new RelayCommand(execute => SendLink(), canExecute => SelectedClients.Any());
         private void SendLink()
         {
-            InputDialogResult urlInputDialogResult = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendLink"),
-                                                                      (string)Application.Current.TryFindResource("Input.Title.SendLink"));
+            InputDialogResult urlInputDialogResult = InputDialog.ShowLocalized("Input.Content.SendLink", LocalizedStrings.Instance["Input.Title.SendLink"]);
 
             if (urlInputDialogResult.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(urlInputDialogResult.InputResult))
             {
@@ -262,8 +262,7 @@ namespace Edulink.ViewModels
         public ICommand MessageCommand => new RelayCommand(execute => SendMessage(), canExecute => SelectedClients.Any());
         private void SendMessage()
         {
-            InputDialogResult messageInputDialog = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.SendMessage"),
-                                                                    (string)Application.Current.TryFindResource("Input.Title.SendMessage"));
+            InputDialogResult messageInputDialog = InputDialog.ShowLocalized("Input.Content.SendMessage", LocalizedStrings.Instance["Input.Title.SendMessage"]);
 
             if (messageInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(messageInputDialog.InputResult))
             {
@@ -341,8 +340,7 @@ namespace Edulink.ViewModels
         public ICommand RenameCommand => new RelayCommand(execute => Rename(), canExecute => SelectedClients.Any());
         private void Rename()
         {
-            InputDialogResult renameInputDialog = InputDialog.Show((string)Application.Current.TryFindResource("Input.Content.RenameComputer"),
-                                                                   (string)Application.Current.TryFindResource("Input.Title.RenameComputer"));
+            InputDialogResult renameInputDialog = InputDialog.ShowLocalized("Input.Content.RenameComputer", LocalizedStrings.Instance["Input.Title.RenameComputer"]);
 
             if (renameInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(renameInputDialog.InputResult))
             {
