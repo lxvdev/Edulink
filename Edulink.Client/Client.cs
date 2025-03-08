@@ -42,7 +42,8 @@ namespace Edulink
                     Parameters = new Dictionary<string, string>
                     {
                         { "Name", name },
-                        { "Version", Assembly.GetExecutingAssembly().GetName().Version.ToString() }
+                        { "Version", Assembly.GetExecutingAssembly().GetName().Version.ToString() },
+                        { "UpdateAvailable", App.UpdateAvailable.ToString() }
                     }
                 });
 
