@@ -709,11 +709,11 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No update available.
+        ///   Looks up a localized string similar to Up to date.
         /// </summary>
-        internal static string TrayContextMenu_Updater_None {
+        internal static string TrayContextMenu_Updater_UpToDate {
             get {
-                return ResourceManager.GetString("TrayContextMenu.Updater.None", resourceCulture);
+                return ResourceManager.GetString("TrayContextMenu.Updater.UpToDate", resourceCulture);
             }
         }
         

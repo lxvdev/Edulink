@@ -315,16 +315,52 @@
   <data name="TrayContextMenu.About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="TrayContextMenu.Connection.Status.Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="TrayContextMenu.Connection.Status.Disconnected" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="TrayContextMenu.Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="TrayContextMenu.Connection.Status.Connected" xml:space="preserve">
-    <value>Connected</value>
+  <data name="TrayContextMenu.Updater" xml:space="preserve">
+    <value>Updater</value>
   </data>
-  <data name="TrayContextMenu.Connection.Status.Disconnected" xml:space="preserve">
-    <value>Not connected</value>
+  <data name="TrayContextMenu.Updater.Available" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="TrayContextMenu.Updater.UpToDate" xml:space="preserve">
+    <value>Up to date</value>
+  </data>
+  <data name="UpdaterDialog.CheckForUpdates" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="UpdaterDialog.ChekingUpdates" xml:space="preserve">
+    <value>Checking for updates</value>
+  </data>
+  <data name="UpdaterDialog.CurrentVersion" xml:space="preserve">
+    <value>You are currently using version {0}</value>
+  </data>
+  <data name="UpdaterDialog.DoNotCloseWindow" xml:space="preserve">
+    <value>Do not close this window</value>
+  </data>
+  <data name="UpdaterDialog.Title" xml:space="preserve">
+    <value>Updater</value>
+  </data>
+  <data name="UpdaterDialog.Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdaterDialog.UpdateAvailable" xml:space="preserve">
+    <value>Version {0} of {1} is now available</value>
+  </data>
+  <data name="UpdaterDialog.UpdateInProgress" xml:space="preserve">
+    <value>Update in progress</value>
+  </data>
+  <data name="UpdaterDialog.UpToDate" xml:space="preserve">
+    <value>Up to date</value>
   </data>
 </root>
