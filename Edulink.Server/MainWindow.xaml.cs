@@ -1,6 +1,8 @@
-﻿using Edulink.Communication.Models;
+﻿using Edulink.Classes;
+using Edulink.Communication.Models;
 using Edulink.Core;
 using Edulink.Models;
+using Edulink.MVVM;
 using Edulink.ViewModels;
 using Edulink.Views;
 using System;
@@ -11,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -30,6 +33,7 @@ namespace Edulink
         public MainWindow()
         {
             InitializeComponent();
+            InitializeTrayIcon();
             try
             {
                 _server = new Server(App.SettingsManager.Settings.Port);
@@ -41,13 +45,35 @@ namespace Edulink
             }
             catch (Exception)
             {
-                MessageDialog.Show((string)Application.Current.TryFindResource("Message.Content.CouldntInitializeServer"),
-                    MessageDialogTitle.Error, MessageDialogButton.Ok, MessageDialogIcon.Error);
+                MessageDialog.ShowLocalized("Message.Content.CouldntInitializeServer", MessageDialogTitle.Error, MessageDialogButton.Ok, MessageDialogIcon.Error);
 
                 SettingsWindow settingsWindow = new SettingsWindow();
                 settingsWindow.Show();
 
                 Close();
+            }
+        }
+
+        private void InitializeTrayIcon()
+        {
+            RelayCommand showWindowCommand = new RelayCommand(execute =>
+            {
+                this.WindowState = WindowState.Normal;
+                this.Activate();
+            });
+
+            App.TaskbarIcon.LeftClickCommand = showWindowCommand;
+            App.TaskbarIcon.DoubleClickCommand = showWindowCommand;
+
+            App.TaskbarIcon.TrayBalloonTipClicked += TaskbarIcon_TrayBalloonTipClicked;
+        }
+
+        private void TaskbarIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
+        {
+            if (App.ActiveBalloonTipType == App.BalloonTipType.ComputerDisconnected)
+            {
+                this.WindowState = WindowState.Normal;
+                this.Activate();
             }
         }
 
@@ -124,8 +150,7 @@ namespace Edulink
                 throw new ArgumentNullException(nameof(e));
             }
 
-            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], string.Format((string)Application.Current.TryFindResource("Message.Title.MessageFrom"), e.Client.Name),
-                MessageDialogButton.OkReply);
+            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], string.Format(LocalizedStrings.Instance["Message.Title.MessageFrom"], e.Client.Name), MessageDialogButton.OkReply);
             if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
             {
                 await e.Client.Helper.SendCommandAsync(new EdulinkCommand
@@ -142,7 +167,7 @@ namespace Edulink
         #endregion
 
         #region Menu Items
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void SettingsItem_Click(object sender, RoutedEventArgs e)
         {
             if (_settingsWindow == null || !_settingsWindow.IsVisible)
             {
@@ -186,8 +211,25 @@ namespace Edulink
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            if (App.TaskbarIcon != null)
+            {
+                App.TaskbarIcon.LeftClickCommand = null;
+                App.TaskbarIcon.DoubleClickCommand = null;
+                App.TaskbarIcon.Dispose();
+            }
             _settingsWindow = null;
             _server?.Dispose();
+        }
+
+        private void AlwaysOnTopItem_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            this.Topmost = (sender as MenuItem).IsChecked;
+        }
+
+        private void UpdaterItem_Click(object sender, RoutedEventArgs e)
+        {
+            UpdaterDialog updaterDialog = new UpdaterDialog();
+            updaterDialog.Show();
         }
     }
 }
