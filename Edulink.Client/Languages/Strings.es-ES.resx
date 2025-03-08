@@ -159,6 +159,12 @@
   <data name="FirstSteps.Welcome.GetStarted" xml:space="preserve">
     <value>Empezar</value>
   </data>
+  <data name="Input.Content.SendMessage" xml:space="preserve">
+    <value>Introduzca su mensaje</value>
+  </data>
+  <data name="Input.Title.SendMessage" xml:space="preserve">
+    <value>Enviar mensaje</value>
+  </data>
   <data name="InputDialog.Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
@@ -324,6 +330,9 @@
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Salir</value>
   </data>
+  <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
+    <value>Enviar mensaje al profesor</value>
+  </data>
   <data name="TrayContextMenu.Settings" xml:space="preserve">
     <value>Ajustes</value>
   </data>
@@ -347,6 +356,9 @@
   </data>
   <data name="UpdaterDialog.DoNotCloseWindow" xml:space="preserve">
     <value>No cierres esta ventana</value>
+  </data>
+  <data name="UpdaterDialog.OpenInBrowser" xml:space="preserve">
+    <value>Abrir en el navegador</value>
   </data>
   <data name="UpdaterDialog.Title" xml:space="preserve">
     <value>Actualizador</value>

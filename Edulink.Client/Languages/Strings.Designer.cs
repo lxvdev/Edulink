@@ -187,6 +187,24 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your message.
+        /// </summary>
+        internal static string Input_Content_SendMessage {
+            get {
+                return ResourceManager.GetString("Input.Content.SendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send message.
+        /// </summary>
+        internal static string Input_Title_SendMessage {
+            get {
+                return ResourceManager.GetString("Input.Title.SendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string InputDialog_Cancel {
@@ -682,6 +700,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send message to teacher.
+        /// </summary>
+        internal static string TrayContextMenu_SendMessageToTeacher {
+            get {
+                return ResourceManager.GetString("TrayContextMenu.SendMessageToTeacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string TrayContextMenu_Settings {
@@ -750,6 +777,15 @@ namespace Edulink.Languages {
         internal static string UpdaterDialog_DoNotCloseWindow {
             get {
                 return ResourceManager.GetString("UpdaterDialog.DoNotCloseWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in browser.
+        /// </summary>
+        internal static string UpdaterDialog_OpenInBrowser {
+            get {
+                return ResourceManager.GetString("UpdaterDialog.OpenInBrowser", resourceCulture);
             }
         }
         
