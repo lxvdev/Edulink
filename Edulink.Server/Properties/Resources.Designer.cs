@@ -61,6 +61,15 @@ namespace Edulink.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        internal static string AppType {
+            get {
+                return ResourceManager.GetString("AppType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon Edulink_Server {
