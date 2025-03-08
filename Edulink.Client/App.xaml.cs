@@ -33,22 +33,22 @@ namespace Edulink
 
         private TrayIconViewModel _trayIconViewModel;
 
-        private static Mutex mutex;
+        private Mutex mutex;
         bool allowMultipleInstances = false; // Change before releasing: For debugging
 
         #region Update properties
-        public static event EventHandler IsUpdateAvailableChanged;
+        public static event EventHandler UpdateAvailableChanged;
 
-        private bool? _isUpdateAvailable = null;
-        public bool? IsUpdateAvailable
+        private static bool? _updateAvailable = null;
+        public static bool? UpdateAvailable
         {
-            get => _isUpdateAvailable;
+            get => _updateAvailable;
             set
             {
-                if (_isUpdateAvailable != value)
+                if (_updateAvailable != value)
                 {
-                    _isUpdateAvailable = value;
-                    IsUpdateAvailableChanged?.Invoke(this, EventArgs.Empty);
+                    _updateAvailable = value;
+                    UpdateAvailableChanged?.Invoke(null, EventArgs.Empty);
                 }
             }
         }
@@ -63,6 +63,8 @@ namespace Edulink
 
         protected override async void OnStartup(StartupEventArgs e)
         {
+            ApplyTheme(SettingsManager.Settings.Theme);
+
             bool isPrimaryInstance;
 
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
@@ -72,13 +74,13 @@ namespace Edulink
                 Environment.Exit(0);
                 return;
             }
-            else if (e.Args.Length >= 1 && e.Args[0] == "--create-task")
+            else if (e.Args.Length == 1 && e.Args[0] == "--create-task")
             {
                 CheckApplicationTask();
                 Environment.Exit(0);
                 return;
             }
-            else if (e.Args.Length >= 1 && e.Args[0] == "--startup")
+            else if (e.Args.Length == 1 && e.Args[0] == "--startup")
             {
                 // Foolproof way to check if the application is already running because anyone with the enough knowledge can bypass the mutex
                 Process process = Process.GetCurrentProcess();
@@ -128,13 +130,6 @@ namespace Edulink
 
             base.OnStartup(e);
 
-            ApplyTheme(SettingsManager.Settings.Theme);
-
-            if (SettingsManager.Settings.CheckForUpdates)
-            {
-                _ = CheckForUpdates();
-            }
-
             InitializeTrayIcon();
 
             if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null)
@@ -142,15 +137,28 @@ namespace Edulink
                 FirstStepsWindow firstStepsWindow = new FirstStepsWindow();
                 firstStepsWindow.ShowDialog();
             }
+
+            if (SettingsManager.Settings.CheckForUpdates)
+            {
+                await CheckForUpdates();
+            }
+
             await ConnectionLoopAsync();
         }
 
         private async Task CheckForUpdates()
         {
-            IsUpdateAvailable = null;
+            try
+            {
+                UpdateAvailable = null;
 
-            ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
-            IsUpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+                ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
+                UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Error checking for updates");
+            }
         }
 
         public void CheckApplicationTask()
@@ -270,8 +278,8 @@ namespace Edulink
                         break;
                     case Commands.Update:
                         ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
-                        IsUpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
-                        if (IsUpdateAvailable == true)
+                        UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+                        if (UpdateAvailable == true)
                         {
                             UpdaterDialog updateDialog = new UpdaterDialog(releaseDetails, true);
                             updateDialog.Show();
