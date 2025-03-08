@@ -11,10 +11,19 @@
         lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
         lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
         materialDesign:MenuAssist.MenuItemsPresenterMargin="0,6">
+        <MenuItem Icon="{materialDesign:PackIcon Kind=DesktopWindows}" IsEnabled="False">
+            <MenuItem.Header>
+                <TextBlock>
+                    <Run Text="{Binding ComputerName, Mode=OneWay}" />
+                    <Run Text="{Binding ConnectionStatusText, StringFormat=({0}), Converter={lex:TranslateConverter}, Mode=OneWay}" />
+                </TextBlock>
+            </MenuItem.Header>
+        </MenuItem>
+        <Separator />
         <MenuItem
-            Header="{Binding ComputerName}"
-            Icon="{materialDesign:PackIcon Kind=DesktopWindows}"
-            IsEnabled="False" />
+            Command="{Binding SendMessageCommand}"
+            Header="{lex:Loc TrayContextMenu.SendMessageToTeacher}"
+            Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
         <Separator />
         <MenuItem
             Command="{Binding SettingsCommand}"
@@ -25,7 +34,8 @@
             Header="{lex:Loc TrayContextMenu.About}"
             Icon="{materialDesign:PackIcon Kind=Info}" />
         <Separator />
-        <MenuItem Header="{Binding ConnectionStatusText, Converter={lex:TranslateConverter}}" IsEnabled="False" />
+        <!--<MenuItem Header="{Binding ConnectionStatusText, Converter={lex:TranslateConverter}}" IsEnabled="False" />-->
+        <!--<Separator />-->
         <MenuItem
             Command="{Binding UpdaterCommand}"
             Header="{Binding UpdaterStatus, Converter={lex:TranslateConverter}}"
