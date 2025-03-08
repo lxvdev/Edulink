@@ -3,6 +3,7 @@ using Edulink.Communication.Classes;
 using Edulink.Communication.Models;
 using Edulink.Models;
 using System;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -54,11 +55,24 @@ namespace Edulink.Core
                 EdulinkCommand command = await helper.ReceiveCommandAsync(TimeSpan.FromSeconds(5));
                 if (string.IsNullOrEmpty(command.Command) || !command.Command.Equals("CONNECT"))
                 {
-                    Console.WriteLine("Invalid or no connection command received. Closing connection.");
+                    Debug.WriteLine("Invalid or no connection command received. Closing connection.");
                     return;
                 }
 
-                client = new Client(helper, command.Parameters["Name"], command.Parameters["Version"]);
+                if (command.Parameters == null && command.Parameters["Name"] == null && command.Parameters["Version"] == null)
+                {
+                    Debug.WriteLine("Invalid connection command parameters. Closing connection.");
+                    return;
+                }
+
+                if (!command.Parameters.ContainsKey("UpdateAvailable"))
+                {
+                    command.Parameters.Add("UpdateAvailable", null);
+                }
+
+                bool? updateAvailable = string.IsNullOrEmpty(command.Parameters["UpdateAvailable"]) ? null : (bool?)bool.Parse(command.Parameters["UpdateAvailable"]);
+
+                client = new Client(helper, command.Parameters["Name"], command.Parameters["Version"], updateAvailable);
 
                 ClientConnected?.Invoke(this, new ClientConnectedEventArgs(client));
 
