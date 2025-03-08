@@ -7,20 +7,27 @@ namespace Edulink.Models
 {
     public class Client : ViewModelBase, IDisposable
     {
-        public Client(TcpHelper helper, string name, string version)
+        public Client(TcpHelper helper, string name, string version, bool? updateAvailable)
         {
             Helper = helper;
             Name = name;
             Version = version;
-            ConnectionTime = DateTime.Now;
+            UpdateAvailable = updateAvailable;
+            ConnectionTimestamp = DateTime.Now;
             Endpoint = Helper?.Client.Client.RemoteEndPoint.ToString();
+            ID = Guid.NewGuid();
         }
 
         public TcpHelper Helper { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
-        public DateTime ConnectionTime { get; set; }
+        public bool? UpdateAvailable { get; set; }
+
+        public DateTime ConnectionTimestamp { get; set; }
         public string Endpoint { get; set; }
+        public Guid ID { get; set; }
+
+        public TimeSpan ConnectionElapsed => DateTime.Now - ConnectionTimestamp;
 
         private bool _isExcludedFromPreview;
         public bool IsExcludedFromPreview
@@ -32,7 +39,6 @@ namespace Edulink.Models
                 OnPropertyChanged();
             }
         }
-
 
         private BitmapImage _preview;
         public BitmapImage Preview
