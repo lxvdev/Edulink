@@ -1,10 +1,15 @@
 ﻿using Edulink.Classes;
+using Edulink.Models;
+using Edulink.Views;
+using Hardcodet.Wpf.TaskbarNotification;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using WPFLocalizeExtension.Engine;
 
 namespace Edulink
 {
@@ -16,57 +21,116 @@ namespace Edulink
         public static SettingsManager SettingsManager = new SettingsManager();
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
 
-        protected override void OnStartup(StartupEventArgs e)
+        public static TaskbarIcon TaskbarIcon;
+
+        public static BalloonTipType ActiveBalloonTipType;
+
+        private Mutex mutex;
+        bool allowMultipleInstances = false;
+
+        #region Update properties
+        public static event EventHandler UpdateAvailableChanged;
+
+        private static bool? _updateAvailable = null;
+        public static bool? UpdateAvailable
         {
-            base.OnStartup(e);
-            SetLanguage(SettingsManager.Settings.Language);
-            ApplyTheme(SettingsManager.Settings.Theme);
-        }
-
-        #region Language
-        public static void SetLanguage(string locale = null)
-        {
-            string cultureName = locale ?? CultureInfo.InstalledUICulture.ToString();
-
-            string resourcePath = GetLanguageDictionaryPath(cultureName);
-
-            ResourceDictionary newDictionary = new ResourceDictionary();
-            try
+            get => _updateAvailable;
+            set
             {
-                newDictionary.Source = new Uri(resourcePath, UriKind.Relative);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Could not find the specified language: {ex.Message}");
-
-                resourcePath = GetLanguageDictionaryPath("en-US");
-                newDictionary.Source = new Uri(resourcePath, UriKind.Relative);
-                cultureName = "en-US";
-            }
-
-            ResourceDictionary existingDictionary = Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.StartsWith("..\\Languages\\"));
-            if (existingDictionary != null)
-            {
-                Current.Resources.MergedDictionaries.Remove(existingDictionary);
-            }
-
-            Current.Resources.MergedDictionaries.Add(newDictionary);
-        }
-
-        private static string GetLanguageDictionaryPath(string cultureName)
-        {
-            switch (cultureName)
-            {
-                case "en-US":
-                case "es-ES":
-                case "ro-RO":
-                case "pl-PL":
-                    return $"..\\Languages\\{cultureName}.xaml";
-                default:
-                    return "..\\Languages\\en-US.xaml";
+                if (_updateAvailable != value)
+                {
+                    _updateAvailable = value;
+                    UpdateAvailableChanged?.Invoke(null, EventArgs.Empty);
+                }
             }
         }
         #endregion
+
+        public App()
+        {
+            TaskbarIcon = new TaskbarIcon
+            {
+                Icon = Edulink.Properties.Resources.Edulink_Server,
+                ToolTipText = "Edulink",
+                NoLeftClickDelay = true
+            };
+
+            TaskbarIcon.TrayBalloonTipClicked += TaskbarIcon_TrayBalloonTipClicked;
+            // Set up culture
+            LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+            LocalizeDictionary.Instance.Culture = !string.IsNullOrEmpty(SettingsManager.Settings.Language) ? new CultureInfo(SettingsManager.Settings.Language) : CultureInfo.InstalledUICulture;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            ApplyTheme(SettingsManager.Settings.Theme);
+
+            bool isPrimaryInstance;
+
+            if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
+            {
+                SettingsManager.Load(e.Args[1]);
+                SettingsManager.Save(true);
+                Environment.Exit(0);
+                return;
+            }
+            if (e.Args.Length == 1 && e.Args[0] == "--reset-settings")
+            {
+                SettingsManager.Load(e.Args[1]);
+                SettingsManager.Save(true);
+                Environment.Exit(0);
+                return;
+            }
+            else
+            {
+                try
+                {
+                    mutex = new Mutex(true, "EdulinkServerMutex", out isPrimaryInstance);
+
+                    if (!isPrimaryInstance && !allowMultipleInstances)
+                    {
+                        MessageDialog.ShowLocalized("Message.Content.AlreadyRunning", MessageDialogTitle.Information, MessageDialogButton.Ok, MessageDialogIcon.Information);
+                        Environment.Exit(0);
+                        return;
+                    }
+                }
+                catch (AbandonedMutexException)
+                {
+                    isPrimaryInstance = true;
+                }
+            }
+
+            base.OnStartup(e);
+
+            if (SettingsManager.Settings.CheckForUpdates)
+            {
+                _ = CheckForUpdates();
+            }
+        }
+
+        private void TaskbarIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
+        {
+            if (ActiveBalloonTipType == BalloonTipType.Update)
+            {
+                UpdaterDialog updaterDialog = new UpdaterDialog();
+                updaterDialog.ShowDialog();
+            }
+        }
+
+        private async Task CheckForUpdates()
+        {
+            UpdateAvailable = null;
+
+            ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
+            UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+            if (UpdateAvailable == true)
+            {
+                ActiveBalloonTipType = BalloonTipType.Update;
+                TaskbarIcon.ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.UpdateAvailable"],
+                                           string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.UpdateAvailable"], releaseDetails.Version),
+                                           BalloonIcon.Info);
+            }
+        }
 
         private void ApplyTheme(string theme)
         {
@@ -86,6 +150,12 @@ namespace Edulink
             }
 
             _paletteHelper.SetTheme(materialTheme);
+        }
+
+        public enum BalloonTipType
+        {
+            Update,
+            PCDisconnected
         }
 
         public static void RestartApp()
