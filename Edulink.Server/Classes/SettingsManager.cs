@@ -1,8 +1,8 @@
 ﻿using Edulink.Models;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows;
 using System.Xml.Serialization;
 
 namespace Edulink.Classes
@@ -24,13 +24,14 @@ namespace Edulink.Classes
             Load();
         }
 
-        private void Load()
+        public void Load(string path = null)
         {
+            string settingsFile = path ?? _settingsFile;
             try
             {
-                if (File.Exists(_settingsFile))
+                if (File.Exists(settingsFile))
                 {
-                    using (StreamReader reader = new StreamReader(_settingsFile))
+                    using (StreamReader reader = new StreamReader(settingsFile))
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                         Settings = (Settings)serializer.Deserialize(reader);
@@ -43,12 +44,12 @@ namespace Edulink.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading settings: {ex.Message}");
+                Debug.WriteLine($"Error loading settings: {ex.Message}");
                 Settings = Settings ?? new Settings();
             }
         }
 
-        public void Save()
+        public void Save(bool noRetry = false)
         {
             try
             {
@@ -66,7 +67,34 @@ namespace Edulink.Classes
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving settings: {ex.Message}");
+                if (noRetry)
+                {
+                    return;
+                }
+                Debug.WriteLine($"Error saving settings: {ex.Message}");
+                string tempPath = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name);
+                string tempSettings = Path.Combine(tempPath, "settings_temp.xml");
+
+                if (!Directory.Exists(tempPath))
+                {
+                    Directory.CreateDirectory(tempPath);
+                }
+
+                using (StreamWriter writer = new StreamWriter(tempSettings))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Settings));
+                    serializer.Serialize(writer, Settings);
+                }
+
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = Process.GetCurrentProcess().MainModule.FileName,
+                    Arguments = $"--apply-settings \"{tempSettings}\"",
+                    UseShellExecute = true,
+                    Verb = "runas"
+                };
+
+                Process.Start(psi);
             }
         }
 
@@ -74,7 +102,7 @@ namespace Edulink.Classes
         {
             Settings = new Settings();
             Save();
-            Console.WriteLine("Settings have been reset to default values.");
+            Debug.WriteLine("Settings have been reset to default values.");
         }
     }
 }
