@@ -1,4 +1,5 @@
-﻿using Edulink.ViewModels;
+﻿using Edulink.Classes;
+using Edulink.ViewModels;
 using System.Windows;
 
 namespace Edulink.Views
@@ -39,6 +40,12 @@ namespace Edulink.Views
 
             }
             else { return new MessageDialogResult(MessageDialogButtonResult.None); }
+        }
+
+        public static MessageDialogResult ShowLocalized(string messageKey, string title = null, MessageDialogButton button = MessageDialogButton.Ok, MessageDialogIcon icon = MessageDialogIcon.None)
+        {
+            string message = LocalizedStrings.Instance[messageKey];
+            return Show(message, title, button, icon);
         }
     }
 
@@ -86,9 +93,9 @@ namespace Edulink.Views
 
     public static class MessageDialogTitle
     {
-        public static string Error => (string)Application.Current.TryFindResource("Message.Title.Error");
-        public static string Information => (string)Application.Current.TryFindResource("Message.Title.Information");
-        public static string Warning => (string)Application.Current.TryFindResource("Message.Title.Warning");
-        public static string Success => (string)Application.Current.TryFindResource("Message.Title.Success");
+        public static string Error => LocalizedStrings.Instance["Message.Title.Error"];
+        public static string Information => LocalizedStrings.Instance["Message.Title.Information"];
+        public static string Warning => LocalizedStrings.Instance["Message.Title.Warning"];
+        public static string Success => LocalizedStrings.Instance["Message.Title.Success"];
     }
 }

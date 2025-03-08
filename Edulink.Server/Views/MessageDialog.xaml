@@ -2,7 +2,9 @@
     x:Class="Edulink.Views.MessageDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:local="clr-namespace:Edulink"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +15,9 @@
     MinWidth="360"
     MinHeight="100"
     MaxWidth="500"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
     FontFamily="{StaticResource Inter}"
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
@@ -66,35 +71,40 @@
                 Margin="5,0,0,0"
                 d:Visibility="Collapsed"
                 Command="{Binding ReplyCommand}"
-                Content="{DynamicResource Message.Reply}"
+                Content="{lex:Loc MessageDialog.Reply,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Visibility="{Binding ReplyButtonVisibility}" />
             <Button
                 Margin="5,0,0,0"
                 d:Visibility="Collapsed"
                 Command="{Binding CancelCommand}"
-                Content="{DynamicResource Message.Cancel}"
+                Content="{lex:Loc MessageDialog.Cancel,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Visibility="{Binding CancelButtonVisibility}" />
             <Button
                 Margin="5,0,0,0"
                 d:Visibility="Visible"
                 Command="{Binding OkCommand}"
-                Content="{DynamicResource Message.Ok}"
+                Content="{lex:Loc MessageDialog.Ok,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Visibility="{Binding OkButtonVisibility}" />
             <Button
                 Margin="5,0,0,0"
                 d:Visibility="Collapsed"
                 Command="{Binding NoCommand}"
-                Content="{DynamicResource Message.No}"
+                Content="{lex:Loc MessageDialog.No,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Visibility="{Binding NoButtonVisibility}" />
             <Button
                 Margin="5,0,0,0"
                 d:Visibility="Collapsed"
                 Command="{Binding YesCommand}"
-                Content="{DynamicResource Message.Yes}"
+                Content="{lex:Loc MessageDialog.Yes,
+                                  Converter={lex:ToUpperConverter}}"
                 Style="{StaticResource MaterialDesignFlatButton}"
                 Visibility="{Binding YesButtonVisibility}" />
         </StackPanel>
