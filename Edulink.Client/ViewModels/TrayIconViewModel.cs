@@ -36,7 +36,7 @@ namespace Edulink.ViewModels
                 }
                 else if (UpdateAvailable == false)
                 {
-                    return "TrayContextMenu.Updater.None";
+                    return "TrayContextMenu.Updater.UpToDate";
                 }
                 else
                 {
