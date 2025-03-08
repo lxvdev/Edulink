@@ -26,7 +26,6 @@
                 </materialDesign:BundledTheme>
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-                <ResourceDictionary Source="/Languages/en-US.xaml" />
 
                 <ResourceDictionary Source="/Resources/ClientTooltip.xaml" />
                 <ResourceDictionary Source="/Resources/ClientContextMenu.xaml" />
