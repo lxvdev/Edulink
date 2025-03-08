@@ -2,7 +2,9 @@
     x:Class="Edulink.Views.SettingsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Edulink.Classes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:local="clr-namespace:Edulink"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,6 +15,9 @@
     d:DataContext="{d:DesignInstance vm:SettingsWindowViewModel,
                                      IsDesignTimeCreatable=True}"
     d:Height="700"
+    lex:LocalizeDictionary.DesignCulture="{x:Static converters:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static converters:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static converters:LocalizationConfig.DefaultDictionary}"
     FontFamily="{StaticResource Inter}"
     Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
@@ -25,7 +30,7 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Connection.Header}" />
+                        Text="{lex:Loc Settings.Connection}" />
 
                     <TextBox
                         x:Name="PortTextBox"
@@ -33,9 +38,8 @@
                         Padding="16,16,16,8"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        materialDesign:HintAssist.Hint="{DynamicResource Settings.Port.Hint}"
+                        materialDesign:HintAssist.Hint="{lex:Loc Settings.Conenction.Port}"
                         materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
-                        materialDesign:ValidationAssist.UsePopup="True"
                         MaxLength="4"
                         Style="{StaticResource MaterialDesignFilledTextBox}"
                         Text="{Binding Port, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
@@ -46,12 +50,12 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Preview.Header}" />
+                        Text="{lex:Loc Settings.Preview}" />
 
                     <CheckBox
                         Margin="0,0,0,5"
                         materialDesign:CheckBoxAssist.CheckBoxSize="20"
-                        Content="{DynamicResource Settings.Preview.Enable}"
+                        Content="{lex:Loc Settings.Preview.Enabled}"
                         Cursor="Hand"
                         IsChecked="{Binding PreviewEnabled}" />
 
@@ -65,10 +69,14 @@
                         TickFrequency="500"
                         TickPlacement="BottomRight"
                         Value="{Binding PreviewFrequency}" />
-                    <TextBlock
-                        Margin="0,0,0,5"
-                        Style="{StaticResource MaterialDesignBody1TextBlock}"
-                        Text="{Binding PreviewFrequency, StringFormat={StaticResource Settings.Preview.Frequency}}" />
+                    <TextBlock Margin="0,0,0,5" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{lex:StringFormatConverter}">
+                                <Binding Source="{lex:Loc Settings.Preview.Frequency}" />
+                                <Binding Mode="OneWay" Path="PreviewFrequency" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </StackPanel>
 
                 <!--  Miscellaneous  -->
@@ -76,7 +84,7 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Miscellaneous.Header}" />
+                        Text="{lex:Loc Settings.Miscellaneous}" />
 
                     <Button
                         Margin="0,0,0,5"
@@ -85,7 +93,7 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ApplicationOutline" />
-                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.RestartApplication}" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.RestartApplication}" />
                         </StackPanel>
                     </Button>
 
@@ -96,7 +104,7 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Clear" />
-                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.ResetSettings}" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.ResetSettings}" />
                         </StackPanel>
                     </Button>
 
@@ -107,7 +115,7 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ContentSaveEdit" />
-                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.Save}" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.Save}" />
                         </StackPanel>
                     </Button>
 
@@ -118,7 +126,7 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Close" />
-                            <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.Miscellaneous.ExitApplication}" />
+                            <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.Miscellaneous.ExitApplication}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -128,7 +136,7 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Language.Header}" />
+                        Text="{lex:Loc Settings.Language}" />
 
                     <ComboBox
                         x:Name="LanguageComboBox"
@@ -147,21 +155,28 @@
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="{DynamicResource Settings.Theme.Header}" />
+                        Text="{lex:Loc Settings.Theme}" />
 
                     <ComboBox
                         x:Name="ThemeComboBox"
                         SelectedValue="{Binding Theme, Mode=TwoWay}"
                         SelectedValuePath="Tag"
                         Style="{StaticResource MaterialDesignFilledComboBox}">
-                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Auto}" Tag="Auto" />
-                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Light}" Tag="Light" />
-                        <ComboBoxItem Content="{DynamicResource Settings.Theme.Dark}" Tag="Dark" />
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Auto}" Tag="Auto" />
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Light}" Tag="Light" />
+                        <ComboBoxItem Content="{lex:Loc Settings.Theme.Dark}" Tag="Dark" />
                     </ComboBox>
                 </StackPanel>
 
                 <!--  IP Address  -->
-                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding IPAddresses, StringFormat={StaticResource Settings.IPAddress}}" />
+                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">
+                    <TextBlock.Text>
+                        <MultiBinding Converter="{lex:StringFormatConverter}">
+                            <Binding Source="{lex:Loc Settings.IPAddress}" />
+                            <Binding Mode="OneWay" Path="IPAddresses" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
             </StackPanel>
         </ScrollViewer>
 
@@ -176,7 +191,7 @@
                     Height="16"
                     Margin="-4,0,8,0"
                     Kind="ContentSave" />
-                <TextBlock VerticalAlignment="Center" Text="{DynamicResource Settings.SaveAndRestart}" />
+                <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.SaveAndRestart}" />
             </StackPanel>
         </Button>
     </Grid>
