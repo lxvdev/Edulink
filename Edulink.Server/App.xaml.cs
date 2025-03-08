@@ -155,7 +155,7 @@ namespace Edulink
         public enum BalloonTipType
         {
             Update,
-            PCDisconnected
+            ComputerDisconnected
         }
 
         public static void RestartApp()
