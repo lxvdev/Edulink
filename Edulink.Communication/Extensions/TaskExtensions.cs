@@ -8,6 +8,11 @@ namespace Edulink.Communication.Classes
     {
         public static async Task<T> WithCancellation<T>(this Task<T> task, CancellationToken cancellationToken)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
             var completedTask = await Task.WhenAny(task, Task.Delay(Timeout.Infinite, cancellationToken));
             if (completedTask == task)
             {
