@@ -7,7 +7,6 @@
 [Setup]
 SourceDir=C:\Users\lxvdev\source\repos\Edulink\Edulink.Client.Setup
 CloseApplications=yes
-Uninstallable=yes
 AppId={{4D5D80A0-D70E-4BCD-B181-EE1F68EDAB32}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
@@ -17,13 +16,12 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}/releases
 DefaultDirName={autopf}\{#MyAppName}
-DisableDirPage=no
 UninstallDisplayIcon={app}\{#MyAppExeName}
 DisableProgramGroupPage=yes
 LicenseFile=..\LICENSE.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only).
 ;PrivilegesRequired=lowest
-OutputDir=\Output
+OutputDir=.\Output
 OutputBaseFilename=Edulink Client Setup
 SetupIconFile=..\Edulink.Client\Resources\Edulink.Client.ico
 SolidCompression=yes
@@ -32,13 +30,23 @@ WizardStyle=modern
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
+[Tasks]
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
 [Files]
 Source: "..\Edulink.Client\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Edulink.Client\bin\Release\*"; Excludes: "*.pdb, *.xml, *.config"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
+[Icons]
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall
+
+[UninstallRun]
+Filename: "schtasks.exe"; Parameters: "/delete /tn ""EdulinkClientTask"" /f"; RunOnceId: "TaskRemove"; Flags: runhidden
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{app}"
@@ -95,7 +103,7 @@ procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    if MsgBox('Would you like to keep the settings?', mbConfirmation, MB_YESNO or MB_DEFBUTTON1) = IDNO then
+    if MsgBox('Would you like to keep the settings?', mbConfirmation, MB_YESNO or MB_DEFBUTTON2) = IDNO then
     begin
         DelTree(ExpandConstant('{commonappdata}\Edulink Client'), True, True, True);
     end;
