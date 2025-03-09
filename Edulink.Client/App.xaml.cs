@@ -107,6 +107,10 @@ namespace Edulink
                     return;
                 }
             }
+            else if (e.Args.Length == 1 && e.Args[0] == "--allow-multiple-instances")
+            {
+                Debug.WriteLine("Allowing multiple instances");
+            }
             else
             {
                 try
