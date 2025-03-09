@@ -63,9 +63,9 @@ namespace Edulink
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            ApplyTheme(SettingsManager.Settings.Theme);
-
             bool isPrimaryInstance;
+
+            ApplyTheme(SettingsManager.Settings.Theme);
 
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
