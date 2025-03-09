@@ -63,9 +63,9 @@ namespace Edulink
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            ApplyTheme(SettingsManager.Settings.Theme);
-
             bool isPrimaryInstance;
+
+            ApplyTheme(SettingsManager.Settings.Theme);
 
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
@@ -82,6 +82,8 @@ namespace Edulink
             }
             else if (e.Args.Length == 1 && e.Args[0] == "--startup")
             {
+                mutex = new Mutex(true, "EdulinkClientMutex", out isPrimaryInstance);
+
                 // Foolproof way to check if the application is already running because anyone with the enough knowledge can bypass the mutex
                 Process process = Process.GetCurrentProcess();
 
