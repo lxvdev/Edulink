@@ -76,10 +76,14 @@ namespace Edulink
             }
             if (e.Args.Length == 1 && e.Args[0] == "--reset-settings")
             {
-                SettingsManager.Load(e.Args[1]);
-                SettingsManager.Save(noRetry: true);
+                SettingsManager.Reset();
+                SettingsManager.Save();
                 Environment.Exit(0);
                 return;
+            }
+            else if (e.Args.Length == 1 && e.Args[0] == "--allow-multiple-instances")
+            {
+                Debug.WriteLine("Allowing multiple instances");
             }
             else
             {
