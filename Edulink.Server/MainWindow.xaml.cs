@@ -59,7 +59,7 @@ namespace Edulink
             RelayCommand showWindowCommand = new RelayCommand(execute =>
             {
                 this.WindowState = WindowState.Normal;
-                this.Activate();
+                this.Focus();
             });
 
             App.TaskbarIcon.LeftClickCommand = showWindowCommand;
@@ -73,7 +73,7 @@ namespace Edulink
             if (App.ActiveBalloonTipType == App.BalloonTipType.ComputerDisconnected)
             {
                 this.WindowState = WindowState.Normal;
-                this.Activate();
+                this.Focus();
             }
         }
 
@@ -171,24 +171,39 @@ namespace Edulink
         {
             if (_settingsWindow == null || !_settingsWindow.IsVisible)
             {
+                _settingsWindow?.Close();
                 _settingsWindow = new SettingsWindow();
                 _settingsWindow.Show();
             }
             else
             {
+                _settingsWindow.WindowState = WindowState.Normal;
                 _settingsWindow.Focus();
             }
+        }
+
+        private void AlwaysOnTopItem_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            this.Topmost = (sender as MenuItem).IsChecked;
+        }
+
+        private void UpdaterItem_Click(object sender, RoutedEventArgs e)
+        {
+            UpdaterDialog updaterDialog = new UpdaterDialog();
+            updaterDialog.Show();
         }
 
         private void AboutItem_Click(object sender, RoutedEventArgs e)
         {
             if (_aboutDialog == null || !_aboutDialog.IsVisible)
             {
+                _aboutDialog?.Close();
                 _aboutDialog = new AboutDialog();
                 _aboutDialog.Show();
             }
             else
             {
+                _aboutDialog.WindowState = WindowState.Normal;
                 _aboutDialog.Focus();
             }
         }
@@ -219,17 +234,6 @@ namespace Edulink
             }
             _settingsWindow = null;
             _server?.Dispose();
-        }
-
-        private void AlwaysOnTopItem_CheckChanged(object sender, RoutedEventArgs e)
-        {
-            this.Topmost = (sender as MenuItem).IsChecked;
-        }
-
-        private void UpdaterItem_Click(object sender, RoutedEventArgs e)
-        {
-            UpdaterDialog updaterDialog = new UpdaterDialog();
-            updaterDialog.Show();
         }
     }
 }
