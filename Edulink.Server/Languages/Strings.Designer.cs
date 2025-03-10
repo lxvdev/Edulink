@@ -502,6 +502,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to leave without saving changes?.
+        /// </summary>
+        internal static string Message_Content_AreYouSureYouWantToLeaveWithoutSavingChanges {
+            get {
+                return ResourceManager.GetString("Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Couldn&apos;t initialize server. Please change the settings..
         /// </summary>
         internal static string Message_Content_CouldntInitializeServer {
