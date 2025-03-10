@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
@@ -96,45 +97,60 @@ namespace Edulink.ViewModels
             }
         }
 
-        SettingsWindow settingsWindow;
+        private SettingsWindow _settingsWindow;
 
         public ICommand SettingsCommand => new RelayCommand(execute => OpenSettings());
         private void OpenSettings()
         {
             if (App.ValidateCredentials())
             {
-                if (settingsWindow == null)
+                if (_settingsWindow == null || !_settingsWindow.IsVisible)
                 {
-                    settingsWindow = new SettingsWindow();
-                    settingsWindow.Closing += (sender, e) => settingsWindow = null;
-                    settingsWindow.Show();
+                    _settingsWindow?.Close();
+                    _settingsWindow = new SettingsWindow();
+                    _settingsWindow.Show();
+                }
+                else
+                {
+                    _settingsWindow.WindowState = WindowState.Normal;
+                    _settingsWindow.Focus();
                 }
             }
         }
 
-        UpdaterDialog updaterDialog;
+        private UpdaterDialog _updaterDialog;
 
         public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
         private void OpenUpdater()
         {
-            if (updaterDialog == null)
+            if (_updaterDialog == null || !_updaterDialog.IsVisible)
             {
-                updaterDialog = new UpdaterDialog();
-                updaterDialog.Closing += (sender, e) => updaterDialog = null;
-                updaterDialog.Show();
+                _updaterDialog?.Close();
+                _updaterDialog = new UpdaterDialog();
+                _updaterDialog.Show();
+            }
+            else
+            {
+                _updaterDialog.WindowState = WindowState.Normal;
+                _updaterDialog.Focus();
             }
         }
 
-        AboutDialog aboutDialog;
+        private AboutDialog _aboutDialog;
 
         public ICommand AboutCommand => new RelayCommand(execute => OpenAbout());
         private void OpenAbout()
         {
-            if (aboutDialog == null)
+            if (_aboutDialog == null || !_aboutDialog.IsVisible)
             {
-                aboutDialog = new AboutDialog();
-                aboutDialog.Closing += (sender, e) => aboutDialog = null;
-                aboutDialog.Show();
+                _aboutDialog?.Close();
+                _aboutDialog = new AboutDialog();
+                _aboutDialog.Show();
+            }
+            else
+            {
+                _aboutDialog.WindowState = WindowState.Normal;
+                _aboutDialog.Focus();
             }
         }
 
