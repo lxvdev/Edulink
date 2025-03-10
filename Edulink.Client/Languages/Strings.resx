@@ -177,6 +177,9 @@
   <data name="Message.Content.AreYouSureWeakPassword" xml:space="preserve">
     <value>Are you sure you want to use a weak password?</value>
   </data>
+  <data name="Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges" xml:space="preserve">
+    <value>Are you sure you want to leave without saving changes?</value>
+  </data>
   <data name="Message.Content.EnterAPassword" xml:space="preserve">
     <value>Please enter a password</value>
   </data>

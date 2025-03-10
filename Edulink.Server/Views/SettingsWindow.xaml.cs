@@ -12,7 +12,9 @@ namespace Edulink.Views
         {
             InitializeComponent();
             SettingsWindowViewModel viewModel = new SettingsWindowViewModel();
+            Closing += viewModel.OnWindowClosing;
             DataContext = viewModel;
+
             PortTextBox.Focus();
         }
     }

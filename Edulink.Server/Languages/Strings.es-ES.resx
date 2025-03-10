@@ -264,6 +264,9 @@
   <data name="Message.Content.AlreadyRunning" xml:space="preserve">
     <value>La aplicación ya se está ejecutando</value>
   </data>
+  <data name="Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges" xml:space="preserve">
+    <value>¿Estás seguro de que quieres salir sin guardar los cambios?</value>
+  </data>
   <data name="Message.Content.CouldntInitializeServer" xml:space="preserve">
     <value>No se pudo inicializar el servidor. Por favor cambie la configuración.</value>
   </data>

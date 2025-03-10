@@ -244,6 +244,9 @@
   <data name="Message.Content.AlreadyRunning" xml:space="preserve">
     <value>The application is already running</value>
   </data>
+  <data name="Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges" xml:space="preserve">
+    <value>Are you sure you want to leave without saving changes?</value>
+  </data>
   <data name="Message.Content.CouldntInitializeServer" xml:space="preserve">
     <value>Couldn't initialize server. Please change the settings.</value>
   </data>

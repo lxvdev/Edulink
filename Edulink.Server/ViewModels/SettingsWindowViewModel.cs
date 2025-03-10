@@ -3,8 +3,10 @@ using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
@@ -15,6 +17,7 @@ namespace Edulink.ViewModels
     {
         private SettingsManager _settingsManager = App.SettingsManager;
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
+        private readonly HashSet<string> _unsavedProperties = new HashSet<string>();
 
         private string _port;
         public string Port
@@ -27,6 +30,7 @@ namespace Edulink.ViewModels
                     _port = value;
                     ValidatePort();
                     OnPropertyChanged();
+                    TrackUnsavedChanges(_settingsManager.Settings.Port == 0 ? string.Empty : _settingsManager.Settings.Port.ToString());
                 }
             }
         }
@@ -55,6 +59,7 @@ namespace Edulink.ViewModels
                 {
                     _previewEnabled = value;
                     OnPropertyChanged();
+                    TrackUnsavedChanges(_settingsManager.Settings.PreviewEnabled);
                 }
             }
         }
@@ -69,6 +74,7 @@ namespace Edulink.ViewModels
                 {
                     _previewFrequency = value;
                     OnPropertyChanged();
+                    TrackUnsavedChanges(_settingsManager.Settings.PreviewFrequency);
                 }
             }
         }
@@ -84,6 +90,7 @@ namespace Edulink.ViewModels
                     _language = value;
                     LocalizeDictionary.Instance.Culture = value;
                     OnPropertyChanged();
+                    TrackUnsavedChanges(!string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture);
                 }
             }
         }
@@ -102,6 +109,7 @@ namespace Edulink.ViewModels
                         ApplyTheme(value);
                     }
                     OnPropertyChanged();
+                    TrackUnsavedChanges(_settingsManager.Settings.Theme);
                 }
             }
         }
@@ -129,6 +137,8 @@ namespace Edulink.ViewModels
                 _settingsManager.Settings.Language = Language.Equals(CultureInfo.InstalledUICulture) ? null : Language.ToString();
                 _settingsManager.Settings.Theme = Theme;
                 _settingsManager.Save();
+
+                _unsavedProperties.Clear();
 
                 if (restart)
                     App.RestartApp();
@@ -177,6 +187,41 @@ namespace Edulink.ViewModels
             }
 
             _paletteHelper.SetTheme(materialTheme);
+        }
+
+        private bool HasUnsavedChanges()
+        {
+            return _unsavedProperties.Count > 0;
+        }
+
+        private void TrackUnsavedChanges(object originalValue, [CallerMemberName] string propertyName = null)
+        {
+            object newValue = GetType().GetProperty(propertyName)?.GetValue(this);
+
+            if (Equals(originalValue, newValue))
+            {
+                _unsavedProperties.Remove(propertyName);
+            }
+            else
+            {
+                _unsavedProperties.Add(propertyName);
+            }
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            if (HasUnsavedChanges())
+            {
+                MessageDialogResult dialogResult = MessageDialog.ShowLocalized("Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges", MessageDialogTitle.Warning, MessageDialogButton.YesNo, MessageDialogIcon.Warning);
+                if (dialogResult.ButtonResult == MessageDialogButtonResult.Yes)
+                {
+                    LoadSettings();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }
