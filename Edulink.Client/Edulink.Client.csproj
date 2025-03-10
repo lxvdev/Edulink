@@ -218,7 +218,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Languages\Strings.en-US.resx" />
     <EmbeddedResource Include="Languages\Strings.es-ES.resx" />
     <EmbeddedResource Include="Languages\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
