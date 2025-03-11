@@ -6,13 +6,13 @@
 
 Seamless classroom control at your fingertips
 
-![Discord](https://img.shields.io/discord/1308186919913390121?style=for-the-badge&logo=discord&logoColor=white)
-![GitHub License](https://img.shields.io/github/license/lxvdev/Edulink?style=for-the-badge)
+[![Discord](https://img.shields.io/discord/1308186919913390121?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/qdRAdczxPS)
+[![GitHub License](https://img.shields.io/github/license/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/blob/master/LICENSE.txt)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/lxvdev/Edulink?style=for-the-badge)
-![GitHub Repo stars](https://img.shields.io/github/stars/lxvdev/Edulink?style=for-the-badge)
+[![GitHub Repo stars](https://img.shields.io/github/stars/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/stargazers)
 
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/lxvdev/Edulink?style=for-the-badge)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/lxvdev/Edulink?style=for-the-badge)
+[![GitHub Issues](https://img.shields.io/github/issues/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/pulls)
 
 # Download
 ### Server - [Download v2.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.0.0-server)
