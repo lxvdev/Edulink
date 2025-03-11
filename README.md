@@ -10,7 +10,7 @@ Seamless classroom control at your fingertips
 The versions of the client and the server aren't the same, so make sure to download the correct version for each one.
 
 # Important
-If a student tries to kill the Edulink process you can press <kbd> ![Windows Key Light](https://upload.wikimedia.org/wikipedia/commons/6/6a/Windows_logo_-_2021_%28White%29.svg#gh-dark-mode-only) ![Windows Key Dark](https://upload.wikimedia.org/wikipedia/commons/c/c4/Windows_logo_-_2021_%28Black%29.svg#gh-light-mode-only)</kbd> + <kbd>L</kbd> to lock the screen and then unlock it to restart the application automatically.
+If a student tries to kill the Edulink process you can press <kbd>![Windows Key Light](https://upload.wikimedia.org/wikipedia/commons/6/6a/Windows_logo_-_2021_%28White%29.svg#gh-dark-mode-only) ![Windows Key Dark](https://upload.wikimedia.org/wikipedia/commons/c/c4/Windows_logo_-_2021_%28Black%29.svg#gh-light-mode-only)</kbd> + <kbd>L</kbd> to lock the screen and then unlock it to restart the application automatically.
 
 You can also search the application in the start menu and start it from there.
 
