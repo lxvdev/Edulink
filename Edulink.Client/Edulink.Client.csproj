@@ -281,6 +281,9 @@
   <ItemGroup>
     <Resource Include="Models\NOTE.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Classes\NOTE.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
