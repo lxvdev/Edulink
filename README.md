@@ -10,6 +10,7 @@ Seamless classroom control at your fingertips
 ![GitHub License](https://img.shields.io/github/license/lxvdev/Edulink?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/lxvdev/Edulink?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/lxvdev/Edulink?style=for-the-badge)
+
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/lxvdev/Edulink?style=for-the-badge)
 ![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/lxvdev/Edulink?style=for-the-badge)
 
