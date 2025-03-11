@@ -90,7 +90,7 @@ namespace Edulink.ViewModels
                     _language = value;
                     LocalizeDictionary.Instance.Culture = value;
                     OnPropertyChanged();
-                    TrackUnsavedChanges(!string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture);
+                    TrackUnsavedChanges(!string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.InstalledUICulture);
                 }
             }
         }
@@ -165,7 +165,7 @@ namespace Edulink.ViewModels
             Port = _settingsManager.Settings.Port == 0 ? string.Empty : _settingsManager.Settings.Port.ToString();
             PreviewEnabled = _settingsManager.Settings.PreviewEnabled;
             PreviewFrequency = _settingsManager.Settings.PreviewFrequency;
-            Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture;
+            Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.InstalledUICulture;
             Theme = _settingsManager.Settings.Theme;
         }
 

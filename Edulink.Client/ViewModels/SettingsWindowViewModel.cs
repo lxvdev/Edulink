@@ -117,7 +117,7 @@ namespace Edulink.ViewModels
                     LocalizeDictionary.Instance.Culture = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(PasswordButtonText));
-                    TrackUnsavedChanges(!string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture);
+                    TrackUnsavedChanges(!string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.InstalledUICulture);
                 }
             }
         }
@@ -202,7 +202,7 @@ namespace Edulink.ViewModels
             Name = _settingsManager.Settings.Name;
             IPAddress = _settingsManager.Settings.IPAddress;
             Port = _settingsManager.Settings.Port == 0 ? string.Empty : _settingsManager.Settings.Port.ToString();
-            Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.CurrentUICulture;
+            Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.InstalledUICulture;
             Theme = _settingsManager.Settings.Theme;
         }
 
