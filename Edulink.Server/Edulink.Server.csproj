@@ -206,6 +206,7 @@
     <EmbeddedResource Include="Languages\Strings.es-ES.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Strings.pl-PL.resx" />
     <EmbeddedResource Include="Languages\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
