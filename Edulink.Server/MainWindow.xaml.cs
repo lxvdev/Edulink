@@ -8,6 +8,7 @@ using Edulink.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -80,23 +81,26 @@ namespace Edulink
         #region Handle received commands
         private async void Server_CommandReceivedAsync(object sender, Server.CommandReceivedEventArgs e)
         {
-            switch (e.Command.Command)
+            string command = e.Command.Command;
+            if (command == Commands.ViewDesktop.ToString())
             {
-                case Commands.Desktop:
-                    HandleDesktop(e);
-                    break;
-                case Commands.Preview:
-                    HandlePreview(e);
-                    break;
-                case Commands.Message:
-                    await HandleMessageAsync(e);
-                    break;
-                case Commands.Disconnect:
-                    e.Client.Helper.Dispose();
-                    break;
-                default:
-                    Console.WriteLine($"Unknown command received from {e.Client.Name}: {e.Command.Command}");
-                    break;
+                HandleDesktop(e);
+            }
+            else if (command == Commands.Preview.ToString())
+            {
+                HandlePreview(e);
+            }
+            else if (command == Commands.Message.ToString())
+            {
+                await HandleMessageAsync(e);
+            }
+            else if (command == Commands.Disconnect.ToString())
+            {
+                e.Client.Helper.Dispose();
+            }
+            else
+            {
+                Debug.WriteLine($"Unknown command received from {e.Client.Name}: {e.Command.Command}");
             }
         }
 
@@ -218,9 +222,9 @@ namespace Edulink
         {
             if (DataContext is MainWindowViewModel viewModel)
             {
-                if (!viewModel.DesktopCommand.CanExecute(null))
+                if (!viewModel.ViewDesktopCommand.CanExecute(null))
                     return;
-                viewModel.DesktopCommand.Execute(null);
+                viewModel.ViewDesktopCommand.Execute(null);
             }
         }
 
