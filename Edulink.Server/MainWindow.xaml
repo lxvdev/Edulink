@@ -11,7 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:Edulink.Models"
     xmlns:vm="clr-namespace:Edulink.ViewModels"
-    Title="Edulink Server"
+    Title="Edulink"
     Width="860"
     Height="480"
     MinWidth="600"
