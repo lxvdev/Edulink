@@ -241,7 +241,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteLink()
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.Link.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= Commands.Link.MinimumVersion);
         }
 
         private string PrepareUrl(string url)
@@ -286,7 +286,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteMessage()
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.Message.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= Commands.Message.MinimumVersion);
         }
         #endregion
 
@@ -321,7 +321,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteViewDesktop()
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.ViewDesktop.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= Commands.ViewDesktop.MinimumVersion);
         }
         #endregion
 
@@ -335,7 +335,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteSimpleCommand(Command command)
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= command.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= command.MinimumVersion);
         }
         #endregion
 
@@ -356,7 +356,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteBlockInput()
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.BlockInput.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= Commands.BlockInput.MinimumVersion);
         }
         #endregion
 
@@ -381,7 +381,7 @@ namespace Edulink.ViewModels
 
         private bool CanExecuteRename()
         {
-            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.RenameComputer.MinimumVersion);
+            return SelectedClients.Any() && SelectedClients.All(client => client.Version >= Commands.RenameComputer.MinimumVersion);
         }
         #endregion
 
