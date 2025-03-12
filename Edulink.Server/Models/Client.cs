@@ -10,7 +10,7 @@ namespace Edulink.Models
         private bool _disposed = false;
         public bool Disposed => _disposed;
 
-        public Client(TcpHelper helper, string name, string version, bool? updateAvailable)
+        public Client(TcpHelper helper, string name, Version version, bool? updateAvailable)
         {
             Helper = helper;
             Name = name;
@@ -23,7 +23,7 @@ namespace Edulink.Models
 
         public TcpHelper Helper { get; set; }
         public string Name { get; set; }
-        public string Version { get; set; }
+        public Version Version { get; set; }
         public bool? UpdateAvailable { get; set; }
 
         public DateTime ConnectionTimestamp { get; set; }
