@@ -128,6 +128,7 @@
       <Link>Views\UpdaterDialog.xaml.cs</Link>
       <DependentUpon>UpdaterDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\AudioControl.cs" />
     <Compile Include="Classes\InputBlocker.cs" />
     <Compile Include="Classes\IPAddressProvider.cs" />
     <Compile Include="Classes\LocalizationConfig.cs" />
