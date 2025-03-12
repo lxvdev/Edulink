@@ -29,41 +29,48 @@
         <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Window.Resources>
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Image
-            Grid.Row="0"
-            Margin="0,0,0,5"
-            RenderOptions.BitmapScalingMode="HighQuality"
-            Source="{Binding DesktopImage}"
-            Stretch="Uniform" />
-        <StackPanel
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Visibility="{Binding IsImageNotReceived, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <ProgressBar IsIndeterminate="{Binding IsImageNotReceived}" Style="{StaticResource MaterialDesignCircularProgressBar}" />
-            <TextBlock
-                Margin="8,0,0,0"
-                Style="{StaticResource MaterialDesignBody1TextBlock}"
-                Text="{lex:Loc DesktopDialog.ReceivingImage}" />
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Image
+                Grid.Row="0"
+                Margin="0,0,0,10"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="{Binding DesktopImage}"
+                Stretch="Uniform" />
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Visibility="{Binding IsImageNotReceived, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <ProgressBar IsIndeterminate="{Binding IsImageNotReceived}" Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                <TextBlock
+                    Margin="8,0,0,0"
+                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                    Text="{lex:Loc DesktopDialog.ReceivingImage}" />
+            </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Margin="0,0,5,0" Command="{Binding SaveCommand}">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ContentSave" />
-                    <TextBlock VerticalAlignment="Center" Text="{lex:Loc DesktopDialog.Save}" />
-                </StackPanel>
-            </Button>
-            <Button Command="{Binding RefreshCommand}" Style="{StaticResource MaterialDesignOutlinedButton}">
-                <StackPanel Orientation="Horizontal">
-                    <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Refresh" />
-                    <TextBlock VerticalAlignment="Center" Text="{lex:Loc DesktopDialog.Refresh}" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button Margin="0,0,5,0" Command="{Binding SaveCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="-4,0,8,0" Kind="ContentSave" />
+                        <TextBlock VerticalAlignment="Center" Text="{lex:Loc DesktopDialog.Save}" />
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding RefreshCommand}" Style="{StaticResource MaterialDesignOutlinedButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="-4,0,8,0" Kind="Refresh" />
+                        <TextBlock VerticalAlignment="Center" Text="{lex:Loc DesktopDialog.Refresh}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <materialDesign:Snackbar
+            Margin="0,0,10,0"
+            HorizontalAlignment="Right"
+            MessageQueue="{Binding SnackbarMessageQueue}" />
     </Grid>
 </Window>
