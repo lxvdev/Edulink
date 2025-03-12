@@ -1,11 +1,10 @@
 ﻿using Edulink.MVVM;
 using Edulink.Views;
-using System;
 using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
-    internal class InputDialogViewModel : ViewModelBase
+    internal class InputDialogViewModel : ClosableViewModel
     {
         public string Message { get; private set; }
         public string Title { get; private set; }
@@ -37,21 +36,15 @@ namespace Edulink.ViewModels
         private void Ok()
         {
             ButtonResult = InputDialogButtonResult.Ok;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
 
         public ICommand CancelCommand => new RelayCommand(execute => Cancel());
         private void Cancel()
         {
             ButtonResult = InputDialogButtonResult.Cancel;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
         #endregion
-
-        public event EventHandler<bool> RequestClose;
-        protected virtual void OnRequestClose(bool dialogResult)
-        {
-            RequestClose?.Invoke(this, dialogResult);
-        }
     }
 }

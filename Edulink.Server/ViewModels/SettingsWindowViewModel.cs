@@ -13,7 +13,7 @@ using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class SettingsWindowViewModel : ViewModelBase
+    public class SettingsWindowViewModel : ValidatableClosableViewModel
     {
         private SettingsManager _settingsManager = App.SettingsManager;
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();

@@ -2,14 +2,13 @@
 using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
-using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Edulink.ViewModels
 {
-    public class MessageDialogViewModel
+    public class MessageDialogViewModel : ClosableViewModel
     {
         public string Message { get; set; }
         public string Title { get; set; }
@@ -102,7 +101,7 @@ namespace Edulink.ViewModels
         private void Ok()
         {
             ButtonResult = MessageDialogButtonResult.Ok;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
 
         public ICommand ReplyCommand => new RelayCommand(execute => Reply());
@@ -113,7 +112,7 @@ namespace Edulink.ViewModels
             {
                 ReplyResult = result.InputResult;
                 ButtonResult = MessageDialogButtonResult.Reply;
-                OnRequestClose(true);
+                OnRequestDialogClose(true);
             }
         }
 
@@ -121,28 +120,22 @@ namespace Edulink.ViewModels
         private void Cancel()
         {
             ButtonResult = MessageDialogButtonResult.Cancel;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
 
         public ICommand YesCommand => new RelayCommand(execute => Yes());
         private void Yes()
         {
             ButtonResult = MessageDialogButtonResult.Yes;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
 
         public ICommand NoCommand => new RelayCommand(execute => No());
         private void No()
         {
             ButtonResult = MessageDialogButtonResult.No;
-            OnRequestClose(true);
+            OnRequestDialogClose(true);
         }
         #endregion
-
-        public event EventHandler<bool> RequestClose;
-        protected virtual void OnRequestClose(bool dialogResult)
-        {
-            RequestClose?.Invoke(this, dialogResult);
-        }
     }
 }

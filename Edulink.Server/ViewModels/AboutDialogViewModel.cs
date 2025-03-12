@@ -1,12 +1,11 @@
 ﻿using Edulink.MVVM;
-using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
-    public class AboutDialogViewModel
+    public class AboutDialogViewModel : ClosableViewModel
     {
         public string Product { get; set; }
         public string Description { get; set; }
@@ -28,12 +27,6 @@ namespace Edulink.ViewModels
         private void Github()
         {
             Process.Start("https://github.com/lxvdev/Edulink");
-        }
-
-        public event EventHandler RequestClose;
-        protected virtual void OnRequestClose()
-        {
-            RequestClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }

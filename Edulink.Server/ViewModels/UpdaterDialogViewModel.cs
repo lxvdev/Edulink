@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
-    public class UpdaterDialogViewModel : ViewModelBase
+    public class UpdaterDialogViewModel : ClosableViewModel
     {
         public string CurrentVersion => $"{Assembly.GetExecutingAssembly().GetName().Version}";
 
@@ -193,12 +193,6 @@ namespace Edulink.ViewModels
                 Debug.WriteLine($"Update error: {ex.Message}");
                 IsUpdating = false;
             }
-        }
-
-        public event EventHandler RequestClose;
-        protected virtual void OnRequestClose()
-        {
-            RequestClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }

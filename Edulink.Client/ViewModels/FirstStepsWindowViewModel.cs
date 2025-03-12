@@ -1,14 +1,13 @@
 ﻿using Edulink.Classes;
 using Edulink.MVVM;
 using Edulink.Views;
-using System;
 using System.ComponentModel;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class FirstStepsWindowViewModel : ViewModelBase
+    public class FirstStepsWindowViewModel : ValidatableClosableViewModel
     {
         private SettingsManager _settingsManager = App.SettingsManager;
 
@@ -151,12 +150,6 @@ namespace Edulink.ViewModels
         private bool CanFinish()
         {
             return !string.IsNullOrEmpty(_name) && !string.IsNullOrEmpty(_ipAddress) && !string.IsNullOrEmpty(_port) && !HasErrors;
-        }
-
-        public event EventHandler RequestClose;
-        protected virtual void OnRequestClose()
-        {
-            RequestClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }

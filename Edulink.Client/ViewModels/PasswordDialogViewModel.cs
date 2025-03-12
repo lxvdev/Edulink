@@ -11,7 +11,7 @@ using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class PasswordDialogViewModel : ViewModelBase
+    public class PasswordDialogViewModel : ClosableViewModel
     {
         public string Title
         {
@@ -196,14 +196,14 @@ namespace Edulink.ViewModels
         {
             if (await HandlePasswordAsync())
             {
-                OnRequestClose(true);
+                OnRequestDialogClose(true);
             }
         }
 
         public ICommand CancelCommand => new RelayCommand(execute => Cancel());
         private void Cancel()
         {
-            OnRequestClose(false);
+            OnRequestDialogClose(false);
         }
         #endregion
 
@@ -273,12 +273,6 @@ namespace Edulink.ViewModels
 
             OnPropertyChanged(nameof(StrengthColor));
             OnPropertyChanged(nameof(StrengthText));
-        }
-
-        public event EventHandler<bool> RequestClose;
-        protected virtual void OnRequestClose(bool dialogResult)
-        {
-            RequestClose?.Invoke(this, dialogResult);
         }
     }
 }

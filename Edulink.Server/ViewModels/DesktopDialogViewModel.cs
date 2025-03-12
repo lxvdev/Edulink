@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace Edulink.ViewModels
 {
-    public class DesktopDialogViewModel : ViewModelBase
+    public class DesktopDialogViewModel : ClosableViewModel
     {
         public Client Client { get; private set; }
 
@@ -192,12 +192,6 @@ namespace Edulink.ViewModels
         #endregion
 
         #region Events
-        public event EventHandler RequestClose;
-        protected virtual void OnRequestClose()
-        {
-            RequestClose?.Invoke(this, EventArgs.Empty);
-        }
-
         public event EventHandler RequestFocus;
         protected virtual void OnRequestFocus()
         {
