@@ -135,7 +135,7 @@ namespace Edulink.ViewModels
             {
                 _ = client.Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    Command = Commands.Preview,
+                    Command = Commands.Preview.ToString(),
                     Parameters = new Dictionary<string, string>
                     {
                         { "Width", DesktopPreviewResolution.Width.ToString() },
@@ -220,8 +220,9 @@ namespace Edulink.ViewModels
         }
 
         #region Link command
-        public ICommand LinkCommand => new RelayCommand(execute => SendLink(), canExecute => SelectedClients.Any());
-        private void SendLink()
+        public ICommand LinkCommand => new RelayCommand(execute => HandleLink(), canExecute => CanExecuteLink());
+
+        private void HandleLink()
         {
             InputDialogResult urlInputDialogResult = InputDialog.ShowLocalized("Input.Content.SendLink", LocalizedStrings.Instance["Input.Title.SendLink"]);
 
@@ -229,13 +230,18 @@ namespace Edulink.ViewModels
             {
                 _ = SendCommandAsync(new EdulinkCommand
                 {
-                    Command = Commands.Link,
+                    Command = Commands.Link.ToString(),
                     Parameters =
                     {
                         { "URL", PrepareUrl(urlInputDialogResult.InputResult) }
                     }
                 }, SelectedClients);
             }
+        }
+
+        private bool CanExecuteLink()
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.Link.MinimumVersion);
         }
 
         private string PrepareUrl(string url)
@@ -260,8 +266,9 @@ namespace Edulink.ViewModels
         #endregion
 
         #region Message command
-        public ICommand MessageCommand => new RelayCommand(execute => SendMessage(), canExecute => SelectedClients.Any());
-        private void SendMessage()
+        public ICommand MessageCommand => new RelayCommand(execute => HandleMessage(), canExecute => CanExecuteMessage());
+
+        private void HandleMessage()
         {
             InputDialogResult messageInputDialog = InputDialog.ShowLocalized("Input.Content.SendMessage", LocalizedStrings.Instance["Input.Title.SendMessage"]);
 
@@ -269,23 +276,30 @@ namespace Edulink.ViewModels
             {
                 _ = SendCommandAsync(new EdulinkCommand
                 {
-                    Command = Commands.Message,
+                    Command = Commands.Message.ToString(),
                     Parameters = {
                         { "Message", messageInputDialog.InputResult }
                     }
                 }, SelectedClients);
             }
         }
+
+        private bool CanExecuteMessage()
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.Message.MinimumVersion);
+        }
         #endregion
 
         #region View desktop command
-        public ICommand DesktopCommand => new RelayCommand(execute => ViewDesktop(), canExecute => SelectedClients.Any());
-        private void ViewDesktop()
+        public List<DesktopDialog> openDesktopDialogs = new List<DesktopDialog>();
+
+        public ICommand ViewDesktopCommand => new RelayCommand(execute => HandleViewDesktop(), canExecute => CanExecuteViewDesktop());
+
+        private void HandleViewDesktop()
         {
             SelectedClients.ForEach(async client => await RequestDesktopAsync(client));
         }
 
-        public List<DesktopDialog> openDesktopDialogs = new List<DesktopDialog>();
         private async Task RequestDesktopAsync(Client client)
         {
             DesktopDialog existingDialog = openDesktopDialogs.FirstOrDefault(dialog => dialog.Client == client);
@@ -302,18 +316,37 @@ namespace Edulink.ViewModels
                 desktopPreviewDialog.Show();
             }
 
-            await client.Helper.SendCommandAsync(new EdulinkCommand { Command = Commands.Desktop });
+            await client.Helper.SendCommandAsync(new EdulinkCommand { Command = Commands.ViewDesktop.ToString() });
+        }
+
+        private bool CanExecuteViewDesktop()
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.ViewDesktop.MinimumVersion);
         }
         #endregion
 
-        public ICommand SimpleCommand => new RelayCommand(execute => _ = SendCommandAsync(new EdulinkCommand { Command = (string)execute }, SelectedClients), canExecute => SelectedClients.Any());
+        #region Simple command
+        public ICommand SimpleCommand => new RelayCommand(execute => HandleSimpleCommand((Command)execute), canExecute => CanExecuteSimpleCommand((Command)canExecute));
 
-        public ICommand BlockInputCommand => new RelayCommand(execute => HandleBlockInput(bool.Parse((string)execute)), canExecute => SelectedClients.Any());
+        private void HandleSimpleCommand(Command command)
+        {
+            _ = SendCommandAsync(new EdulinkCommand { Command = command.ToString() }, SelectedClients);
+        }
+
+        private bool CanExecuteSimpleCommand(Command command)
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= command.MinimumVersion);
+        }
+        #endregion
+
+        #region Block input command
+        public ICommand BlockInputCommand => new RelayCommand(execute => HandleBlockInput(bool.Parse((string)execute)), canExecute => CanExecuteBlockInput());
+
         private void HandleBlockInput(bool block)
         {
             _ = SendCommandAsync(new EdulinkCommand
             {
-                Command = Commands.BlockInput,
+                Command = Commands.BlockInput.ToString(),
                 Parameters = new Dictionary<string, string>
                 {
                     { "Block", block.ToString() }
@@ -321,7 +354,40 @@ namespace Edulink.ViewModels
             }, SelectedClients);
         }
 
+        private bool CanExecuteBlockInput()
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.BlockInput.MinimumVersion);
+        }
+        #endregion
+
+        #region Rename command
+        public ICommand RenameCommand => new RelayCommand(execute => Rename(), canExecute => CanExecuteRename());
+
+        private void Rename()
+        {
+            InputDialogResult renameInputDialog = InputDialog.ShowLocalized("Input.Content.RenameComputer", LocalizedStrings.Instance["Input.Title.RenameComputer"]);
+
+            if (renameInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(renameInputDialog.InputResult))
+            {
+                _ = SendCommandAsync(new EdulinkCommand
+                {
+                    Command = Commands.RenameComputer.ToString(),
+                    Parameters = {
+                        { "Name", renameInputDialog.InputResult }
+                    }
+                }, SelectedClients);
+            }
+        }
+
+        private bool CanExecuteRename()
+        {
+            return SelectedClients.Any() && SelectedClients.All(client => new Version(client.Version) >= Commands.RenameComputer.MinimumVersion);
+        }
+        #endregion
+
+        #region Exclude preview command
         public ICommand ExcludePreviewCommand => new RelayCommand(execute => ExcludePreview(bool.Parse((string)execute)));
+
         private void ExcludePreview(bool exclude)
         {
             foreach (Client client in SelectedClients.Where(c => c.IsExcludedFromPreview == !exclude))
@@ -337,23 +403,7 @@ namespace Edulink.ViewModels
                 }
             }
         }
-
-        public ICommand RenameCommand => new RelayCommand(execute => Rename(), canExecute => SelectedClients.Any());
-        private void Rename()
-        {
-            InputDialogResult renameInputDialog = InputDialog.ShowLocalized("Input.Content.RenameComputer", LocalizedStrings.Instance["Input.Title.RenameComputer"]);
-
-            if (renameInputDialog.ButtonResult == InputDialogButtonResult.Ok && !string.IsNullOrEmpty(renameInputDialog.InputResult))
-            {
-                _ = SendCommandAsync(new EdulinkCommand
-                {
-                    Command = Commands.RenameComputer,
-                    Parameters = {
-                        { "Name", renameInputDialog.InputResult }
-                    }
-                }, SelectedClients);
-            }
-        }
+        #endregion
 
         #endregion
     }
