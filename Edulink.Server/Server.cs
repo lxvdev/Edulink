@@ -72,7 +72,7 @@ namespace Edulink.Core
 
                 bool? updateAvailable = string.IsNullOrEmpty(command.Parameters["UpdateAvailable"]) ? null : (bool?)bool.Parse(command.Parameters["UpdateAvailable"]);
 
-                client = new Client(helper, command.Parameters["Name"], command.Parameters["Version"], updateAvailable);
+                client = new Client(helper, command.Parameters["Name"], new Version(command.Parameters["Version"]), updateAvailable);
 
                 await helper.SendCommandAsync(new EdulinkCommand { Command = $"WELCOME" });
                 Console.WriteLine($"{client.Name} ({client.Endpoint}) connected.");
