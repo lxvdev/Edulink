@@ -7,6 +7,9 @@ namespace Edulink.Models
 {
     public class Client : ViewModelBase, IDisposable
     {
+        private bool _disposed = false;
+        public bool Disposed => _disposed;
+
         public Client(TcpHelper helper, string name, string version, bool? updateAvailable)
         {
             Helper = helper;
@@ -85,9 +88,30 @@ namespace Edulink.Models
             }
         }
 
+        #region Dispose
         public void Dispose()
         {
-            Helper?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                Helper?.Dispose();
+                _preview?.StreamSource?.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        ~Client()
+        {
+            Dispose(false);
+        }
+        #endregion
     }
 }
