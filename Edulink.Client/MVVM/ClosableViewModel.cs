@@ -4,13 +4,13 @@ namespace Edulink.MVVM
 {
     public class ClosableViewModel : ViewModelBase
     {
-        public event EventHandler RequestClose;
+        protected event EventHandler RequestClose;
         protected virtual void OnRequestClose()
         {
             RequestClose?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler<bool> RequestDialogClose;
+        protected event EventHandler<bool> RequestDialogClose;
         protected virtual void OnRequestDialogClose(bool dialogResult)
         {
             RequestDialogClose?.Invoke(this, dialogResult);
