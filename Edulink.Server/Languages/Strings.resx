@@ -106,6 +106,9 @@
   <data name="Author" xml:space="preserve">
     <value>Andrew</value>
   </data>
+  <data name="DesktopDialog.Message.FailedToRefresh" xml:space="preserve">
+    <value>Failed to refresh</value>
+  </data>
   <data name="DesktopDialog.ReceivingImage" xml:space="preserve">
     <value>Receiving image</value>
   </data>
@@ -298,6 +301,12 @@
   <data name="Settings.Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="Settings.Message.CopiedToClipboard" xml:space="preserve">
+    <value>Copied to clipboard</value>
+  </data>
+  <data name="Settings.Message.Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="Settings.Miscellaneous" xml:space="preserve">
     <value>Miscellaneous</value>
   </data>
@@ -324,12 +333,6 @@
   </data>
   <data name="Settings.SaveAndRestart" xml:space="preserve">
     <value>Save and restart</value>
-  </data>
-  <data name="Settings.Snackbar.CopiedToClipboard" xml:space="preserve">
-    <value>Copied to clipboard</value>
-  </data>
-  <data name="Settings.Snackbar.Saved" xml:space="preserve">
-    <value>Saved</value>
   </data>
   <data name="Settings.Theme" xml:space="preserve">
     <value>Theme</value>

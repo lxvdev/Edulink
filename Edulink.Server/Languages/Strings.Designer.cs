@@ -88,6 +88,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to refresh.
+        /// </summary>
+        internal static string DesktopDialog_Message_FailedToRefresh {
+            get {
+                return ResourceManager.GetString("DesktopDialog.Message.FailedToRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receiving image.
         /// </summary>
         internal static string DesktopDialog_ReceivingImage {
@@ -664,6 +673,24 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copied to clipboard.
+        /// </summary>
+        internal static string Settings_Message_CopiedToClipboard {
+            get {
+                return ResourceManager.GetString("Settings.Message.CopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        internal static string Settings_Message_Saved {
+            get {
+                return ResourceManager.GetString("Settings.Message.Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miscellaneous.
         /// </summary>
         internal static string Settings_Miscellaneous {
@@ -741,24 +768,6 @@ namespace Edulink.Languages {
         internal static string Settings_SaveAndRestart {
             get {
                 return ResourceManager.GetString("Settings.SaveAndRestart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Copied to clipboard.
-        /// </summary>
-        internal static string Settings_Snackbar_CopiedToClipboard {
-            get {
-                return ResourceManager.GetString("Settings.Snackbar.CopiedToClipboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saved.
-        /// </summary>
-        internal static string Settings_Snackbar_Saved {
-            get {
-                return ResourceManager.GetString("Settings.Snackbar.Saved", resourceCulture);
             }
         }
         
