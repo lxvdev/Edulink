@@ -69,6 +69,11 @@
             Icon="{materialDesign:PackIcon Kind=MouseOutline}" />
         <MenuItem
             Command="{Binding SimpleCommand}"
+            CommandParameter="{x:Static models:Commands.ToggleMute}"
+            Header="{lex:Loc Main.Commands.ToggleMute}"
+            Icon="{materialDesign:PackIcon Kind=VolumeMute}" />
+        <MenuItem
+            Command="{Binding SimpleCommand}"
             CommandParameter="{x:Static models:Commands.Update}"
             Header="{lex:Loc Main.Commands.UpdateApplication}"
             Icon="{materialDesign:PackIcon Kind=Update}" />
