@@ -345,6 +345,12 @@
   <data name="Settings.SaveAndRestart" xml:space="preserve">
     <value>Guardar y reiniciar</value>
   </data>
+  <data name="Settings.Snackbar.CopiedToClipboard" xml:space="preserve">
+    <value>Copiado al portapapeles</value>
+  </data>
+  <data name="Settings.Snackbar.Saved" xml:space="preserve">
+    <value>Guardado</value>
+  </data>
   <data name="Settings.Theme" xml:space="preserve">
     <value>Tema</value>
   </data>

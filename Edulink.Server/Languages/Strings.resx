@@ -325,6 +325,12 @@
   <data name="Settings.SaveAndRestart" xml:space="preserve">
     <value>Save and restart</value>
   </data>
+  <data name="Settings.Snackbar.CopiedToClipboard" xml:space="preserve">
+    <value>Copied to clipboard</value>
+  </data>
+  <data name="Settings.Snackbar.Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="Settings.Theme" xml:space="preserve">
     <value>Theme</value>
   </data>

@@ -745,6 +745,24 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copied to clipboard.
+        /// </summary>
+        internal static string Settings_Snackbar_CopiedToClipboard {
+            get {
+                return ResourceManager.GetString("Settings.Snackbar.CopiedToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        internal static string Settings_Snackbar_Saved {
+            get {
+                return ResourceManager.GetString("Settings.Snackbar.Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         internal static string Settings_Theme {
