@@ -22,7 +22,7 @@ namespace Edulink.MVVM
             return null;
         }
 
-        public void AddError(string errorMessage, [CallerMemberName] string propertyName = null)
+        protected void AddError(string errorMessage, [CallerMemberName] string propertyName = null)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
             {
@@ -33,7 +33,7 @@ namespace Edulink.MVVM
             OnErrorsChanged(propertyName);
         }
 
-        public void ClearErrors([CallerMemberName] string propertyName = null)
+        protected void ClearErrors([CallerMemberName] string propertyName = null)
         {
             if (_propertyErrors.Remove(propertyName))
             {
