@@ -16,11 +16,11 @@ namespace Edulink.Views
         {
             InitializeComponent();
             MessageDialogViewModel viewModel = new MessageDialogViewModel(message, title, button, icon);
-            viewModel.RequestClose += OnRequestClose;
+            viewModel.RequestDialogClose += OnRequestDialogClose;
             DataContext = viewModel;
         }
 
-        private void OnRequestClose(object sender, bool dialogResult)
+        private void OnRequestDialogClose(object sender, bool dialogResult)
         {
             if (sender is MessageDialogViewModel viewModel)
             {

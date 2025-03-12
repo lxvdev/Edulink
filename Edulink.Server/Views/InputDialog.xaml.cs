@@ -19,7 +19,7 @@ namespace Edulink.Views
         {
             InitializeComponent();
             _viewModel = new InputDialogViewModel(message, title);
-            _viewModel.RequestClose += OnRequestClose;
+            _viewModel.RequestDialogClose += OnRequestDialogClose;
             DataContext = _viewModel;
 
             InputTextBox.Focus();
@@ -39,7 +39,7 @@ namespace Edulink.Views
             }
         }
 
-        private void OnRequestClose(object sender, bool dialogResult)
+        private void OnRequestDialogClose(object sender, bool dialogResult)
         {
             if (sender is InputDialogViewModel viewModel)
             {

@@ -15,13 +15,13 @@ namespace Edulink.Views
         {
             InitializeComponent();
             _viewModel = new PasswordDialogViewModel(type);
-            _viewModel.RequestClose += OnRequestClose;
+            _viewModel.RequestDialogClose += OnRequestDialogClose;
             DataContext = _viewModel;
 
             CurrentPasswordBox.Focus();
         }
 
-        private void OnRequestClose(object sender, bool dialogResult)
+        private void OnRequestDialogClose(object sender, bool dialogResult)
         {
             if (sender is PasswordDialogViewModel viewModel)
             {
