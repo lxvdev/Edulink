@@ -20,7 +20,7 @@
             Header="{lex:Loc Main.Commands.SendMessage}"
             Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
         <MenuItem
-            Command="{Binding DesktopCommand}"
+            Command="{Binding ViewDesktopCommand}"
             Header="{lex:Loc Main.Commands.ViewDesktop}"
             Icon="{materialDesign:PackIcon Kind=DesktopWindows}" />
         <MenuItem
