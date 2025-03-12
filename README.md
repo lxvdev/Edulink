@@ -1,6 +1,6 @@
 <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Assets/Logo/EdulinkLogoFullDarkTheme@0.25x.png">
-    <source media="(prefers-color-scheme: light)" srcset="Assets/Logo/EdulinkLogoFullLightTheme@0.25x.png">
+    <source media="(prefers-color-scheme: dark)" srcset="Assets/Logo/EdulinkLogoFullDarkTheme.png">
+    <source media="(prefers-color-scheme: light)" srcset="Assets/Logo/EdulinkLogoFullLightTheme.png">
     <img alt="Edulink Full Logo" src="./light.png">
 </picture>
 
