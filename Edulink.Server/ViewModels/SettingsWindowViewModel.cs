@@ -140,7 +140,7 @@ namespace Edulink.ViewModels
 
                 ClearUnsavedChanges();
 
-                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
 
                 if (restart)
                     App.RestartApp();
@@ -166,7 +166,7 @@ namespace Edulink.ViewModels
         private void CopyIPAddresses()
         {
             Clipboard.SetText(IPAddresses);
-            _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.CopiedToClipboard"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+            _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.CopiedToClipboard"], new PackIcon { Kind = PackIconKind.Close }, () => { });
         }
 
         public ICommand RefreshIPAddressesCommand => new RelayCommand(execute => RefreshIPAddresses());
