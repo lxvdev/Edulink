@@ -16,6 +16,9 @@ namespace Edulink.ViewModels
         private SettingsManager _settingsManager = App.SettingsManager;
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
 
+        private readonly SnackbarMessageQueue _snackbarMessageQueue = new SnackbarMessageQueue();
+        public ISnackbarMessageQueue SnackbarMessageQueue => _snackbarMessageQueue;
+
         private string _name;
         public string Name
         {
@@ -163,6 +166,8 @@ namespace Edulink.ViewModels
                 _settingsManager.Save();
 
                 ClearUnsavedChanges();
+
+                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
 
                 if (restart)
                     App.RestartApp();
