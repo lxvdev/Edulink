@@ -167,7 +167,7 @@ namespace Edulink.ViewModels
 
                 ClearUnsavedChanges();
 
-                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
 
                 if (restart)
                     App.RestartApp();
