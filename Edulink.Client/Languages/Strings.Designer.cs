@@ -547,6 +547,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        internal static string Settings_Message_Saved {
+            get {
+                return ResourceManager.GetString("Settings.Message.Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miscellaneous.
         /// </summary>
         internal static string Settings_Miscellaneous {
@@ -624,15 +633,6 @@ namespace Edulink.Languages {
         internal static string Settings_SaveAndRestart {
             get {
                 return ResourceManager.GetString("Settings.SaveAndRestart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Saved.
-        /// </summary>
-        internal static string Settings_Snackbar_Saved {
-            get {
-                return ResourceManager.GetString("Settings.Snackbar.Saved", resourceCulture);
             }
         }
         
