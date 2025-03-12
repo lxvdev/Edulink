@@ -88,7 +88,7 @@ namespace Edulink.ViewModels
             {
                 _ = App.Client.Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    Command = Commands.Message,
+                    Command = Commands.Message.ToString(),
                     Parameters = new Dictionary<string, string>
                     {
                         { "Message", dialogResult.InputResult }
