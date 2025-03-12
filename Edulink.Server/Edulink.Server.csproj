@@ -98,6 +98,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\ClosableViewModel.cs" />
+    <Compile Include="MVVM\ValidatableClosableViewModel.cs" />
+    <Compile Include="MVVM\ValidatableViewModel.cs" />
     <Compile Include="ViewModels\UpdaterDialogViewModel.cs" />
     <Compile Include="Views\UpdaterDialog.xaml.cs">
       <DependentUpon>UpdaterDialog.xaml</DependentUpon>
