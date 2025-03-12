@@ -291,6 +291,9 @@ namespace Edulink
                             updateDialog.Show();
                         }
                         break;
+                    case Commands.ToggleMute:
+                        AudioControl.ToggleMuteAudio();
+                        break;
                     case Commands.Disconnect:
                         Client.Dispose();
                         break;
