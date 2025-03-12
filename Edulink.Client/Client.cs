@@ -38,7 +38,7 @@ namespace Edulink
 
                 await Helper.SendCommandAsync(new EdulinkCommand
                 {
-                    Command = Commands.Connect,
+                    Command = Commands.Connect.ToString(),
                     Parameters = new Dictionary<string, string>
                     {
                         { "Name", name },
