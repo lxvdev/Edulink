@@ -140,6 +140,7 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="MVVM\ClosableViewModel.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
+    <Compile Include="MVVM\TrackableValidatableClosableViewModel.cs" />
     <Compile Include="MVVM\ValidatableClosableViewModel.cs" />
     <Compile Include="MVVM\ValidatableViewModel.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
