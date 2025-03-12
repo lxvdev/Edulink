@@ -16,6 +16,9 @@ namespace Edulink.ViewModels
         private SettingsManager _settingsManager = App.SettingsManager;
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
 
+        private readonly SnackbarMessageQueue _snackbarMessageQueue = new SnackbarMessageQueue();
+        public ISnackbarMessageQueue SnackbarMessageQueue => _snackbarMessageQueue;
+
         private string _port;
         public string Port
         {
@@ -137,6 +140,8 @@ namespace Edulink.ViewModels
 
                 ClearUnsavedChanges();
 
+                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+
                 if (restart)
                     App.RestartApp();
             }
@@ -156,6 +161,20 @@ namespace Edulink.ViewModels
         public ICommand RestartApplicationCommand => new RelayCommand(execute => App.RestartApp());
 
         public ICommand ExitCommand => new RelayCommand(execute => App.CloseApp());
+
+        public ICommand CopyIPAddressesCommand => new RelayCommand(execute => CopyIPAddresses(), canExecute => !string.IsNullOrEmpty(IPAddresses));
+        private void CopyIPAddresses()
+        {
+            Clipboard.SetText(IPAddresses);
+            _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Snackbar.CopiedToClipboard"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+        }
+
+        public ICommand RefreshIPAddressesCommand => new RelayCommand(execute => RefreshIPAddresses());
+        private void RefreshIPAddresses()
+        {
+            _ipAddresses = IPAddressProvider.GetIPAddresses();
+            OnPropertyChanged(nameof(IPAddresses));
+        }
 
         private void LoadSettings()
         {
