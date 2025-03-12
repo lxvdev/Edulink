@@ -37,7 +37,7 @@ namespace Edulink.Classes
 
                 // Try to start Edulink on lockscreen unlock
                 ISessionStateChangeTrigger unlockTrigger = (ISessionStateChangeTrigger)taskDefinition.Triggers.Create(_TASK_TRIGGER_TYPE2.TASK_TRIGGER_SESSION_STATE_CHANGE);
-                unlockTrigger.StateChange = _TASK_SESSION_STATE_CHANGE_TYPE.TASK_SESSION_UNLOCK;
+                unlockTrigger.StateChange = _TASK_SESSION_STATE_CHANGE_TYPE.TASK_SESSION_LOCK;
                 unlockTrigger.UserId = null;
 
                 IExecAction execAction = (IExecAction)taskDefinition.Actions.Create(_TASK_ACTION_TYPE.TASK_ACTION_EXEC);
