@@ -235,68 +235,80 @@ namespace Edulink
         }
 
         private InputBlocker _inputBlocker = new InputBlocker();
-        private async void Client_CommandReceivedAsync(object sender, EdulinkCommand command)
+        private async void Client_CommandReceivedAsync(object sender, EdulinkCommand edunlinkCommand)
         {
             try
             {
-                switch (command.Command)
+                string command = edunlinkCommand.Command;
+                if (command == Commands.Link.ToString())
                 {
-                    case Commands.Link:
-                        SystemUtility.OpenLink(command.Parameters["URL"]);
-                        break;
-                    case Commands.Message:
-                        HandleMessage(command);
-                        break;
-                    case Commands.Desktop:
-                    case Commands.Preview:
-                        HandleDesktop(command);
-                        break;
-                    case Commands.RestartApplication:
-                        App.RestartApp();
-                        break;
-                    case Commands.Shutdown:
-                        SystemUtility.ShutdownComputer();
-                        break;
-                    case Commands.Restart:
-                        SystemUtility.RestartComputer();
-                        break;
-                    case Commands.LockScreen:
-                        SystemUtility.Lockscreen();
-                        break;
-                    case Commands.LogOff:
-                        SystemUtility.LogOffUser();
-                        break;
-                    case Commands.ResetPassword:
-                        SettingsManager.Settings.Password = null;
-                        SettingsManager.Save();
-                        break;
-                    case Commands.BlockInput:
-                        if (bool.TryParse(command.Parameters["Block"], out bool block))
-                        {
-                            _inputBlocker.BlockKeyboard(block);
-                            _inputBlocker.BlockMouse(block);
-                        }
-                        break;
-                    case Commands.RenameComputer:
-                        SettingsManager.Settings.Name = command.Parameters["Name"];
-                        SettingsManager.Save();
-                        RestartApp();
-                        break;
-                    case Commands.Update:
-                        ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
-                        UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
-                        if (UpdateAvailable == true)
-                        {
-                            UpdaterDialog updateDialog = new UpdaterDialog(releaseDetails, true);
-                            updateDialog.Show();
-                        }
-                        break;
-                    case Commands.ToggleMute:
-                        AudioControl.ToggleMuteAudio();
-                        break;
-                    case Commands.Disconnect:
-                        Client.Dispose();
-                        break;
+                    SystemUtility.OpenLink(edunlinkCommand.Parameters["URL"]);
+                }
+                else if (command == Commands.Message.ToString())
+                {
+                    HandleMessage(edunlinkCommand);
+                }
+                else if (command == Commands.ViewDesktop.ToString() ||
+                         command == Commands.Preview.ToString())
+                {
+                    HandleScreenshot(edunlinkCommand);
+                }
+                else if (command == Commands.RestartApplication.ToString())
+                {
+                    RestartApp();
+                }
+                else if (command == Commands.Shutdown.ToString())
+                {
+                    SystemUtility.ShutdownComputer();
+                }
+                else if (command == Commands.Restart.ToString())
+                {
+                    SystemUtility.RestartComputer();
+                }
+                else if (command == Commands.LockScreen.ToString())
+                {
+                    SystemUtility.Lockscreen();
+                }
+                else if (command == Commands.LogOff.ToString())
+                {
+                    SystemUtility.LogOffUser();
+                }
+                else if (command == Commands.ResetPassword.ToString())
+                {
+                    SettingsManager.Settings.Password = null;
+                    SettingsManager.Save();
+                }
+                else if (command == Commands.BlockInput.ToString())
+                {
+                    if (bool.TryParse(edunlinkCommand.Parameters["Block"], out bool block))
+                    {
+                        _inputBlocker.BlockKeyboard(block);
+                        _inputBlocker.BlockMouse(block);
+                    }
+                }
+                else if (command == Commands.RenameComputer.ToString())
+                {
+                    SettingsManager.Settings.Name = edunlinkCommand.Parameters["Name"];
+                    SettingsManager.Save();
+                    RestartApp();
+                }
+                else if (command == Commands.Update.ToString())
+                {
+                    ReleaseDetails releaseDetails = await OpenUpdater.GetLatestVersionAsync();
+                    UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
+                    if (UpdateAvailable == true)
+                    {
+                        UpdaterDialog updateDialog = new UpdaterDialog(releaseDetails, true);
+                        updateDialog.Show();
+                    }
+                }
+                else if (command == Commands.ToggleMute.ToString())
+                {
+                    AudioControl.ToggleMuteAudio();
+                }
+                else if (command == Commands.Disconnect.ToString())
+                {
+                    Client.Dispose();
                 }
             }
             catch (Exception ex)
@@ -307,7 +319,7 @@ namespace Edulink
         }
 
         private readonly MemoryStream _reusableMemoryStream = new MemoryStream();
-        private void HandleDesktop(EdulinkCommand command)
+        private void HandleScreenshot(EdulinkCommand command)
         {
             int width = command.Parameters.ContainsKey("Width") ? int.Parse(command.Parameters["Width"]) : 0;
             int height = command.Parameters.ContainsKey("Height") ? int.Parse(command.Parameters["Height"]) : 0;
