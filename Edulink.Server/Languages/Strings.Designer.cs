@@ -313,6 +313,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle mute.
+        /// </summary>
+        internal static string Main_Commands_ToggleMute {
+            get {
+                return ResourceManager.GetString("Main.Commands.ToggleMute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unblock input.
         /// </summary>
         internal static string Main_Commands_UnblockInput {

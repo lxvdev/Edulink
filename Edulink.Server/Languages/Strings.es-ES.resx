@@ -201,6 +201,9 @@
   <data name="Main.Commands.Shutdown" xml:space="preserve">
     <value>Apagar</value>
   </data>
+  <data name="Main.Commands.ToggleMute" xml:space="preserve">
+    <value>Alternar silencio</value>
+  </data>
   <data name="Main.Commands.UnblockInput" xml:space="preserve">
     <value>Desbloquear entrada</value>
   </data>

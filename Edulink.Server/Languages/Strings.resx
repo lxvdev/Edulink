@@ -181,6 +181,9 @@
   <data name="Main.Commands.Shutdown" xml:space="preserve">
     <value>Shutdown</value>
   </data>
+  <data name="Main.Commands.ToggleMute" xml:space="preserve">
+    <value>Toggle mute</value>
+  </data>
   <data name="Main.Commands.UnblockInput" xml:space="preserve">
     <value>Unblock input</value>
   </data>
