@@ -2,8 +2,10 @@
 using Edulink.Communication.Models;
 using Edulink.Models;
 using Edulink.MVVM;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -13,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace Edulink.ViewModels
 {
-    public class DesktopDialogViewModel : ClosableViewModel
+    public class DesktopDialogViewModel : ViewModelBase
     {
         public Client Client { get; private set; }
 
@@ -51,6 +53,9 @@ namespace Edulink.ViewModels
             get => DesktopImage == null;
         }
 
+        private readonly SnackbarMessageQueue _snackbarMessageQueue = new SnackbarMessageQueue();
+        public ISnackbarMessageQueue SnackbarMessageQueue => _snackbarMessageQueue;
+
         public DesktopDialogViewModel(Client client)
         {
             Client = client;
@@ -87,7 +92,7 @@ namespace Edulink.ViewModels
             }
         }
 
-        public ICommand RefreshCommand => new RelayCommand(async execute => await Refresh());
+        public ICommand RefreshCommand => new RelayCommand(async execute => await Refresh(), canExecute => !Client.Disposed);
         private async Task Refresh()
         {
             try
@@ -97,7 +102,9 @@ namespace Edulink.ViewModels
             }
             catch (Exception)
             {
-                OnRequestClose();
+                StatusMessage = TimeStamp.ToString("dd/MM/yyyy HH:mm:ss");
+                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["DesktopDialog.Message.FailedToRefresh"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+                Debug.WriteLine("Failed to refresh desktop image.");
             }
         }
         #endregion
@@ -128,7 +135,7 @@ namespace Edulink.ViewModels
 
             using (Graphics graphics = Graphics.FromImage(watermarkedImage))
             {
-                Icon appIcon = Edulink.Properties.Resources.Edulink_Server;
+                Icon appIcon = Properties.Resources.Edulink_Server;
 
                 if (appIcon == null) return default;
 
@@ -151,44 +158,6 @@ namespace Edulink.ViewModels
 
             return watermarkedImage;
         }
-
-        //public Bitmap AddWatermarkToBitmapOLD(Bitmap originalImage)
-        //{
-        //    int additionalHeight = 52;
-        //    Bitmap watermarkedImage = new Bitmap(originalImage.Width, originalImage.Height + additionalHeight);
-
-        //    using (Graphics graphics = Graphics.FromImage(watermarkedImage))
-        //    {
-        //        graphics.Clear(Color.White);
-        //        graphics.DrawImage(originalImage, 0, additionalHeight, originalImage.Width, originalImage.Height);
-
-        //        Bitmap resizedLogo = new Bitmap(LoadBitmapFromResources("Resources/Edulink_32px.png"), new System.Drawing.Size(32, 32));
-        //        graphics.DrawImage(resizedLogo, 10, 10);
-
-        //        using (Font font = new Font("Arial", 24, System.Drawing.FontStyle.Regular))
-        //        {
-        //            using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, 0, 0, 0)))
-        //            {
-        //                graphics.DrawString("Edulink", font, brush, new PointF(46, 8));
-        //            }
-        //        }
-        //    }
-
-        //    return watermarkedImage;
-        //}
-
-        //public Bitmap LoadBitmapFromResources(string resourceName)
-        //{
-        //    BitmapImage bitmapImage = new BitmapImage(new Uri($"pack://application:,,,/{resourceName}"));
-
-        //    using (MemoryStream memoryStream = new MemoryStream())
-        //    {
-        //        BitmapEncoder encoder = new PngBitmapEncoder();
-        //        encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-        //        encoder.Save(memoryStream);
-        //        return new Bitmap(memoryStream);
-        //    }
-        //}
         #endregion
 
         #region Events
