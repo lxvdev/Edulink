@@ -170,14 +170,34 @@
                 </StackPanel>
 
                 <!--  IP Address  -->
-                <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">
-                    <TextBlock.Text>
-                        <MultiBinding Converter="{lex:StringFormatConverter}">
-                            <Binding Source="{lex:Loc Settings.IPAddress}" />
-                            <Binding Mode="OneWay" Path="IPAddresses" />
-                        </MultiBinding>
-                    </TextBlock.Text>
-                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignBody1TextBlock}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{lex:StringFormatConverter}">
+                                <Binding Source="{lex:Loc Settings.IPAddress}" />
+                                <Binding Mode="OneWay" Path="IPAddresses" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <Button
+                        Width="30"
+                        Height="30"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding CopyIPAddressesCommand}"
+                        Content="{materialDesign:PackIcon Kind=ContentCopy,
+                                                          Size=16}"
+                        Style="{StaticResource MaterialDesignIconForegroundButton}" />
+                    <Button
+                        Width="30"
+                        Height="30"
+                        Margin="3,0,0,0"
+                        VerticalAlignment="Center"
+                        Command="{Binding RefreshIPAddressesCommand}"
+                        Content="{materialDesign:PackIcon Kind=Refresh,
+                                                          Size=18}"
+                        Style="{StaticResource MaterialDesignIconForegroundButton}" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
@@ -195,5 +215,10 @@
                 <TextBlock VerticalAlignment="Center" Text="{lex:Loc Settings.SaveAndRestart}" />
             </StackPanel>
         </Button>
+
+        <materialDesign:Snackbar
+            Margin="0,0,10,0"
+            HorizontalAlignment="Right"
+            MessageQueue="{Binding SnackbarMessageQueue}" />
     </Grid>
 </Window>
