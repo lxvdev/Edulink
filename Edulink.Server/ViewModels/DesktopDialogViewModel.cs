@@ -98,7 +98,7 @@ namespace Edulink.ViewModels
             try
             {
                 StatusMessage = LocalizedStrings.Instance["DesktopDialog.ReceivingImage"];
-                await Client.Helper.SendCommandAsync(new EdulinkCommand() { Command = Commands.Desktop });
+                await Client.Helper.SendCommandAsync(new EdulinkCommand() { Command = Commands.ViewDesktop.ToString() });
             }
             catch (Exception)
             {
