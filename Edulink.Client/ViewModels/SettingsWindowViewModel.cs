@@ -3,21 +3,18 @@ using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class SettingsWindowViewModel : ViewModelBase
+    public class SettingsWindowViewModel : TrackableValidatableClosableViewModel
     {
         private SettingsManager _settingsManager = App.SettingsManager;
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
-        private readonly HashSet<string> _unsavedProperties = new HashSet<string>();
 
         private string _name;
         public string Name
@@ -165,7 +162,7 @@ namespace Edulink.ViewModels
                 _settingsManager.Settings.Theme = Theme;
                 _settingsManager.Save();
 
-                _unsavedProperties.Clear();
+                ClearUnsavedChanges();
 
                 if (restart)
                     App.RestartApp();
@@ -226,28 +223,9 @@ namespace Edulink.ViewModels
             _paletteHelper.SetTheme(materialTheme);
         }
 
-        private bool HasUnsavedChanges()
-        {
-            return _unsavedProperties.Count > 0;
-        }
-
-        private void TrackUnsavedChanges(object originalValue, [CallerMemberName] string propertyName = null)
-        {
-            object newValue = GetType().GetProperty(propertyName)?.GetValue(this);
-
-            if (Equals(originalValue, newValue))
-            {
-                _unsavedProperties.Remove(propertyName);
-            }
-            else
-            {
-                _unsavedProperties.Add(propertyName);
-            }
-        }
-
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            if (HasUnsavedChanges())
+            if (HasUnsavedChanges)
             {
                 MessageDialogResult dialogResult = MessageDialog.ShowLocalized("Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges", MessageDialogTitle.Warning, MessageDialogButton.YesNo, MessageDialogIcon.Warning);
                 if (dialogResult.ButtonResult == MessageDialogButtonResult.Yes)
