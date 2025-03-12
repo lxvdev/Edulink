@@ -18,7 +18,6 @@ namespace Edulink.Views
         {
             InitializeComponent();
             _viewModel = new DesktopDialogViewModel(client);
-            _viewModel.RequestClose += (s, e) => Close();
             _viewModel.RequestFocus += (s, e) => Focus();
             DataContext = _viewModel;
         }
