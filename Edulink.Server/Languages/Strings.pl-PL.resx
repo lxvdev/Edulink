@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Main.Commands.UpdateApplication" xml:space="preserve">
-    <value>Aktualizuj aplikację</value>
-  </data>
-  <data name="Main.Commands.ViewDesktop" xml:space="preserve">
-    <value>Pokaż pulpit</value>
-  </data>
-  <data name="Main.ConnectedComputers" xml:space="preserve">
-    <value>Połączonych komputerów ({0})</value>
-  </data>
-  <data name="Main.List.ToolTip.ConnectionTime" xml:space="preserve">
-    <value>Połączono o {0:HH:mm:ss}</value>
-  </data>
   <data name="About.Close" xml:space="preserve">
     <value>Zamknij</value>
   </data>
@@ -212,6 +200,18 @@
   </data>
   <data name="Main.Commands.UnblockInput" xml:space="preserve">
     <value>Odblokuj wprowadzanie tekstu</value>
+  </data>
+  <data name="Main.Commands.UpdateApplication" xml:space="preserve">
+    <value>Aktualizuj aplikację</value>
+  </data>
+  <data name="Main.Commands.ViewDesktop" xml:space="preserve">
+    <value>Pokaż pulpit</value>
+  </data>
+  <data name="Main.ConnectedComputers" xml:space="preserve">
+    <value>Połączonych komputerów ({0})</value>
+  </data>
+  <data name="Main.List.ToolTip.ConnectionTime" xml:space="preserve">
+    <value>Połączono o {0:HH:mm:ss}</value>
   </data>
   <data name="Main.List.ToolTip.Endpoint" xml:space="preserve">
     <value>Punkt końcowy: {0}</value>
@@ -303,6 +303,9 @@
   <data name="MessageDialog.Reply" xml:space="preserve">
     <value>Odpowiedz</value>
   </data>
+  <data name="MessageDialog.Retry" xml:space="preserve">
+    <value>Ponów</value>
+  </data>
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Tak</value>
   </data>
@@ -317,6 +320,9 @@
   </data>
   <data name="Settings.Language" xml:space="preserve">
     <value>Język</value>
+  </data>
+  <data name="Settings.Message.Saved" xml:space="preserve">
+    <value>Zapisano</value>
   </data>
   <data name="Settings.Miscellaneous" xml:space="preserve">
     <value>Różne ustawienia</value>
