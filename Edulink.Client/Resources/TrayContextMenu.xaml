@@ -34,13 +34,15 @@
             Header="{lex:Loc TrayContextMenu.About}"
             Icon="{materialDesign:PackIcon Kind=Info}" />
         <Separator />
-        <!--<MenuItem Header="{Binding ConnectionStatusText, Converter={lex:TranslateConverter}}" IsEnabled="False" />-->
-        <!--<Separator />-->
         <MenuItem
             Command="{Binding UpdaterCommand}"
             Header="{Binding UpdaterStatus, Converter={lex:TranslateConverter}}"
             Icon="{materialDesign:PackIcon Kind=Update}" />
         <Separator />
+        <MenuItem
+            Command="{Binding RestartApplicationCommand}"
+            Header="{lex:Loc TrayContextMenu.RestartApplication}"
+            Icon="{materialDesign:PackIcon Kind=ApplicationOutline}" />
         <MenuItem
             Command="{Binding ExitCommand}"
             FontWeight="Bold"
