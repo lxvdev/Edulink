@@ -4,14 +4,14 @@ using System.Windows;
 namespace Edulink.Views
 {
     /// <summary>
-    /// Interaction logic for FirstStepsWindow.xaml
+    /// Interaction logic for SetupWindow.xaml
     /// </summary>
-    public partial class FirstStepsWindow : Window
+    public partial class SetupWindow : Window
     {
-        public FirstStepsWindow()
+        public SetupWindow()
         {
             InitializeComponent();
-            FirstStepsWindowViewModel viewModel = new FirstStepsWindowViewModel();
+            SetupWindowViewModel viewModel = new SetupWindowViewModel();
             viewModel.RequestClose += (sender, e) => Close();
             DataContext = viewModel;
         }
