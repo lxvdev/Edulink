@@ -18,7 +18,10 @@ Seamless classroom control at your fingertips
 ### Server - [Download v2.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.0.0-server)
 ### Client - [Download v2.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.0.0-client)
 
-The versions of the client and the server aren't the same, so make sure to download the correct version for each one.
+The versions of the client and the server aren't the same, here you can download the latest compatible versions.
+
+---
+### Migrator - [Download v1.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v1.0.0.0-migrator) (for older versions of Edulink)
 
 # Important
 If a student tries to kill the Edulink process you can press <kbd>⊞ Win</kbd> + <kbd>L</kbd> to lock the screen and then unlock it to restart the application automatically.
