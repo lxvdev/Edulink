@@ -88,105 +88,6 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Computer name.
-        /// </summary>
-        internal static string FirstSteps_Computer_Name {
-            get {
-                return ResourceManager.GetString("FirstSteps.Computer.Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter a name to identify this computer on the teacher&apos;s screen..
-        /// </summary>
-        internal static string FirstSteps_Computer_Name_Description {
-            get {
-                return ResourceManager.GetString("FirstSteps.Computer.Name.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter the teacher&apos;s computer IP address and port to connect..
-        /// </summary>
-        internal static string FirstSteps_Connection_Description {
-            get {
-                return ResourceManager.GetString("FirstSteps.Connection.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IP address.
-        /// </summary>
-        internal static string FirstSteps_Connection_IPAddress {
-            get {
-                return ResourceManager.GetString("FirstSteps.Connection.IPAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Port.
-        /// </summary>
-        internal static string FirstSteps_Connection_Port {
-            get {
-                return ResourceManager.GetString("FirstSteps.Connection.Port", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change password.
-        /// </summary>
-        internal static string FirstSteps_Password_ChangePassword {
-            get {
-                return ResourceManager.GetString("FirstSteps.Password.ChangePassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set a password to protect these settings from being changed by a student..
-        /// </summary>
-        internal static string FirstSteps_Password_Description {
-            get {
-                return ResourceManager.GetString("FirstSteps.Password.Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Set password.
-        /// </summary>
-        internal static string FirstSteps_Password_SetPassword {
-            get {
-                return ResourceManager.GetString("FirstSteps.Password.SetPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edulink setup.
-        /// </summary>
-        internal static string FirstSteps_Title {
-            get {
-                return ResourceManager.GetString("FirstSteps.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome.
-        /// </summary>
-        internal static string FirstSteps_Welcome {
-            get {
-                return ResourceManager.GetString("FirstSteps.Welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Get started.
-        /// </summary>
-        internal static string FirstSteps_Welcome_GetStarted {
-            get {
-                return ResourceManager.GetString("FirstSteps.Welcome.GetStarted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter your message.
         /// </summary>
         internal static string Input_Content_SendMessage {
@@ -691,6 +592,105 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Computer name.
+        /// </summary>
+        internal static string Setup_Computer_Name {
+            get {
+                return ResourceManager.GetString("Setup.Computer.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a name to identify this computer on the teacher&apos;s screen..
+        /// </summary>
+        internal static string Setup_Computer_Name_Description {
+            get {
+                return ResourceManager.GetString("Setup.Computer.Name.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the teacher&apos;s computer IP address and port to connect..
+        /// </summary>
+        internal static string Setup_Connection_Description {
+            get {
+                return ResourceManager.GetString("Setup.Connection.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address.
+        /// </summary>
+        internal static string Setup_Connection_IPAddress {
+            get {
+                return ResourceManager.GetString("Setup.Connection.IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        internal static string Setup_Connection_Port {
+            get {
+                return ResourceManager.GetString("Setup.Connection.Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change password.
+        /// </summary>
+        internal static string Setup_Password_ChangePassword {
+            get {
+                return ResourceManager.GetString("Setup.Password.ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set a password to protect these settings from being changed by a student..
+        /// </summary>
+        internal static string Setup_Password_Description {
+            get {
+                return ResourceManager.GetString("Setup.Password.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set password.
+        /// </summary>
+        internal static string Setup_Password_SetPassword {
+            get {
+                return ResourceManager.GetString("Setup.Password.SetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edulink setup.
+        /// </summary>
+        internal static string Setup_Title {
+            get {
+                return ResourceManager.GetString("Setup.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        internal static string Setup_Welcome {
+            get {
+                return ResourceManager.GetString("Setup.Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get started.
+        /// </summary>
+        internal static string Setup_Welcome_GetStarted {
+            get {
+                return ResourceManager.GetString("Setup.Welcome.GetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string TrayContextMenu_About {
@@ -723,6 +723,15 @@ namespace Edulink.Languages {
         internal static string TrayContextMenu_Exit {
             get {
                 return ResourceManager.GetString("TrayContextMenu.Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No name.
+        /// </summary>
+        internal static string TrayContextMenu_NoName {
+            get {
+                return ResourceManager.GetString("TrayContextMenu.NoName", resourceCulture);
             }
         }
         

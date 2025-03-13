@@ -126,37 +126,37 @@
   <data name="Author" xml:space="preserve">
     <value>Andrew</value>
   </data>
-  <data name="FirstSteps.Computer.Name" xml:space="preserve">
+  <data name="Setup.Computer.Name" xml:space="preserve">
     <value>Computer name</value>
   </data>
-  <data name="FirstSteps.Computer.Name.Description" xml:space="preserve">
+  <data name="Setup.Computer.Name.Description" xml:space="preserve">
     <value>Enter a name to identify this computer on the teacher's screen.</value>
   </data>
-  <data name="FirstSteps.Connection.Description" xml:space="preserve">
+  <data name="Setup.Connection.Description" xml:space="preserve">
     <value>Enter the teacher's computer IP address and port to connect.</value>
   </data>
-  <data name="FirstSteps.Connection.IPAddress" xml:space="preserve">
+  <data name="Setup.Connection.IPAddress" xml:space="preserve">
     <value>IP address</value>
   </data>
-  <data name="FirstSteps.Connection.Port" xml:space="preserve">
+  <data name="Setup.Connection.Port" xml:space="preserve">
     <value>Port</value>
   </data>
-  <data name="FirstSteps.Password.ChangePassword" xml:space="preserve">
+  <data name="Setup.Password.ChangePassword" xml:space="preserve">
     <value>Change password</value>
   </data>
-  <data name="FirstSteps.Password.Description" xml:space="preserve">
+  <data name="Setup.Password.Description" xml:space="preserve">
     <value>Set a password to protect these settings from being changed by a student.</value>
   </data>
-  <data name="FirstSteps.Password.SetPassword" xml:space="preserve">
+  <data name="Setup.Password.SetPassword" xml:space="preserve">
     <value>Set password</value>
   </data>
-  <data name="FirstSteps.Title" xml:space="preserve">
+  <data name="Setup.Title" xml:space="preserve">
     <value>Edulink setup</value>
   </data>
-  <data name="FirstSteps.Welcome" xml:space="preserve">
+  <data name="Setup.Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
-  <data name="FirstSteps.Welcome.GetStarted" xml:space="preserve">
+  <data name="Setup.Welcome.GetStarted" xml:space="preserve">
     <value>Get started</value>
   </data>
   <data name="Input.Content.SendMessage" xml:space="preserve">
@@ -338,6 +338,9 @@
   </data>
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="TrayContextMenu.NoName" xml:space="preserve">
+    <value>No name</value>
   </data>
   <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
     <value>Restart application</value>
