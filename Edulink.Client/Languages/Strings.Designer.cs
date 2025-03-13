@@ -376,6 +376,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        internal static string MessageDialog_Retry {
+            get {
+                return ResourceManager.GetString("MessageDialog.Retry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
         internal static string MessageDialog_Yes {

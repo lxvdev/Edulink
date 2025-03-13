@@ -222,6 +222,9 @@
   <data name="MessageDialog.Reply" xml:space="preserve">
     <value>Reply</value>
   </data>
+  <data name="MessageDialog.Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="Settings.Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="Settings.Message.Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="Settings.Miscellaneous" xml:space="preserve">
     <value>Miscellaneous</value>
   </data>
@@ -305,9 +311,6 @@
   </data>
   <data name="Settings.SaveAndRestart" xml:space="preserve">
     <value>Save and restart</value>
-  </data>
-  <data name="Settings.Message.Saved" xml:space="preserve">
-    <value>Saved</value>
   </data>
   <data name="Settings.Theme" xml:space="preserve">
     <value>Theme</value>
