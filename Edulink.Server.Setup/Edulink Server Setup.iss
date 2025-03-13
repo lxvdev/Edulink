@@ -1,5 +1,5 @@
 #define MyAppName "Edulink Server"
-#define MyAppVersion "2.0.1.0"
+#define MyAppVersion "2.0.1.1"
 #define MyAppPublisher "Edulink Labs"
 #define MyAppURL "https://github.com/lxvdev/Edulink"
 #define MyAppExeName "Edulink Server.exe"
