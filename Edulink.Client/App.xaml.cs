@@ -70,7 +70,12 @@ namespace Edulink
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
                 SettingsManager.Load(e.Args[1]);
-                SettingsManager.Save(noRetry: true);
+
+                if (!SettingsManager.Save(noRetry: true))
+                {
+                    Environment.Exit(1);
+                }
+
                 Environment.Exit(0);
                 return;
             }
@@ -289,8 +294,10 @@ namespace Edulink
                 else if (command == Commands.RenameComputer.ToString())
                 {
                     SettingsManager.Settings.Name = edunlinkCommand.Parameters["Name"];
-                    SettingsManager.Save();
-                    RestartApp();
+                    if (SettingsManager.Save())
+                    {
+                        RestartApp();
+                    }
                 }
                 else if (command == Commands.Update.ToString())
                 {
