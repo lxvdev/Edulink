@@ -21,7 +21,6 @@
     lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
     lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
     Closing="Window_Closing"
-    FontFamily="{StaticResource Inter}"
     Style="{StaticResource MaterialDesignWindow}"
     UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
