@@ -15,8 +15,8 @@ Seamless classroom control at your fingertips
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/pulls)
 
 # Download
-### Server - [Download v2.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.0.0-server)
-### Client - [Download v2.0.0.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.0.0-client)
+### Server - [Download v2.0.1.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.1.0-server)
+### Client - [Download v2.0.1.0](https://github.com/lxvdev/Edulink/releases/tag/v2.0.1.0-client)
 
 The versions of the client and the server aren't the same, here you can download the latest compatible versions.
 
