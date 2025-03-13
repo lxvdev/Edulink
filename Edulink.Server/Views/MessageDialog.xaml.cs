@@ -65,6 +65,7 @@ namespace Edulink.Views
     {
         None,
         Ok,
+        Retry,
         Cancel,
         Reply,
         Yes,
@@ -86,6 +87,7 @@ namespace Edulink.Views
         Ok,
         Reply,
         Cancel,
+        RetryCancel,
         OkCancel,
         OkReply,
         YesNo
