@@ -49,7 +49,7 @@ namespace Edulink.Classes
             }
         }
 
-        public void Save(string path = null, bool noRetry = false)
+        public bool Save(string path = null, bool noRetry = false)
         {
             string settingsFilePath = path ?? _settingsFile;
             try
@@ -64,6 +64,7 @@ namespace Edulink.Classes
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Settings));
                     serializer.Serialize(fs, Settings);
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -71,16 +72,18 @@ namespace Edulink.Classes
                 if (noRetry)
                 {
                     Debug.WriteLine($"Error saving settings (no retry): {ex.Message}");
-                    return;
+                    return false;
                 }
 
                 Debug.WriteLine($"Error saving settings: {ex.Message}");
 
+                // Save settings to a temporal path
                 string tempPath = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name);
                 string tempSettings = Path.Combine(tempPath, "settings_temp.xml");
 
                 Save(tempSettings, noRetry: true);
 
+                // Apply temporal settings using arguments
                 ProcessStartInfo psi = new ProcessStartInfo
                 {
                     FileName = Process.GetCurrentProcess().MainModule.FileName,
@@ -89,7 +92,23 @@ namespace Edulink.Classes
                     Verb = "runas"
                 };
 
-                Process.Start(psi);
+                // Start the process and wait for exit code
+                using (Process process = Process.Start(psi))
+                {
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                        if (process.ExitCode == 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
             }
         }
 
