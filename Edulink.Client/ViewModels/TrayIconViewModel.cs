@@ -52,7 +52,7 @@ namespace Edulink.ViewModels
 
         public string ConnectionStatusText => _connectionStatus ? "TrayContextMenu.Connection.Status.Connected" : "TrayContextMenu.Connection.Status.Disconnected";
 
-        public string ComputerName => App.SettingsManager.Settings.Name;
+        public string ComputerName => !string.IsNullOrEmpty(App.SettingsManager.Settings.Name) ? App.SettingsManager.Settings.Name : LocalizedStrings.Instance["TrayContextMenu.NoName"];
 
         public bool? UpdateAvailable => App.UpdateAvailable;
         public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version}";
@@ -75,6 +75,7 @@ namespace Edulink.ViewModels
             {
                 OnPropertyChanged(nameof(ConnectionStatusText));
                 OnPropertyChanged(nameof(UpdaterStatus));
+                OnPropertyChanged(nameof(ComputerName));
             }
         }
 
