@@ -140,8 +140,8 @@ namespace Edulink
 
             if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null)
             {
-                FirstStepsWindow firstStepsWindow = new FirstStepsWindow();
-                firstStepsWindow.ShowDialog();
+                SetupWindow setupWindow = new SetupWindow();
+                setupWindow.ShowDialog();
             }
 
             if (SettingsManager.Settings.CheckForUpdates)
