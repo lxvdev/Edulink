@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Edulink.Migrator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Edulink Migrator")]
+[assembly: AssemblyDescription("An app for migrating Edulink versions")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Edulink.Migrator")]
-[assembly: AssemblyCopyright("Copyright ©  2025")]
+[assembly: AssemblyProduct("Edulink Migrator")]
+[assembly: AssemblyCopyright("Copyright © Andrew 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
