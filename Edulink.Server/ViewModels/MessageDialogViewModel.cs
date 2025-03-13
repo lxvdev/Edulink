@@ -18,8 +18,9 @@ namespace Edulink.ViewModels
         public Visibility IconVisibility { get; set; } = Visibility.Collapsed;
 
         public Visibility OkButtonVisibility { get; set; } = Visibility.Collapsed;
-        public Visibility ReplyButtonVisibility { get; set; } = Visibility.Collapsed;
+        public Visibility RetryButtonVisibility { get; set; } = Visibility.Collapsed;
         public Visibility CancelButtonVisibility { get; set; } = Visibility.Collapsed;
+        public Visibility ReplyButtonVisibility { get; set; } = Visibility.Collapsed;
         public Visibility YesButtonVisibility { get; set; } = Visibility.Collapsed;
         public Visibility NoButtonVisibility { get; set; } = Visibility.Collapsed;
 
@@ -78,6 +79,10 @@ namespace Edulink.ViewModels
                 case MessageDialogButton.Cancel:
                     CancelButtonVisibility = Visibility.Visible;
                     break;
+                case MessageDialogButton.RetryCancel:
+                    RetryButtonVisibility = Visibility.Visible;
+                    CancelButtonVisibility = Visibility.Visible;
+                    break;
                 case MessageDialogButton.YesNo:
                     YesButtonVisibility = Visibility.Visible;
                     NoButtonVisibility = Visibility.Visible;
@@ -114,6 +119,13 @@ namespace Edulink.ViewModels
                 ButtonResult = MessageDialogButtonResult.Reply;
                 OnRequestDialogClose(true);
             }
+        }
+
+        public ICommand RetryCommand => new RelayCommand(execute => Retry());
+        private void Retry()
+        {
+            ButtonResult = MessageDialogButtonResult.Retry;
+            OnRequestDialogClose(true);
         }
 
         public ICommand CancelCommand => new RelayCommand(execute => Cancel());
