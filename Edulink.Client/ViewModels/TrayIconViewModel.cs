@@ -118,6 +118,15 @@ namespace Edulink.ViewModels
             }
         }
 
+        public ICommand RestartApplicationCommand => new RelayCommand(execute => RestartApplication());
+        private void RestartApplication()
+        {
+            if (App.ValidateCredentials())
+            {
+                App.RestartApp();
+            }
+        }
+
         private UpdaterDialog _updaterDialog;
 
         public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
