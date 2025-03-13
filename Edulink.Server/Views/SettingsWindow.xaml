@@ -18,7 +18,6 @@
     lex:LocalizeDictionary.DesignCulture="{x:Static converters:LocalizationConfig.DesignCulture}"
     lex:ResxLocalizationProvider.DefaultAssembly="{x:Static converters:LocalizationConfig.DefaultAssembly}"
     lex:ResxLocalizationProvider.DefaultDictionary="{x:Static converters:LocalizationConfig.DefaultDictionary}"
-    FontFamily="{StaticResource Inter}"
     Style="{StaticResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
