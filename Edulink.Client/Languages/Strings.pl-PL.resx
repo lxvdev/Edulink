@@ -222,6 +222,9 @@
   <data name="MessageDialog.Reply" xml:space="preserve">
     <value>Odpowiedź</value>
   </data>
+  <data name="MessageDialog.Retry" xml:space="preserve">
+    <value>Ponów</value>
+  </data>
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Tak</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="Settings.Language" xml:space="preserve">
     <value>Język</value>
   </data>
+  <data name="Settings.Message.Saved" xml:space="preserve">
+    <value>Zapisano</value>
+  </data>
   <data name="Settings.Miscellaneous" xml:space="preserve">
     <value>Różne</value>
   </data>
@@ -332,6 +338,9 @@
   </data>
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Wyjdź</value>
+  </data>
+  <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
+    <value>Uruchom ponownie aplikację</value>
   </data>
   <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
     <value>Wyślij wiadomość do nauczyciela</value>

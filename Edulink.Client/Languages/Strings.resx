@@ -339,6 +339,9 @@
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
+    <value>Restart application</value>
+  </data>
   <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
     <value>Send message to teacher</value>
   </data>

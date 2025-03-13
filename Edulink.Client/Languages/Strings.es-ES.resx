@@ -295,7 +295,7 @@
     <value>Restablecer ajustes</value>
   </data>
   <data name="Settings.Miscellaneous.RestartApplication" xml:space="preserve">
-    <value>Reiniciar la aplicación</value>
+    <value>Reiniciar aplicación</value>
   </data>
   <data name="Settings.Miscellaneous.Save" xml:space="preserve">
     <value>Guardar</value>
@@ -338,6 +338,9 @@
   </data>
   <data name="TrayContextMenu.Exit" xml:space="preserve">
     <value>Salir</value>
+  </data>
+  <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
+    <value>Reiniciar aplicación</value>
   </data>
   <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
     <value>Enviar mensaje al profesor</value>

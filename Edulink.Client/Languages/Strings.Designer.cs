@@ -727,6 +727,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart application.
+        /// </summary>
+        internal static string TrayContextMenu_RestartApplication {
+            get {
+                return ResourceManager.GetString("TrayContextMenu.RestartApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send message to teacher.
         /// </summary>
         internal static string TrayContextMenu_SendMessageToTeacher {
