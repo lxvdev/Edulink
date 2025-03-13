@@ -165,6 +165,9 @@
   <data name="Main.AllComputers" xml:space="preserve">
     <value>Seleccionar todos los ordenadores</value>
   </data>
+  <data name="Main.AreYouSureYouWantToExit" xml:space="preserve">
+    <value>¿Estás seguro de que quieres salir?</value>
+  </data>
   <data name="Main.Commands.BlockInput" xml:space="preserve">
     <value>Bloquear entrada</value>
   </data>
@@ -308,6 +311,9 @@
   </data>
   <data name="MessageDialog.Reply" xml:space="preserve">
     <value>Responder</value>
+  </data>
+  <data name="MessageDialog.Retry" xml:space="preserve">
+    <value>Reintentar</value>
   </data>
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Sí</value>

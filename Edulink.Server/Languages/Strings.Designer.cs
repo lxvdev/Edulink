@@ -205,6 +205,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to exit?.
+        /// </summary>
+        internal static string Main_AreYouSureYouWantToExit {
+            get {
+                return ResourceManager.GetString("Main.AreYouSureYouWantToExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Block input.
         /// </summary>
         internal static string Main_Commands_BlockInput {
@@ -633,6 +642,15 @@ namespace Edulink.Languages {
         internal static string MessageDialog_Reply {
             get {
                 return ResourceManager.GetString("MessageDialog.Reply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retry.
+        /// </summary>
+        internal static string MessageDialog_Retry {
+            get {
+                return ResourceManager.GetString("MessageDialog.Retry", resourceCulture);
             }
         }
         

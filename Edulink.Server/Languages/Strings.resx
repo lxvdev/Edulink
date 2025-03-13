@@ -145,6 +145,9 @@
   <data name="Main.AllComputers" xml:space="preserve">
     <value>Select all computers</value>
   </data>
+  <data name="Main.AreYouSureYouWantToExit" xml:space="preserve">
+    <value>Are you sure you want to exit?</value>
+  </data>
   <data name="Main.Commands.BlockInput" xml:space="preserve">
     <value>Block input</value>
   </data>
@@ -288,6 +291,9 @@
   </data>
   <data name="MessageDialog.Reply" xml:space="preserve">
     <value>Reply</value>
+  </data>
+  <data name="MessageDialog.Retry" xml:space="preserve">
+    <value>Retry</value>
   </data>
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Yes</value>
