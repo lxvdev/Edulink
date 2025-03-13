@@ -7,9 +7,6 @@
     ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
         <ResourceDictionary>
-            <!--  Fun fact, this doesn't work  -->
-            <FontFamily x:Key="Inter">pack://application:,,,/Themes/Fonts/#Inter</FontFamily>
-
             <!--  Theme settings  -->
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme

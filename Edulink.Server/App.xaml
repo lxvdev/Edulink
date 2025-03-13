@@ -9,8 +9,6 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="Inter">pack://application:,,,/Themes/Fonts/Inter.ttf#Inter</FontFamily>
-
             <!--  Theme settings  -->
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
