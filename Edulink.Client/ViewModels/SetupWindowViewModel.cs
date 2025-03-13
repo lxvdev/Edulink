@@ -7,7 +7,7 @@ using WPFLocalizeExtension.Engine;
 
 namespace Edulink.ViewModels
 {
-    public class FirstStepsWindowViewModel : ValidatableClosableViewModel
+    public class SetupWindowViewModel : ValidatableClosableViewModel
     {
         private SettingsManager _settingsManager = App.SettingsManager;
 
@@ -94,9 +94,9 @@ namespace Edulink.ViewModels
             }
         }
 
-        public string PasswordButtonText => string.IsNullOrEmpty(App.SettingsManager.Settings?.Password) ? "FirstSteps.Password.SetPassword" : "FirstSteps.Password.ChangePassword";
+        public string PasswordButtonText => string.IsNullOrEmpty(App.SettingsManager.Settings?.Password) ? "Setup.Password.SetPassword" : "Setup.Password.ChangePassword";
 
-        public FirstStepsWindowViewModel()
+        public SetupWindowViewModel()
         {
             _name = _settingsManager.Settings.Name;
             _ipAddress = _settingsManager.Settings.IPAddress;
