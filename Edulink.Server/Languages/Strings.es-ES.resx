@@ -193,7 +193,7 @@
     <value>Reiniciar</value>
   </data>
   <data name="Main.Commands.RestartApplication" xml:space="preserve">
-    <value>Reiniciar la aplicación</value>
+    <value>Reiniciar aplicación</value>
   </data>
   <data name="Main.Commands.SendLink" xml:space="preserve">
     <value>Enviar enlace</value>
@@ -346,7 +346,7 @@
     <value>Restablecer ajustes</value>
   </data>
   <data name="Settings.Miscellaneous.RestartApplication" xml:space="preserve">
-    <value>Reiniciar la aplicación</value>
+    <value>Reiniciar aplicación</value>
   </data>
   <data name="Settings.Miscellaneous.Save" xml:space="preserve">
     <value>Guardar</value>
