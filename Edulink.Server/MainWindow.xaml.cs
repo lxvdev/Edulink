@@ -230,6 +230,12 @@ namespace Edulink
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            MessageDialogResult dialogResult = MessageDialog.ShowLocalized("Main.AreYouSureYouWantToExit", MessageDialogTitle.Warning, MessageDialogButton.YesNo, MessageDialogIcon.Warning);
+            if (dialogResult.ButtonResult == MessageDialogButtonResult.No)
+            {
+                e.Cancel = true;
+            }
+
             if (App.TaskbarIcon != null)
             {
                 App.TaskbarIcon.LeftClickCommand = null;
