@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Edulink Migrator")]
-[assembly: AssemblyDescription("An app for migrating Edulink versions")]
+[assembly: AssemblyDescription("Program for migrating Edulink versions")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Edulink Migrator")]
