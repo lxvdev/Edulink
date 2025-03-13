@@ -145,7 +145,7 @@
     <Compile Include="MVVM\ValidatableClosableViewModel.cs" />
     <Compile Include="MVVM\ValidatableViewModel.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
-    <Compile Include="ViewModels\FirstStepsWindowViewModel.cs" />
+    <Compile Include="ViewModels\SetupWindowViewModel.cs" />
     <Compile Include="ViewModels\PasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
     <Compile Include="ViewModels\TrayIconViewModel.cs" />
@@ -177,7 +177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FirstStepsWindow.xaml">
+    <Page Include="Views\SetupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,8 +197,8 @@
     <Compile Include="Classes\SystemUtility.cs" />
     <Compile Include="Classes\TaskSchedulerHelper.cs" />
     <Compile Include="Client.cs" />
-    <Compile Include="Views\FirstStepsWindow.xaml.cs">
-      <DependentUpon>FirstStepsWindow.xaml</DependentUpon>
+    <Compile Include="Views\SetupWindow.xaml.cs">
+      <DependentUpon>SetupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
