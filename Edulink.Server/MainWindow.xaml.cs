@@ -25,8 +25,6 @@ namespace Edulink
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SettingsWindow _settingsWindow;
-        private AboutDialog _aboutDialog;
         private Server _server;
 
         private MainWindowViewModel _viewModel;
@@ -41,6 +39,7 @@ namespace Edulink
                 _server.CommandReceived += Server_CommandReceivedAsync;
 
                 _viewModel = new MainWindowViewModel(_server);
+                _viewModel.RequestClose += (_, e) => Close();
                 DataContext = _viewModel;
                 Loaded += async (s, e) => await _server.StartServerAsync();
             }
@@ -55,26 +54,39 @@ namespace Edulink
             }
         }
 
+        private void ShowWindow()
+        {
+            WindowState = WindowState.Normal;
+            Focus();
+        }
+
         private void InitializeTrayIcon()
         {
-            RelayCommand showWindowCommand = new RelayCommand(execute =>
-            {
-                this.WindowState = WindowState.Normal;
-                this.Focus();
-            });
-
-            App.TaskbarIcon.LeftClickCommand = showWindowCommand;
-            App.TaskbarIcon.DoubleClickCommand = showWindowCommand;
+            App.TaskbarIcon.LeftClickCommand = new RelayCommand(execute => ShowWindow());
+            App.TaskbarIcon.DoubleClickCommand = new RelayCommand(execute => ShowWindow());
 
             App.TaskbarIcon.TrayBalloonTipClicked += TaskbarIcon_TrayBalloonTipClicked;
         }
 
         private void TaskbarIcon_TrayBalloonTipClicked(object sender, RoutedEventArgs e)
         {
-            if (App.ActiveBalloonTipType == App.BalloonTipType.ComputerDisconnected)
+            if (App.ActiveBalloonTipType == BalloonTipType.ComputerDisconnected)
             {
-                this.WindowState = WindowState.Normal;
-                this.Focus();
+                ShowWindow();
+            }
+        }
+
+        private void ToggleFullScreen()
+        {
+            if (WindowStyle == WindowStyle.None)
+            {
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Normal;
+            }
+            else
+            {
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
             }
         }
 
@@ -171,50 +183,14 @@ namespace Edulink
         #endregion
 
         #region Menu Items
-        private void SettingsItem_Click(object sender, RoutedEventArgs e)
+        private void FullScreenItem_Click(object sender, RoutedEventArgs e)
         {
-            if (_settingsWindow == null || !_settingsWindow.IsVisible)
-            {
-                _settingsWindow?.Close();
-                _settingsWindow = new SettingsWindow();
-                _settingsWindow.Show();
-            }
-            else
-            {
-                _settingsWindow.WindowState = WindowState.Normal;
-                _settingsWindow.Focus();
-            }
+            ToggleFullScreen();
         }
 
         private void AlwaysOnTopItem_CheckChanged(object sender, RoutedEventArgs e)
         {
-            this.Topmost = (sender as MenuItem).IsChecked;
-        }
-
-        private void UpdaterItem_Click(object sender, RoutedEventArgs e)
-        {
-            UpdaterDialog updaterDialog = new UpdaterDialog();
-            updaterDialog.Show();
-        }
-
-        private void AboutItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (_aboutDialog == null || !_aboutDialog.IsVisible)
-            {
-                _aboutDialog?.Close();
-                _aboutDialog = new AboutDialog();
-                _aboutDialog.Show();
-            }
-            else
-            {
-                _aboutDialog.WindowState = WindowState.Normal;
-                _aboutDialog.Focus();
-            }
-        }
-
-        private void ExitItem_Click(object sender, RoutedEventArgs e)
-        {
-            App.CloseApp();
+            Topmost = (sender as MenuItem).IsChecked;
         }
         #endregion
 
@@ -228,12 +204,21 @@ namespace Edulink
             }
         }
 
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11)
+            {
+                ToggleFullScreen();
+            }
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             MessageDialogResult dialogResult = MessageDialog.ShowLocalized("Main.AreYouSureYouWantToExit", MessageDialogTitle.Warning, MessageDialogButton.YesNo, MessageDialogIcon.Warning);
             if (dialogResult.ButtonResult == MessageDialogButtonResult.No)
             {
                 e.Cancel = true;
+                return;
             }
 
             if (App.TaskbarIcon != null)
@@ -242,7 +227,7 @@ namespace Edulink
                 App.TaskbarIcon.DoubleClickCommand = null;
                 App.TaskbarIcon.Dispose();
             }
-            _settingsWindow = null;
+
             _server?.Dispose();
         }
     }
