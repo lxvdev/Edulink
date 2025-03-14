@@ -163,14 +163,16 @@ namespace Edulink.ViewModels
                 _settingsManager.Settings.Port = int.TryParse(Port, out int port) ? port : 0;
                 _settingsManager.Settings.Language = Language.Equals(CultureInfo.InstalledUICulture) ? null : Language.ToString();
                 _settingsManager.Settings.Theme = Theme;
-                _settingsManager.Save();
 
-                ClearUnsavedChanges();
+                if (_settingsManager.Save())
+                {
+                    ClearUnsavedChanges();
 
-                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+                    _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
 
-                if (restart)
-                    App.RestartApp();
+                    if (restart)
+                        App.RestartApp();
+                }
             }
             catch (Exception ex)
             {
