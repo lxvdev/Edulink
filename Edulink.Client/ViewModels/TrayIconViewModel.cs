@@ -98,25 +98,46 @@ namespace Edulink.ViewModels
             }
         }
 
-        private SettingsWindow _settingsWindow;
+        private void ShowWindow<T>(ref T window) where T : Window, new()
+        {
+            if (window == null || !window.IsVisible)
+            {
+                window?.Close();
+                window = new T();
+                window.Show();
+            }
+            else
+            {
+                window.WindowState = WindowState.Normal;
+                window.Activate();
+            }
+        }
 
         public ICommand SettingsCommand => new RelayCommand(execute => OpenSettings());
+
+        private SettingsWindow _settingsWindow;
         private void OpenSettings()
         {
             if (App.ValidateCredentials())
             {
-                if (_settingsWindow == null || !_settingsWindow.IsVisible)
-                {
-                    _settingsWindow?.Close();
-                    _settingsWindow = new SettingsWindow();
-                    _settingsWindow.Show();
-                }
-                else
-                {
-                    _settingsWindow.WindowState = WindowState.Normal;
-                    _settingsWindow.Focus();
-                }
+                ShowWindow(ref _settingsWindow);
             }
+        }
+
+        public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
+
+        private UpdaterDialog _updaterDialog;
+        private void OpenUpdater()
+        {
+            ShowWindow(ref _updaterDialog);
+        }
+
+        public ICommand AboutCommand => new RelayCommand(execute => OpenAbout());
+
+        private AboutDialog _aboutDialog;
+        private void OpenAbout()
+        {
+            ShowWindow(ref _aboutDialog);
         }
 
         public ICommand RestartApplicationCommand => new RelayCommand(execute => RestartApplication());
@@ -125,42 +146,6 @@ namespace Edulink.ViewModels
             if (App.ValidateCredentials())
             {
                 App.RestartApp();
-            }
-        }
-
-        private UpdaterDialog _updaterDialog;
-
-        public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
-        private void OpenUpdater()
-        {
-            if (_updaterDialog == null || !_updaterDialog.IsVisible)
-            {
-                _updaterDialog?.Close();
-                _updaterDialog = new UpdaterDialog();
-                _updaterDialog.Show();
-            }
-            else
-            {
-                _updaterDialog.WindowState = WindowState.Normal;
-                _updaterDialog.Focus();
-            }
-        }
-
-        private AboutDialog _aboutDialog;
-
-        public ICommand AboutCommand => new RelayCommand(execute => OpenAbout());
-        private void OpenAbout()
-        {
-            if (_aboutDialog == null || !_aboutDialog.IsVisible)
-            {
-                _aboutDialog?.Close();
-                _aboutDialog = new AboutDialog();
-                _aboutDialog.Show();
-            }
-            else
-            {
-                _aboutDialog.WindowState = WindowState.Normal;
-                _aboutDialog.Focus();
             }
         }
 
