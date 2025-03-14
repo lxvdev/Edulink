@@ -49,6 +49,21 @@ namespace Edulink.ViewModels
             }
         }
 
+        private bool _disconnectionNotificationEnabled;
+        public bool DisconnectionNotificationEnabled
+        {
+            get => _disconnectionNotificationEnabled;
+            set
+            {
+                if (_disconnectionNotificationEnabled != value)
+                {
+                    _disconnectionNotificationEnabled = value;
+                    OnPropertyChanged();
+                    TrackUnsavedChanges(_settingsManager.Settings.DisconnectionNotificationEnabled);
+                }
+            }
+        }
+
         private bool _previewEnabled;
         public bool PreviewEnabled
         {
@@ -132,18 +147,21 @@ namespace Edulink.ViewModels
             try
             {
                 _settingsManager.Settings.Port = int.TryParse(Port, out int port) ? port : 0;
+                _settingsManager.Settings.DisconnectionNotificationEnabled = DisconnectionNotificationEnabled;
                 _settingsManager.Settings.PreviewEnabled = PreviewEnabled;
                 _settingsManager.Settings.PreviewFrequency = PreviewFrequency;
                 _settingsManager.Settings.Language = Language.Equals(CultureInfo.InstalledUICulture) ? null : Language.ToString();
                 _settingsManager.Settings.Theme = Theme;
-                _settingsManager.Save();
 
-                ClearUnsavedChanges();
+                if (_settingsManager.Save())
+                {
+                    ClearUnsavedChanges();
 
-                _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+                    _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.Saved"], new PackIcon { Kind = PackIconKind.Close }, () => { });
 
-                if (restart)
-                    App.RestartApp();
+                    if (restart)
+                        App.RestartApp();
+                }
             }
             catch (Exception ex)
             {
@@ -179,6 +197,7 @@ namespace Edulink.ViewModels
         private void LoadSettings()
         {
             Port = _settingsManager.Settings.Port == 0 ? string.Empty : _settingsManager.Settings.Port.ToString();
+            DisconnectionNotificationEnabled = _settingsManager.Settings.DisconnectionNotificationEnabled;
             PreviewEnabled = _settingsManager.Settings.PreviewEnabled;
             PreviewFrequency = _settingsManager.Settings.PreviewFrequency;
             Language = !string.IsNullOrEmpty(_settingsManager.Settings.Language) ? new CultureInfo(_settingsManager.Settings.Language) : CultureInfo.InstalledUICulture;
