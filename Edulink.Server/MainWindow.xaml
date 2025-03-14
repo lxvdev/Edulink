@@ -190,7 +190,7 @@
                                 <ColumnDefinition Width="130" MinWidth="0" />
                             </Grid.ColumnDefinitions>
 
-                            <!--  Connected clients  -->
+                            <!--  Connected computers  -->
                             <ListBox
                                 x:Name="ComputersList"
                                 Grid.Column="0"
