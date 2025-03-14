@@ -235,6 +235,18 @@
   <data name="Main.Menu.Options.AlwaysOnTop" xml:space="preserve">
     <value>Always on top</value>
   </data>
+  <data name="Main.Menu.View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Main.Menu.View.FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="Main.Menu.View.Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Main.Refreshed" xml:space="preserve">
+    <value>Refreshed</value>
+  </data>
   <data name="Main.SortBy" xml:space="preserve">
     <value>Sort by</value>
   </data>
@@ -330,6 +342,12 @@
   </data>
   <data name="Settings.Miscellaneous.Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Settings.Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Settings.Notifications.ComputerDisconnected" xml:space="preserve">
+    <value>Computer disconnected</value>
   </data>
   <data name="Settings.Preview" xml:space="preserve">
     <value>Preview</value>

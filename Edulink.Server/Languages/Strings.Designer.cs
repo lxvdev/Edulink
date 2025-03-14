@@ -475,6 +475,42 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string Main_Menu_View {
+            get {
+                return ResourceManager.GetString("Main.Menu.View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full screen.
+        /// </summary>
+        internal static string Main_Menu_View_FullScreen {
+            get {
+                return ResourceManager.GetString("Main.Menu.View.FullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        internal static string Main_Menu_View_Refresh {
+            get {
+                return ResourceManager.GetString("Main.Menu.View.Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refreshed.
+        /// </summary>
+        internal static string Main_Refreshed {
+            get {
+                return ResourceManager.GetString("Main.Refreshed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sort by.
         /// </summary>
         internal static string Main_SortBy {
@@ -759,6 +795,24 @@ namespace Edulink.Languages {
         internal static string Settings_Miscellaneous_Save {
             get {
                 return ResourceManager.GetString("Settings.Miscellaneous.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        internal static string Settings_Notifications {
+            get {
+                return ResourceManager.GetString("Settings.Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Computer disconnected.
+        /// </summary>
+        internal static string Settings_Notifications_ComputerDisconnected {
+            get {
+                return ResourceManager.GetString("Settings.Notifications.ComputerDisconnected", resourceCulture);
             }
         }
         
