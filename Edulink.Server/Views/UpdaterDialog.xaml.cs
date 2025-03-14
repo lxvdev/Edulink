@@ -33,5 +33,14 @@ namespace Edulink.Views
                 else { Close(); }
             }
         }
+
+        public UpdaterDialog()
+        {
+            InitializeComponent();
+
+            UpdaterDialogViewModel viewModel;
+            viewModel = new UpdaterDialogViewModel();
+            DataContext = viewModel;
+        }
     }
 }
