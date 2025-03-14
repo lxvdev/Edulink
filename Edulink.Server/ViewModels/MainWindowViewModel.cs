@@ -232,7 +232,7 @@ namespace Edulink.ViewModels
             else
             {
                 window.WindowState = WindowState.Normal;
-                window.Focus();
+                window.Activate();
             }
         }
 
@@ -360,7 +360,7 @@ namespace Edulink.ViewModels
 
             if (existingDialog != null)
             {
-                existingDialog.Focus();
+                existingDialog.Activate();
             }
             else
             {
