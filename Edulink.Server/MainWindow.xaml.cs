@@ -57,7 +57,7 @@ namespace Edulink
         private void ShowWindow()
         {
             WindowState = WindowState.Normal;
-            Focus();
+            Activate();
         }
 
         private void InitializeTrayIcon()
