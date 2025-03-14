@@ -44,8 +44,23 @@
                         Text="{Binding Port, ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
+                <!--  Notification  -->
+                <StackPanel Margin="0,0,0,5">
+                    <TextBlock
+                        Margin="0,0,0,5"
+                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                        Text="{lex:Loc Settings.Notifications}" />
+
+                    <CheckBox
+                        Margin="0,0,0,5"
+                        materialDesign:CheckBoxAssist.CheckBoxSize="20"
+                        Content="{lex:Loc Settings.Notifications.ComputerDisconnected}"
+                        Cursor="Hand"
+                        IsChecked="{Binding DisconnectionNotificationEnabled}" />
+                </StackPanel>
+
                 <!--  Preview  -->
-                <StackPanel Margin="0,0,0,0">
+                <StackPanel Margin="0,0,0,5">
                     <TextBlock
                         Margin="0,0,0,5"
                         Style="{StaticResource MaterialDesignHeadline5TextBlock}"
