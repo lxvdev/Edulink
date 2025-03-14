@@ -5,6 +5,7 @@ using Edulink.Models;
 using Edulink.MVVM;
 using Edulink.Views;
 using Hardcodet.Wpf.TaskbarNotification;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,12 +16,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ClosableViewModel
     {
         private ObservableCollection<Client> _clients = new ObservableCollection<Client>();
         public ObservableCollection<Client> Clients
@@ -63,6 +65,9 @@ namespace Edulink.ViewModels
         public int ShowMainContent => HasClients ? 1 : 0;
 
         public int ClientsCount => Clients.Count;
+
+        private readonly SnackbarMessageQueue _snackbarMessageQueue = new SnackbarMessageQueue();
+        public ISnackbarMessageQueue SnackbarMessageQueue => _snackbarMessageQueue;
 
         public MainWindowViewModel(Server server)
         {
@@ -123,7 +128,7 @@ namespace Edulink.ViewModels
         }
 
         private Rectangle DesktopPreviewResolution { get; } = new Rectangle(0, 0, 240, 135);
-        private void PreviewTimerCallback(object state)
+        private void PreviewTimerCallback(object state = null)
         {
             Clients.Where(client => client.IsVisible && !client.IsExcludedFromPreview).ToList()
                    .ForEach(client => RequestPreview(client));
@@ -199,8 +204,57 @@ namespace Edulink.ViewModels
         private void Server_ClientDisconnected(object sender, Server.ClientDisconnectedEventArgs e)
         {
             _clients.Remove(e.Client);
-            App.ActiveBalloonTipType = App.BalloonTipType.ComputerDisconnected;
-            App.TaskbarIcon.ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.ComputerDisconnected"], string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.ComputerDisconnected"], e.Client?.Name ?? "???"), BalloonIcon.Info);
+            App.ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.ComputerDisconnected"],
+                               string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.ComputerDisconnected"], e.Client?.Name ?? "???"),
+                               BalloonIcon.Info, BalloonTipType.ComputerDisconnected);
+        }
+        #endregion
+
+        #region MenuItems
+        public ICommand RefreshCommand => new RelayCommand(execute => RefreshList());
+        private void RefreshList()
+        {
+            PreviewTimerCallback();
+            _snackbarMessageQueue.Clear();
+            _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Main.Refreshed"], new PackIcon { Kind = PackIconKind.Close }, () => { });
+        }
+
+        public ICommand ExitCommand => new RelayCommand(execute => OnRequestClose());
+
+        private void ShowWindow<T>(ref T window) where T : Window, new()
+        {
+            if (window == null || !window.IsVisible)
+            {
+                window?.Close();
+                window = new T();
+                window.Show();
+            }
+            else
+            {
+                window.WindowState = WindowState.Normal;
+                window.Focus();
+            }
+        }
+
+        public ICommand AboutCommand => new RelayCommand(execute => ShowAbout());
+        private AboutDialog _aboutDialog;
+        private void ShowAbout()
+        {
+            ShowWindow(ref _aboutDialog);
+        }
+
+        public ICommand SettingsCommand => new RelayCommand(execute => ShowSettings());
+        private SettingsWindow _settingsWindow;
+        private void ShowSettings()
+        {
+            ShowWindow(ref _settingsWindow);
+        }
+
+        public ICommand UpdaterCommand => new RelayCommand(execute => ShowUpdater());
+        private UpdaterDialog _updaterDialog;
+        private void ShowUpdater()
+        {
+            ShowWindow(ref _updaterDialog);
         }
         #endregion
 
