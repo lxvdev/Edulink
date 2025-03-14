@@ -21,6 +21,7 @@
     lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
     lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
     Closing="Window_Closing"
+    KeyUp="Window_KeyUp"
     Style="{StaticResource MaterialDesignWindow}"
     UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
@@ -30,6 +31,13 @@
         <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
+        <KeyBinding
+            Key="S"
+            Command="{Binding SettingsCommand}"
+            Modifiers="Ctrl" />
+    </Window.InputBindings>
     <Grid>
         <DockPanel>
             <!--  Top bar menu  -->
@@ -40,14 +48,29 @@
                 <!--  File  -->
                 <MenuItem Header="{lex:Loc Main.Menu.File}">
                     <MenuItem
-                        Click="SettingsItem_Click"
+                        Command="{Binding SettingsCommand}"
                         Header="{lex:Loc Main.Menu.File.Settings}"
-                        Icon="{materialDesign:PackIcon Kind=Cog}" />
+                        Icon="{materialDesign:PackIcon Kind=Cog}"
+                        InputGestureText="Ctrl + S" />
                     <Separator />
                     <MenuItem
-                        Click="ExitItem_Click"
+                        Command="{Binding ExitCommand}"
                         Header="{lex:Loc Main.Menu.File.Exit}"
-                        Icon="{materialDesign:PackIcon Kind=Close}" />
+                        Icon="{materialDesign:PackIcon Kind=Close}"
+                        InputGestureText="Alt + F4" />
+                </MenuItem>
+                <!--  View  -->
+                <MenuItem Header="{lex:Loc Main.Menu.View}">
+                    <MenuItem
+                        Click="FullScreenItem_Click"
+                        Header="{lex:Loc Main.Menu.View.FullScreen}"
+                        Icon="{materialDesign:PackIcon Kind=Fullscreen}"
+                        InputGestureText="F11" />
+                    <MenuItem
+                        Command="{Binding RefreshCommand}"
+                        Header="{lex:Loc Main.Menu.View.Refresh}"
+                        Icon="{materialDesign:PackIcon Kind=Refresh}"
+                        InputGestureText="F5" />
                 </MenuItem>
                 <!--  Options  -->
                 <MenuItem Header="{lex:Loc Main.Menu.Options}">
@@ -61,11 +84,11 @@
                 <!--  Help  -->
                 <MenuItem Header="{lex:Loc Main.Menu.Help}">
                     <MenuItem
-                        Click="UpdaterItem_Click"
+                        Command="{Binding UpdaterCommand}"
                         Header="{lex:Loc Main.Menu.Help.Updater}"
                         Icon="{materialDesign:PackIcon Kind=Update}" />
                     <MenuItem
-                        Click="AboutItem_Click"
+                        Command="{Binding AboutCommand}"
                         Header="{lex:Loc Main.Menu.Help.About}"
                         Icon="{materialDesign:PackIcon Kind=Info}" />
                 </MenuItem>
@@ -193,11 +216,11 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel
-                                            Width="240"
+                                            Width="Auto"
                                             Cursor="Hand"
                                             ToolTip="{StaticResource ClientTooltip}">
                                             <Grid Margin="0,0,0,5">
-                                                <materialDesign:Card Width="240" Height="134">
+                                                <materialDesign:Card Height="134">
                                                     <Grid>
                                                         <materialDesign:PackIcon
                                                             Width="30"
@@ -401,5 +424,10 @@
                 </materialDesign:TransitionerSlide>
             </materialDesign:Transitioner>
         </DockPanel>
+
+        <materialDesign:Snackbar
+            Margin="0,0,10,10"
+            HorizontalAlignment="Right"
+            MessageQueue="{Binding SnackbarMessageQueue}" />
     </Grid>
 </Window>
