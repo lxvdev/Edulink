@@ -70,7 +70,12 @@ namespace Edulink
             if (e.Args.Length > 1 && e.Args[0] == "--apply-settings")
             {
                 SettingsManager.Load(e.Args[1]);
-                SettingsManager.Save(noRetry: true);
+
+                if (!SettingsManager.Save(noRetry: true))
+                {
+                    Environment.Exit(1);
+                }
+
                 Environment.Exit(0);
                 return;
             }
@@ -129,10 +134,9 @@ namespace Edulink
             UpdateAvailable = OpenUpdater.IsUpdateAvailable(releaseDetails);
             if (UpdateAvailable == true)
             {
-                ActiveBalloonTipType = BalloonTipType.Update;
-                TaskbarIcon.ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.UpdateAvailable"],
-                                           string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.UpdateAvailable"], releaseDetails.Version),
-                                           BalloonIcon.Info);
+                ShowBalloonTip(LocalizedStrings.Instance["TaskbarIcon.Title.UpdateAvailable"],
+                               string.Format(LocalizedStrings.Instance["TaskbarIcon.Content.UpdateAvailable"], releaseDetails.Version),
+                               BalloonIcon.Info, BalloonTipType.Update);
             }
         }
 
@@ -156,10 +160,28 @@ namespace Edulink
             _paletteHelper.SetTheme(materialTheme);
         }
 
-        public enum BalloonTipType
+        public static void ShowBalloonTip(string title, string message, BalloonIcon symbol, BalloonTipType type)
         {
-            Update,
-            ComputerDisconnected
+            switch (type)
+            {
+                case BalloonTipType.Update:
+                    if (SettingsManager.Settings.CheckForUpdates)
+                    {
+                        ActiveBalloonTipType = type;
+                        TaskbarIcon.ShowBalloonTip(title, message, symbol);
+                    }
+                    break;
+                case BalloonTipType.ComputerDisconnected:
+                    if (SettingsManager.Settings.DisconnectionNotificationEnabled)
+                    {
+                        ActiveBalloonTipType = type;
+                        TaskbarIcon.ShowBalloonTip(title, message, symbol);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public static void RestartApp()
@@ -177,5 +199,11 @@ namespace Edulink
         {
             base.OnExit(e);
         }
+    }
+
+    public enum BalloonTipType
+    {
+        Update,
+        ComputerDisconnected
     }
 }
