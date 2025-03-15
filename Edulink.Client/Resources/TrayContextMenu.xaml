@@ -24,6 +24,10 @@
             Command="{Binding SendMessageCommand}"
             Header="{lex:Loc TrayContextMenu.SendMessageToTeacher}"
             Icon="{materialDesign:PackIcon Kind=MessageOutline}" />
+        <MenuItem
+            Command="{Binding SendFileCommand}"
+            Header="{lex:Loc TrayContextMenu.SendFile}"
+            Icon="{materialDesign:PackIcon Kind=FileOutline}" />
         <Separator />
         <MenuItem
             Command="{Binding SettingsCommand}"
