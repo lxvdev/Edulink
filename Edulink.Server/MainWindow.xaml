@@ -225,6 +225,7 @@
                                                         <materialDesign:PackIcon
                                                             Width="30"
                                                             Height="30"
+                                                            Margin="15,0"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             Kind="Hide" />
