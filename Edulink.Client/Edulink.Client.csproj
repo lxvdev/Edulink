@@ -138,6 +138,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Computer.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="MVVM\ClosableViewModel.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="MVVM\ValidatableClosableViewModel.cs" />
     <Compile Include="MVVM\ValidatableViewModel.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="ViewModels\SendFileWindowViewModel.cs" />
     <Compile Include="ViewModels\SetupWindowViewModel.cs" />
     <Compile Include="ViewModels\PasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\SettingsWindowViewModel.cs" />
@@ -177,6 +179,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SendFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SetupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +203,9 @@
     <Compile Include="Classes\SystemUtility.cs" />
     <Compile Include="Classes\TaskSchedulerHelper.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Views\SendFileWindow.xaml.cs">
+      <DependentUpon>SendFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SetupWindow.xaml.cs">
       <DependentUpon>SetupWindow.xaml</DependentUpon>
     </Compile>
