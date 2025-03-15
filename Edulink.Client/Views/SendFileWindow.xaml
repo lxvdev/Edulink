@@ -1,0 +1,112 @@
+﻿<Window
+    x:Class="Edulink.Views.SendFileWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Edulink.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
+    Title="Send file"
+    Width="480"
+    Height="600"
+    d:DataContext="{d:DesignInstance vm:SendFileWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter"
+            FalseValue="Collapsed"
+            TrueValue="Visible" />
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="InvertBooleanToVisibilityConverter"
+            FalseValue="Visible"
+            TrueValue="Collapsed" />
+        <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+    </Window.Resources>
+    <Grid>
+        <!--  TODO: Localize strings  -->
+        <materialDesign:Transitioner d:SelectedIndex="1" SelectedIndex="{Binding PageIndex}">
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight}">
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:FadeWipe />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <Grid>
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Visibility="{Binding Receiving, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ProgressBar
+                            Margin="0,0,8,0"
+                            IsIndeterminate="True"
+                            Style="{StaticResource MaterialDesignCircularProgressBar}"
+                            Visibility="{Binding Receiving, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="Loading list" />
+                    </StackPanel>
+                    <Grid
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding Receiving, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                        <TextBlock
+                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                            Text="Sharing is not allowed"
+                            Visibility="{Binding SharingEnabled, Converter={StaticResource InvertBooleanToVisibilityConverter}}" />
+                    </Grid>
+                </Grid>
+            </materialDesign:TransitionerSlide>
+            <!--  Select computer  -->
+            <materialDesign:TransitionerSlide OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight}">
+                <materialDesign:TransitionerSlide.ForwardWipe>
+                    <materialDesign:FadeWipe />
+                </materialDesign:TransitionerSlide.ForwardWipe>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ListBox
+                        Grid.Row="0"
+                        Margin="0,0,0,10"
+                        d:ItemsSource="{d:SampleData ItemCount=16}"
+                        IsEnabled="{Binding IsTeacher, Converter={StaticResource InvertBooleanConverter}}"
+                        ItemsSource="{Binding ComputersView}"
+                        SelectedItem="{Binding SelectedComputer}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Cursor="Hand" Orientation="Horizontal">
+                                    <materialDesign:PackIcon
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0,0,10,0"
+                                        VerticalAlignment="Center"
+                                        Kind="DesktopWindows" />
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding Name}" />
+                                        <TextBlock Style="{StaticResource MaterialDesignOverlineTextBlock}" Text="{Binding ID}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <CheckBox
+                        Grid.Row="1"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        Content="Send to teacher"
+                        Cursor="Hand"
+                        IsChecked="{Binding IsTeacher}" />
+                    <Button
+                        Grid.Row="1"
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Content="Next"
+                        Style="{StaticResource MaterialDesignFlatButton}" />
+                </Grid>
+            </materialDesign:TransitionerSlide>
+        </materialDesign:Transitioner>
+    </Grid>
+</Window>
