@@ -20,6 +20,10 @@ namespace Edulink.Models
 
         public static readonly Command ToggleMute = new Command("TOGGLEMUTE", "2.0.1.0");
 
+        public static readonly Command ComputerList = new Command("COMPUTERLIST", "2.1.0.0");
+        public static readonly Command RequestSendFile = new Command("REQUESTSENDFILE", "2.1.0.0");
+        public static readonly Command ResponseSendFile = new Command("RESPONSESENDFILE", "2.1.0.0");
+
         public static readonly Command Connect = new Command("CONNECT", "2.0.0.0");
         public static readonly Command Disconnect = new Command("DISCONNECT", "2.0.0.0");
     }
