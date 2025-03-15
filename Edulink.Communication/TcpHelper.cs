@@ -11,7 +11,7 @@ namespace Edulink.Communication
 {
     public class TcpHelper : IDisposable
     {
-        public TcpClient Client;
+        public TcpClient TcpClient;
         private NetworkStream _stream;
         private StreamReader _reader;
         private StreamWriter _writer;
@@ -19,8 +19,8 @@ namespace Edulink.Communication
 
         public TcpHelper(TcpClient tcpClient)
         {
-            Client = tcpClient ?? throw new ArgumentNullException(nameof(tcpClient));
-            _stream = Client.GetStream();
+            TcpClient = tcpClient ?? throw new ArgumentNullException(nameof(tcpClient));
+            _stream = TcpClient.GetStream();
             _reader = new StreamReader(_stream, Encoding.UTF8);
             _writer = new StreamWriter(_stream, Encoding.UTF8) { AutoFlush = false };
         }
@@ -82,11 +82,11 @@ namespace Edulink.Communication
         {
             if (disposing)
             {
-                Client?.Close();
+                TcpClient?.Close();
                 _reader?.Dispose();
                 _writer?.Dispose();
                 _stream?.Dispose();
-                Client?.Dispose();
+                TcpClient?.Dispose();
             }
         }
     }
