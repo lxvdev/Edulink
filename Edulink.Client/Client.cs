@@ -11,11 +11,12 @@ namespace Edulink
 {
     public class Client : IDisposable
     {
-        private TcpClient tcpClient;
+        private TcpClient _tcpClient;
         public TcpHelper Helper;
-        private string ipAddress;
-        private int port;
-        private string name;
+
+        public string IPAddress { get; set; }
+        public int Port { get; set; }
+        public string Name { get; set; }
         public bool Connected { get; private set; } = false;
 
         public event EventHandler<EdulinkCommand> CommandReceived;
@@ -23,28 +24,34 @@ namespace Edulink
 
         public Client(string ipAddress, int port, string name)
         {
-            this.ipAddress = ipAddress;
-            this.port = port;
-            this.name = name;
-            tcpClient = new TcpClient();
+            this.IPAddress = ipAddress;
+            this.Port = port;
+            this.Name = name;
+        }
+
+        public Client()
+        {
+
         }
 
         public async Task<bool> ConnectAsync()
         {
             try
             {
-                await tcpClient.ConnectAsync(ipAddress, port);
-                Helper = new TcpHelper(tcpClient);
+                _tcpClient = new TcpClient();
+
+                await _tcpClient.ConnectAsync(IPAddress, Port);
+                Helper = new TcpHelper(_tcpClient);
 
                 await Helper.SendCommandAsync(new EdulinkCommand
                 {
                     Command = Commands.Connect.ToString(),
                     Parameters = new Dictionary<string, string>
-                    {
-                        { "Name", name },
-                        { "Version", Assembly.GetExecutingAssembly().GetName().Version.ToString() },
-                        { "UpdateAvailable", App.UpdateAvailable.ToString() }
-                    }
+                {
+                    { "Name", Name },
+                    { "Version", Assembly.GetExecutingAssembly().GetName().Version.ToString() },
+                    { "UpdateAvailable", App.UpdateAvailable.ToString() }
+                }
                 });
 
                 EdulinkCommand response = await Helper.ReceiveCommandAsync(TimeSpan.FromSeconds(5));
@@ -103,6 +110,7 @@ namespace Edulink
         public void Dispose()
         {
             Helper?.Dispose();
+            _tcpClient?.Dispose();
             Connected = false;
             ConnectionStatusChanged?.Invoke(this, Connected);
         }
