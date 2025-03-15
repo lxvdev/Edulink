@@ -17,7 +17,7 @@ namespace Edulink.Models
             Version = version;
             UpdateAvailable = updateAvailable;
             ConnectionTimestamp = DateTime.Now;
-            Endpoint = Helper?.Client.Client.RemoteEndPoint.ToString();
+            Endpoint = Helper?.TcpClient.Client.RemoteEndPoint.ToString();
             ID = Guid.NewGuid();
         }
 
