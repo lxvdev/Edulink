@@ -15,22 +15,6 @@ namespace Edulink.ViewModels
 {
     public class TrayIconViewModel : ViewModelBase
     {
-        private bool _connectionStatus = false;
-        public bool ConnectionStatus
-        {
-            get => _connectionStatus;
-            set
-            {
-                if (_connectionStatus != value)
-                {
-                    _connectionStatus = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(ConnectionStatusText));
-                    CommandManager.InvalidateRequerySuggested();
-                }
-            }
-        }
-
         public string UpdaterStatus
         {
             get
@@ -50,7 +34,9 @@ namespace Edulink.ViewModels
             }
         }
 
-        public string ConnectionStatusText => _connectionStatus ? "TrayContextMenu.Connection.Status.Connected" : "TrayContextMenu.Connection.Status.Disconnected";
+        public bool ConnectionStatus => App.Client.Connected;
+
+        public string ConnectionStatusText => ConnectionStatus ? "TrayContextMenu.Connection.Status.Connected" : "TrayContextMenu.Connection.Status.Disconnected";
 
         public string ComputerName => !string.IsNullOrEmpty(App.SettingsManager.Settings.Name) ? App.SettingsManager.Settings.Name : LocalizedStrings.Instance["TrayContextMenu.NoName"];
 
@@ -59,8 +45,16 @@ namespace Edulink.ViewModels
 
         public TrayIconViewModel()
         {
+            App.Client.ConnectionStatusChanged += Client_ConnectionStatusChanged;
             LocalizeDictionary.Instance.PropertyChanged += LocalizeDictionary_PropertyChanged;
             App.UpdateAvailableChanged += App_IsUpdateAvailableChanged;
+        }
+
+        private void Client_ConnectionStatusChanged(object sender, bool e)
+        {
+            OnPropertyChanged(nameof(ConnectionStatus));
+            OnPropertyChanged(nameof(ConnectionStatusText));
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private void App_IsUpdateAvailableChanged(object sender, EventArgs e)
@@ -113,9 +107,11 @@ namespace Edulink.ViewModels
             }
         }
 
-        public ICommand SettingsCommand => new RelayCommand(execute => OpenSettings());
+        public ICommand SendFileCommand => new RelayCommand(execute => ShowWindow(ref App.SendFileWindow), canExecute => ConnectionStatus && messagesAllowed);
 
         private SettingsWindow _settingsWindow;
+        public ICommand SettingsCommand => new RelayCommand(execute => OpenSettings());
+
         private void OpenSettings()
         {
             if (App.ValidateCredentials())
@@ -124,21 +120,11 @@ namespace Edulink.ViewModels
             }
         }
 
-        public ICommand UpdaterCommand => new RelayCommand(execute => OpenUpdater());
-
         private UpdaterDialog _updaterDialog;
-        private void OpenUpdater()
-        {
-            ShowWindow(ref _updaterDialog);
-        }
-
-        public ICommand AboutCommand => new RelayCommand(execute => OpenAbout());
+        public ICommand UpdaterCommand => new RelayCommand(execute => ShowWindow(ref _updaterDialog));
 
         private AboutDialog _aboutDialog;
-        private void OpenAbout()
-        {
-            ShowWindow(ref _aboutDialog);
-        }
+        public ICommand AboutCommand => new RelayCommand(execute => ShowWindow(ref _aboutDialog));
 
         public ICommand RestartApplicationCommand => new RelayCommand(execute => RestartApplication());
         private void RestartApplication()
