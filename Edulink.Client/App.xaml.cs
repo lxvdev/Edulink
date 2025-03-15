@@ -5,6 +5,7 @@ using Edulink.ViewModels;
 using Edulink.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +28,9 @@ namespace Edulink
     public partial class App : Application
     {
         public static SettingsManager SettingsManager = new SettingsManager();
-        public static Client Client;
+        public static Client Client = new Client();
+
+        public static SendFileWindow SendFileWindow;
 
         private readonly PaletteHelper _paletteHelper = new PaletteHelper();
 
@@ -143,6 +146,44 @@ namespace Edulink
 
             InitializeTrayIcon();
 
+            // TODO: Implement COMPUTERLIST command on server to avoid this
+            SendFileWindow = new SendFileWindow();
+            SendFileWindow.Show();
+            SendFileWindow.UpdateList(new List<Computer>
+            {
+                new Computer
+                {
+                    Name = "PC 01",
+                    ID = Guid.NewGuid()
+                },
+                new Computer
+                {
+                    Name = "PC 02",
+                    ID = Guid.NewGuid()
+                }
+            });
+            SendFileWindow.SetSharingStatus(true);
+
+            _ = Task.Delay(5000).ContinueWith(task =>
+            {
+                Current.Dispatcher.Invoke(() =>
+                {
+                    SendFileWindow.UpdateList(new List<Computer>
+                    {
+                        new Computer
+                        {
+                            Name = "PC 03",
+                            ID = Guid.NewGuid()
+                        },
+                        new Computer
+                        {
+                            Name = "PC 01",
+                            ID = Guid.NewGuid()
+                        }
+                    });
+                });
+            });
+
             if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null)
             {
                 SetupWindow setupWindow = new SetupWindow();
@@ -212,23 +253,21 @@ namespace Edulink
             {
                 try
                 {
-                    using (Client = new Client(SettingsManager.Settings.IPAddress, SettingsManager.Settings.Port, SettingsManager.Settings.Name))
-                    {
-                        if (await Client.ConnectAsync())
-                        {
-                            Console.WriteLine("Connected to server");
-                            _trayIconViewModel.ConnectionStatus = true;
-                            Client.CommandReceived += Client_CommandReceivedAsync;
-                            await Client.ListenForCommandsAsync();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Failed to connect. Retrying in 5 seconds...");
-                            _trayIconViewModel.ConnectionStatus = false;
-                            Client.CommandReceived -= Client_CommandReceivedAsync;
-                        }
-                    }
+                    Client.CommandReceived += Client_CommandReceivedAsync;
 
+                    Client.IPAddress = SettingsManager.Settings.IPAddress;
+                    Client.Port = SettingsManager.Settings.Port;
+                    Client.Name = SettingsManager.Settings.Name;
+
+                    if (await Client.ConnectAsync())
+                    {
+                        Console.WriteLine("Connected to server");
+                        await Client.ListenForCommandsAsync();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to connect. Retrying in 5 seconds...");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -240,23 +279,23 @@ namespace Edulink
         }
 
         private InputBlocker _inputBlocker = new InputBlocker();
-        private async void Client_CommandReceivedAsync(object sender, EdulinkCommand edunlinkCommand)
+        private async void Client_CommandReceivedAsync(object sender, EdulinkCommand edulinkCommand)
         {
             try
             {
-                string command = edunlinkCommand.Command;
+                string command = edulinkCommand.Command;
                 if (command == Commands.Link.ToString())
                 {
-                    SystemUtility.OpenLink(edunlinkCommand.Parameters["URL"]);
+                    SystemUtility.OpenLink(edulinkCommand.Parameters["URL"]);
                 }
                 else if (command == Commands.Message.ToString())
                 {
-                    HandleMessage(edunlinkCommand);
+                    HandleMessage(edulinkCommand);
                 }
                 else if (command == Commands.ViewDesktop.ToString() ||
                          command == Commands.Preview.ToString())
                 {
-                    HandleScreenshot(edunlinkCommand);
+                    HandleScreenshot(edulinkCommand);
                 }
                 else if (command == Commands.RestartApplication.ToString())
                 {
@@ -285,7 +324,7 @@ namespace Edulink
                 }
                 else if (command == Commands.BlockInput.ToString())
                 {
-                    if (bool.TryParse(edunlinkCommand.Parameters["Block"], out bool block))
+                    if (bool.TryParse(edulinkCommand.Parameters["Block"], out bool block))
                     {
                         _inputBlocker.BlockKeyboard(block);
                         _inputBlocker.BlockMouse(block);
@@ -293,7 +332,7 @@ namespace Edulink
                 }
                 else if (command == Commands.RenameComputer.ToString())
                 {
-                    SettingsManager.Settings.Name = edunlinkCommand.Parameters["Name"];
+                    SettingsManager.Settings.Name = edulinkCommand.Parameters["Name"];
                     if (SettingsManager.Save())
                     {
                         RestartApp();
@@ -313,6 +352,10 @@ namespace Edulink
                 {
                     AudioControl.ToggleMuteAudio();
                 }
+                else if (command == Commands.ComputerList.ToString())
+                {
+                    HandleComputerList(edulinkCommand);
+                }
                 else if (command == Commands.Disconnect.ToString())
                 {
                     Client.Dispose();
@@ -322,6 +365,23 @@ namespace Edulink
             {
                 Console.WriteLine($"Error handling command: {ex.Message}");
 
+            }
+        }
+
+        private void HandleComputerList(EdulinkCommand edulinkCommand)
+        {
+            if (SendFileWindow != null)
+            {
+                if (bool.TryParse(edulinkCommand.Parameters["Success"], out bool success) && success)
+                {
+                    List<Computer> computers = JsonConvert.DeserializeObject<List<Computer>>(edulinkCommand.Parameters["List"]);
+                    SendFileWindow.UpdateList(computers);
+                    SendFileWindow.SetSharingStatus(success);
+                }
+                else if (!success)
+                {
+                    SendFileWindow.SetSharingStatus(success);
+                }
             }
         }
 
@@ -419,9 +479,10 @@ namespace Edulink
         {
             try
             {
+                Client.CommandReceived -= Client_CommandReceivedAsync;
                 mutex?.ReleaseMutex();
                 mutex?.Dispose();
-                Client?.Disconnect();
+                Client?.Dispose();
                 _inputBlocker?.Dispose();
             }
             catch (Exception)
