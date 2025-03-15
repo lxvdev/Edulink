@@ -745,6 +745,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send file.
+        /// </summary>
+        internal static string TrayContextMenu_SendFile {
+            get {
+                return ResourceManager.GetString("TrayContextMenu.SendFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send message to teacher.
         /// </summary>
         internal static string TrayContextMenu_SendMessageToTeacher {
