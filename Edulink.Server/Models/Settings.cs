@@ -4,6 +4,8 @@
     {
         public int Port { get; set; } = 7153;
         public bool DisconnectionNotificationEnabled { get; set; } = true;
+        public bool FileSharingStudents { get; set; } = true;
+        public bool FileSharingTeacher { get; set; } = true;
         public bool PreviewEnabled { get; set; } = true;
         public double PreviewFrequency { get; set; } = 5000;
         public bool CheckForUpdates { get; set; } = true;
