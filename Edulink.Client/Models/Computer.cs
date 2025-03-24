@@ -6,5 +6,8 @@ namespace Edulink.Models
     {
         public string Name { get; set; }
         public Guid ID { get; set; }
+        public bool IsTeacher { get; set; } = false;
+
+        public Computer() { }
     }
 }
