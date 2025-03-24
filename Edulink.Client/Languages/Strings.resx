@@ -234,6 +234,30 @@
   <data name="PasswordDialog.Title.SetPassword" xml:space="preserve">
     <value>Set password</value>
   </data>
+  <data name="SelectComputer.Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="SelectComputer.SendToTeacher" xml:space="preserve">
+    <value>Send to teacher</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.LoadingList" xml:space="preserve">
+    <value>Loading list</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.NotConnected" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.SharingNotAllowed" xml:space="preserve">
+    <value>Sharing is not allowed</value>
+  </data>
+  <data name="SendFile.Send.SendFileTo" xml:space="preserve">
+    <value>Send file to {0}</value>
+  </data>
+  <data name="SendFile.Send.SendFileTo.Teacher" xml:space="preserve">
+    <value>teacher</value>
+  </data>
+  <data name="SendFile.Title" xml:space="preserve">
+    <value>Send file</value>
+  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Connection</value>
   </data>

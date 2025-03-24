@@ -126,39 +126,6 @@
   <data name="Author" xml:space="preserve">
     <value>Andrew</value>
   </data>
-  <data name="Setup.Computer.Name" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="Setup.Computer.Name.Description" xml:space="preserve">
-    <value>Introduzca un nombre para identificar este ordenador en la pantalla del profesor.</value>
-  </data>
-  <data name="Setup.Connection.Description" xml:space="preserve">
-    <value>Introduzca la dirección IP y el puerto del ordenador del profesor para conectarse.</value>
-  </data>
-  <data name="Setup.Connection.IPAddress" xml:space="preserve">
-    <value>Dirección IP</value>
-  </data>
-  <data name="Setup.Connection.Port" xml:space="preserve">
-    <value>Puerto</value>
-  </data>
-  <data name="Setup.Password.ChangePassword" xml:space="preserve">
-    <value>Cambiar la contraseña</value>
-  </data>
-  <data name="Setup.Password.Description" xml:space="preserve">
-    <value>Establezca una contraseña para proteger estas configuraciones de ser cambiadas por un estudiante.</value>
-  </data>
-  <data name="Setup.Password.SetPassword" xml:space="preserve">
-    <value>Establecer contraseña</value>
-  </data>
-  <data name="Setup.Title" xml:space="preserve">
-    <value>Configuración de Edulink</value>
-  </data>
-  <data name="Setup.Welcome" xml:space="preserve">
-    <value>Bienvenido</value>
-  </data>
-  <data name="Setup.Welcome.GetStarted" xml:space="preserve">
-    <value>Empezar</value>
-  </data>
   <data name="Input.Content.SendMessage" xml:space="preserve">
     <value>Introduzca su mensaje</value>
   </data>
@@ -267,6 +234,24 @@
   <data name="PasswordDialog.Title.SetPassword" xml:space="preserve">
     <value>Establecer contraseña</value>
   </data>
+  <data name="SendFile.InitialStatusMessage.LoadingList" xml:space="preserve">
+    <value>Cargando lista</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.NotConnected" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.SharingNotAllowed" xml:space="preserve">
+    <value>No se permite compartir</value>
+  </data>
+  <data name="SelectComputer.Next" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="SelectComputer.SendToTeacher" xml:space="preserve">
+    <value>Enviar al profesor</value>
+  </data>
+  <data name="SendFile.Title" xml:space="preserve">
+    <value>Enviar archivo</value>
+  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Conexión</value>
   </data>
@@ -327,6 +312,39 @@
   <data name="Settings.Title" xml:space="preserve">
     <value>Ajustes</value>
   </data>
+  <data name="Setup.Computer.Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Setup.Computer.Name.Description" xml:space="preserve">
+    <value>Introduzca un nombre para identificar este ordenador en la pantalla del profesor.</value>
+  </data>
+  <data name="Setup.Connection.Description" xml:space="preserve">
+    <value>Introduzca la dirección IP y el puerto del ordenador del profesor para conectarse.</value>
+  </data>
+  <data name="Setup.Connection.IPAddress" xml:space="preserve">
+    <value>Dirección IP</value>
+  </data>
+  <data name="Setup.Connection.Port" xml:space="preserve">
+    <value>Puerto</value>
+  </data>
+  <data name="Setup.Password.ChangePassword" xml:space="preserve">
+    <value>Cambiar la contraseña</value>
+  </data>
+  <data name="Setup.Password.Description" xml:space="preserve">
+    <value>Establezca una contraseña para proteger estas configuraciones de ser cambiadas por un estudiante.</value>
+  </data>
+  <data name="Setup.Password.SetPassword" xml:space="preserve">
+    <value>Establecer contraseña</value>
+  </data>
+  <data name="Setup.Title" xml:space="preserve">
+    <value>Configuración de Edulink</value>
+  </data>
+  <data name="Setup.Welcome" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="Setup.Welcome.GetStarted" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
   <data name="TrayContextMenu.About" xml:space="preserve">
     <value>Acerca de</value>
   </data>
@@ -344,6 +362,9 @@
   </data>
   <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
     <value>Reiniciar aplicación</value>
+  </data>
+  <data name="TrayContextMenu.SendFile" xml:space="preserve">
+    <value>Enviar archivo</value>
   </data>
   <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
     <value>Enviar mensaje al profesor</value>

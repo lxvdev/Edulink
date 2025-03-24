@@ -412,6 +412,78 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        internal static string SelectComputer_Next {
+            get {
+                return ResourceManager.GetString("SelectComputer.Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send to teacher.
+        /// </summary>
+        internal static string SelectComputer_SendToTeacher {
+            get {
+                return ResourceManager.GetString("SelectComputer.SendToTeacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading list.
+        /// </summary>
+        internal static string SendFile_InitialStatusMessage_LoadingList {
+            get {
+                return ResourceManager.GetString("SendFile.InitialStatusMessage.LoadingList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not connected.
+        /// </summary>
+        internal static string SendFile_InitialStatusMessage_NotConnected {
+            get {
+                return ResourceManager.GetString("SendFile.InitialStatusMessage.NotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sharing is not allowed.
+        /// </summary>
+        internal static string SendFile_InitialStatusMessage_SharingNotAllowed {
+            get {
+                return ResourceManager.GetString("SendFile.InitialStatusMessage.SharingNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send file to {0}.
+        /// </summary>
+        internal static string SendFile_Send_SendFileTo {
+            get {
+                return ResourceManager.GetString("SendFile.Send.SendFileTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to teacher.
+        /// </summary>
+        internal static string SendFile_Send_SendFileTo_Teacher {
+            get {
+                return ResourceManager.GetString("SendFile.Send.SendFileTo.Teacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send file.
+        /// </summary>
+        internal static string SendFile_Title {
+            get {
+                return ResourceManager.GetString("SendFile.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection.
         /// </summary>
         internal static string Settings_Connection {
