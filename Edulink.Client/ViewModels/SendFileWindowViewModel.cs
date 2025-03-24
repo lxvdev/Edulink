@@ -1,45 +1,16 @@
-﻿using Edulink.Communication.Models;
+﻿using Edulink.Classes;
 using Edulink.Models;
 using Edulink.MVVM;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Data;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
     public class SendFileWindowViewModel : ViewModelBase
     {
-        // TODO: Add a status message
-        private bool _receiving = true;
-        public bool Receiving
-        {
-            get => _receiving;
-            set
-            {
-                if (_receiving != value)
-                {
-                    _receiving = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private bool _sharingEnabled = false;
-        public bool SharingEnabled
-        {
-            get => _sharingEnabled;
-            set
-            {
-                if (_sharingEnabled != value)
-                {
-                    _sharingEnabled = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public SelectComputerControlViewModel SelectComputerViewModel { get; }
 
         private int _pageIndex = 0;
         public int PageIndex
@@ -55,70 +26,166 @@ namespace Edulink.ViewModels
             }
         }
 
-        private ObservableCollection<Computer> _computers;
-
-        public ICollectionView ComputersView { get; }
-
-        private Computer _selectedComputer;
-        public Computer SelectedComputer
+        #region Sharing and Receiving Status Properties
+        private bool _receiving;
+        public bool Receiving
         {
-            get => _selectedComputer;
+            get => _receiving;
             set
             {
-                if (_selectedComputer != value)
+                if (_receiving != value)
                 {
-                    _selectedComputer = value;
+                    _receiving = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(InitialStatusMessage));
                 }
             }
         }
 
-        private bool _isTeacher;
-        public bool IsTeacher
+        private bool _sharingToStudents;
+        public bool SharingToStudents
         {
-            get => _isTeacher;
+            get => _sharingToStudents;
             set
             {
-                if (_isTeacher != value)
+                if (_sharingToStudents != value)
                 {
-                    _isTeacher = value;
+                    _sharingToStudents = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(InitialStatusMessage));
+                }
+            }
+        }
+
+        private bool _sharingToTeacher;
+        public bool SharingToTeacher
+        {
+            get => _sharingToTeacher;
+            set
+            {
+                if (_sharingToTeacher != value)
+                {
+                    _sharingToTeacher = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(InitialStatusMessage));
+                }
+            }
+        }
+
+        public string InitialStatusMessage
+        {
+            get
+            {
+                if (!_receiving && !App.Client.Connected)
+                {
+                    return "SendFile.InitialStatusMessage.NotConnected";
+                }
+                else if (_receiving)
+                {
+                    return "SendFile.InitialStatusMessage.LoadingList";
+                }
+                else if (!_receiving && !_sharingToStudents && !_sharingToTeacher)
+                {
+                    return "SendFile.InitialStatusMessage.SharingNotAllowed";
+                }
+
+                return "";
+            }
+        }
+        #endregion
+
+        #region Computer Properties
+        private Computer _targetComputer;
+        public Computer TargetComputer
+        {
+            get => _targetComputer;
+            set
+            {
+                if (_targetComputer != value)
+                {
+                    _targetComputer = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(TargetName));
+                }
+            }
+        }
+
+        public string TargetName => TargetComputer?.IsTeacher == false ? TargetComputer.Name : LocalizedStrings.Instance["SendFile.Send.SendFileTo.Teacher"];
+        #endregion
+
+        #region File sharing Properties
+        private SharingFile _sharingFile;
+        public SharingFile SharingFile
+        {
+            get => _sharingFile;
+            set
+            {
+                if (_sharingFile != value)
+                {
+                    _sharingFile = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(FileSelected));
+                }
+            }
+        }
+
+        public bool FileSelected => SharingFile != null;
+
+        private bool _sendingFile;
+        public bool SendingFile
+        {
+            get => _sendingFile;
+            set
+            {
+                if (_sendingFile != value)
+                {
+                    _sendingFile = value;
                     OnPropertyChanged();
                 }
             }
         }
+        #endregion
 
         public SendFileWindowViewModel()
         {
-            _computers = new ObservableCollection<Computer>();
-            ComputersView = CollectionViewSource.GetDefaultView(_computers);
-
-            ComputersView.SortDescriptions.Add(new SortDescription(nameof(Computer.Name), ListSortDirection.Ascending));
-
-            if (App.Client.Connected)
-            {
-                Task.Run(() => App.Client.Helper.SendCommandAsync(new EdulinkCommand() { Command = Commands.ComputerList.ToString() }));
-            }
-            else
-            {
-                Receiving = false;
-                SharingEnabled = false;
-            }
+            SelectComputerViewModel = new SelectComputerControlViewModel();
+            SelectComputerViewModel.RequestNext += _computerControlViewModel_RequestNext;
         }
 
-        public ICommand ListPageCommand => new RelayCommand(execute => GoToListPage(), canExecute => !_receiving && _computers != null);
+        #region Event handlers
+        private void _computerControlViewModel_RequestNext(object sender, EventArgs e)
+        {
+            if (SendFilePageCommand.CanExecute(sender))
+            {
+                SendFilePageCommand.Execute(sender);
+            }
+        }
+        #endregion
 
-        private void GoToListPage() => PageIndex = 1;
+        #region Commands
+        public ICommand ListPageCommand => new RelayCommand(execute => GoToListPage(), canExecute => !_receiving && SelectComputerViewModel.Computers.Any());
 
+        private void GoToListPage()
+        {
+            PageIndex = 1;
+        }
+
+        public ICommand SendFilePageCommand => new RelayCommand(execute => GoToSendFilePage(),
+                                                                canExecute => !_receiving && SelectComputerViewModel.SelectedComputer != null);
+
+        private void GoToSendFilePage()
+        {
+            TargetComputer = SelectComputerViewModel.SelectedComputer;
+            PageIndex = 2;
+        }
+        #endregion
+
+        #region Methods
         public void UpdateList(List<Computer> computers)
         {
-            if (computers == null) return;
+            SelectComputerViewModel.UpdateList(computers);
 
-            _computers.Clear();
-
-            computers.ForEach(computer => _computers.Add(computer));
-
-            SharingEnabled = true;
-            Receiving = false;
+            SetReceivingStatus(false);
 
             if (ListPageCommand.CanExecute(this))
             {
@@ -126,10 +193,40 @@ namespace Edulink.ViewModels
             }
         }
 
-        public void SetSharingStatus(bool enabled)
+        public void SetReceivingStatus(bool value)
         {
-            SharingEnabled = enabled;
-            Receiving = false;
+            Receiving = value;
+            OnPropertyChanged(nameof(InitialStatusMessage));
         }
+
+        public void SetSharingStatus(bool student, bool teacher)
+        {
+            SharingToStudents = student;
+            SharingToTeacher = teacher;
+
+            // Update sharing status on select computer view model
+            SelectComputerViewModel.CanSendTeacher = SharingToTeacher;
+
+            SetReceivingStatus(false);
+
+            // Go to send file page if only sharing to the teacher is allowed
+            if (SharingToTeacher && !SelectComputerViewModel.Computers.Any())
+            {
+                SelectComputerViewModel.SendTeacher = true;
+
+                if (SendFilePageCommand.CanExecute(this))
+                {
+                    SendFilePageCommand.Execute(this);
+                }
+            }
+        }
+
+        public void SetSharingFile(SharingFile sharingFile)
+        {
+            if (sharingFile == null) return;
+
+            SharingFile = sharingFile;
+        }
+        #endregion
     }
 }
