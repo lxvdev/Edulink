@@ -330,7 +330,7 @@
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
-  <data name="Settings.Conenction.Port" xml:space="preserve">
+  <data name="Settings.Connection.Port" xml:space="preserve">
     <value>Puerto</value>
   </data>
   <data name="Settings.Connection" xml:space="preserve">
@@ -408,7 +408,7 @@
   <data name="UpdaterDialog.CheckForUpdates" xml:space="preserve">
     <value>Buscar actualizaciones al iniciar</value>
   </data>
-  <data name="UpdaterDialog.ChekingUpdates" xml:space="preserve">
+  <data name="UpdaterDialog.CheckingUpdates" xml:space="preserve">
     <value>Buscando actualizaciones</value>
   </data>
   <data name="UpdaterDialog.CurrentVersion" xml:space="preserve">

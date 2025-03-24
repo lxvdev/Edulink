@@ -700,20 +700,20 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port.
-        /// </summary>
-        internal static string Settings_Conenction_Port {
-            get {
-                return ResourceManager.GetString("Settings.Conenction.Port", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection.
         /// </summary>
         internal static string Settings_Connection {
             get {
                 return ResourceManager.GetString("Settings.Connection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port.
+        /// </summary>
+        internal static string Settings_Connection_Port {
+            get {
+                return ResourceManager.GetString("Settings.Connection.Port", resourceCulture);
             }
         }
         
@@ -936,9 +936,9 @@ namespace Edulink.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Checking for updates.
         /// </summary>
-        internal static string UpdaterDialog_ChekingUpdates {
+        internal static string UpdaterDialog_CheckingUpdates {
             get {
-                return ResourceManager.GetString("UpdaterDialog.ChekingUpdates", resourceCulture);
+                return ResourceManager.GetString("UpdaterDialog.CheckingUpdates", resourceCulture);
             }
         }
         
