@@ -296,7 +296,7 @@
                                 IsChecked="{Binding IsBroadcast, Mode=TwoWay}"
                                 IsEnabled="{Binding HasClients}" />
 
-                            <WrapPanel
+                            <!--<WrapPanel
                                 Margin="0,0,0,0"
                                 Orientation="Horizontal"
                                 Visibility="Collapsed">
@@ -419,7 +419,7 @@
                                         <TextBlock Text="{lex:Loc Main.Commands.UnblockInput}" />
                                     </StackPanel>
                                 </Button>
-                            </WrapPanel>
+                            </WrapPanel>-->
                         </StackPanel>
                     </Grid>
                 </materialDesign:TransitionerSlide>
