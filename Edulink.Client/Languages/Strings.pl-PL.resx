@@ -360,7 +360,7 @@
   <data name="UpdaterDialog.CheckForUpdates" xml:space="preserve">
     <value>Sprawdź aktualizacje po uruchomieniu</value>
   </data>
-  <data name="UpdaterDialog.ChekingUpdates" xml:space="preserve">
+  <data name="UpdaterDialog.CheckingUpdates" xml:space="preserve">
     <value>Sprawdzanie aktualizacji</value>
   </data>
   <data name="UpdaterDialog.CurrentVersion" xml:space="preserve">

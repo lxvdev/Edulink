@@ -882,9 +882,9 @@ namespace Edulink.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Checking for updates.
         /// </summary>
-        internal static string UpdaterDialog_ChekingUpdates {
+        internal static string UpdaterDialog_CheckingUpdates {
             get {
-                return ResourceManager.GetString("UpdaterDialog.ChekingUpdates", resourceCulture);
+                return ResourceManager.GetString("UpdaterDialog.CheckingUpdates", resourceCulture);
             }
         }
         
