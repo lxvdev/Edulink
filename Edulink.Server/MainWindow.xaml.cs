@@ -5,6 +5,7 @@ using Edulink.Models;
 using Edulink.MVVM;
 using Edulink.ViewModels;
 using Edulink.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,6 +61,7 @@ namespace Edulink
             Activate();
         }
 
+        #region Tray icon
         private void InitializeTrayIcon()
         {
             App.TaskbarIcon.LeftClickCommand = new RelayCommand(execute => ShowWindow());
@@ -75,6 +77,7 @@ namespace Edulink
                 ShowWindow();
             }
         }
+        #endregion
 
         private void ToggleFullScreen()
         {
@@ -87,6 +90,14 @@ namespace Edulink
             {
                 WindowStyle = WindowStyle.None;
                 WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11)
+            {
+                ToggleFullScreen();
             }
         }
 
@@ -106,6 +117,10 @@ namespace Edulink
             {
                 await HandleMessageAsync(e);
             }
+            else if (command == Commands.ComputerList.ToString())
+            {
+                await HandleComputerList(e);
+            }
             else if (command == Commands.Disconnect.ToString())
             {
                 e.Client.Helper.Dispose();
@@ -116,12 +131,66 @@ namespace Edulink
             }
         }
 
+        #region Handle computer list
+        private async Task HandleComputerList(Server.CommandReceivedEventArgs e)
+        {
+            // File sharing settings
+            bool isFileSharingBetweenStudentsAllowed = App.SettingsManager.Settings.FileSharingStudents;
+            bool isFileSharingToTeacherAllowed = App.SettingsManager.Settings.FileSharingTeacher;
+
+            if (!isFileSharingBetweenStudentsAllowed)
+            {
+                await SendComputerListResponseAsync(e.Client, false, isFileSharingToTeacherAllowed);
+                return;
+            }
+
+            // Convert Clients to Computers
+            List<Computer> computers = _viewModel.Clients
+                /*.Where(client => client.ID != e.Client.ID) */// Remove sender computer
+                .Select(client => new Computer
+                {
+                    Name = client.Name,
+                    ID = client.ID
+                }).ToList();
+
+            // Serialize
+            string computersJson = JsonConvert.SerializeObject(computers, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            // Send the response
+            await SendComputerListResponseAsync(e.Client, true, isFileSharingToTeacherAllowed, computersJson);
+        }
+
+        private async Task SendComputerListResponseAsync(Client client, bool success, bool sendTeacher, string list = null)
+        {
+            // Basic parameters
+            Dictionary<string, string> parameters = new Dictionary<string, string>
+            {
+                { "Success", success.ToString() },
+                { "SendTeacher", sendTeacher.ToString() },
+                { "ClientID", client.ID.ToString() }
+            };
+
+            // Add list to parameters if it has been provided on the parameters of this function
+            if (list != null)
+            {
+                parameters.Add("List", list);
+            }
+
+            // Send response to the client
+            await client.Helper.SendCommandAsync(new EdulinkCommand
+            {
+                Command = Commands.ComputerList.ToString(),
+                Parameters = parameters
+            });
+        }
+        #endregion
+
         private void HandleDesktop(Server.CommandReceivedEventArgs e)
         {
-            if (e is null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
+            if (e is null) throw new ArgumentNullException(nameof(e));
 
             if (e.Command.Content != null)
             {
@@ -142,6 +211,7 @@ namespace Edulink
             }
         }
 
+        // Set the client preview to the received image preview
         private void HandlePreview(Server.CommandReceivedEventArgs e)
         {
             if (e.Command.Content != null)
@@ -161,12 +231,12 @@ namespace Edulink
 
         private async Task HandleMessageAsync(Server.CommandReceivedEventArgs e)
         {
-            if (e is null)
-            {
-                throw new ArgumentNullException(nameof(e));
-            }
+            if (e is null) throw new ArgumentNullException(nameof(e));
 
-            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"], string.Format(LocalizedStrings.Instance["Message.Title.MessageFrom"], e.Client.Name), MessageDialogButton.OkReply);
+            MessageDialogResult messageDialogResult = MessageDialog.Show(e.Command.Parameters["Message"],
+                                                                         string.Format(LocalizedStrings.Instance["Message.Title.MessageFrom"], e.Client.Name),
+                                                                         MessageDialogButton.OkReply);
+
             if (messageDialogResult.ButtonResult == MessageDialogButtonResult.Reply && !string.IsNullOrEmpty(messageDialogResult.ReplyResult))
             {
                 await e.Client.Helper.SendCommandAsync(new EdulinkCommand
@@ -179,7 +249,6 @@ namespace Edulink
                 });
             }
         }
-
         #endregion
 
         #region Menu Items
@@ -194,6 +263,7 @@ namespace Edulink
         }
         #endregion
 
+        // Show desktop dialog whenever a computer has been clicked twice on the computer list
         private void ComputersList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is MainWindowViewModel viewModel)
@@ -204,21 +274,14 @@ namespace Edulink
             }
         }
 
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11)
-            {
-                ToggleFullScreen();
-            }
-        }
-
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            // Ask user if they really want to exit the application
             MessageDialogResult dialogResult = MessageDialog.ShowLocalized("Main.AreYouSureYouWantToExit", MessageDialogTitle.Warning, MessageDialogButton.YesNo, MessageDialogIcon.Warning);
             if (dialogResult.ButtonResult == MessageDialogButtonResult.No)
             {
                 e.Cancel = true;
-                return;
+                return; // Fun fact: I forgot to add this so it would dispose it even if you said no
             }
 
             if (App.TaskbarIcon != null)
