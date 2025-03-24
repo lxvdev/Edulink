@@ -146,44 +146,6 @@ namespace Edulink
 
             InitializeTrayIcon();
 
-            // TODO: Implement COMPUTERLIST command on server to avoid this
-            SendFileWindow = new SendFileWindow();
-            SendFileWindow.Show();
-            SendFileWindow.UpdateList(new List<Computer>
-            {
-                new Computer
-                {
-                    Name = "PC 01",
-                    ID = Guid.NewGuid()
-                },
-                new Computer
-                {
-                    Name = "PC 02",
-                    ID = Guid.NewGuid()
-                }
-            });
-            SendFileWindow.SetSharingStatus(true);
-
-            _ = Task.Delay(5000).ContinueWith(task =>
-            {
-                Current.Dispatcher.Invoke(() =>
-                {
-                    SendFileWindow.UpdateList(new List<Computer>
-                    {
-                        new Computer
-                        {
-                            Name = "PC 03",
-                            ID = Guid.NewGuid()
-                        },
-                        new Computer
-                        {
-                            Name = "PC 01",
-                            ID = Guid.NewGuid()
-                        }
-                    });
-                });
-            });
-
             if (SettingsManager.Settings?.IPAddress == null || SettingsManager.Settings?.Name == null)
             {
                 SetupWindow setupWindow = new SetupWindow();
@@ -242,7 +204,10 @@ namespace Edulink
                     {
                         Process.Start(processStartInfo);
                     }
-                    catch (Exception) { }
+                    catch (Exception)
+                    {
+                        Debug.WriteLine("Could not create startup task");
+                    }
                 }
             }
         }
@@ -278,6 +243,7 @@ namespace Edulink
             }
         }
 
+        #region Handle commands
         private InputBlocker _inputBlocker = new InputBlocker();
         private async void Client_CommandReceivedAsync(object sender, EdulinkCommand edulinkCommand)
         {
@@ -372,16 +338,28 @@ namespace Edulink
         {
             if (SendFileWindow != null)
             {
-                if (bool.TryParse(edulinkCommand.Parameters["Success"], out bool success) && success)
+                bool success = false;
+                bool sendTeacher = false;
+
+                // Parse parameters
+                if (edulinkCommand.Parameters.ContainsKey("Success"))
+                {
+                    bool.TryParse(edulinkCommand.Parameters["Success"], out success);
+                }
+
+                if (edulinkCommand.Parameters.ContainsKey("SendTeacher"))
+                {
+                    bool.TryParse(edulinkCommand.Parameters["SendTeacher"], out sendTeacher);
+                }
+
+                // If successful, deserialize the list of computers and update the UI
+                if (success && edulinkCommand.Parameters.ContainsKey("List"))
                 {
                     List<Computer> computers = JsonConvert.DeserializeObject<List<Computer>>(edulinkCommand.Parameters["List"]);
                     SendFileWindow.UpdateList(computers);
-                    SendFileWindow.SetSharingStatus(success);
                 }
-                else if (!success)
-                {
-                    SendFileWindow.SetSharingStatus(success);
-                }
+
+                SendFileWindow.SetSharingStatus(success, sendTeacher);
             }
         }
 
@@ -422,6 +400,7 @@ namespace Edulink
                 });
             }
         }
+        #endregion
 
         public static bool ValidateCredentials()
         {
