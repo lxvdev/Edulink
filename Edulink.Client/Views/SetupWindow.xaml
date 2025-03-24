@@ -26,7 +26,7 @@
     <Window.Resources>
         <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
     </Window.Resources>
-    <Grid Margin="10">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -35,7 +35,7 @@
         <!--  Branding  -->
         <StackPanel
             Grid.Row="0"
-            Margin="0,0,0,10"
+            Margin="10,10,10,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Orientation="Horizontal">
@@ -71,7 +71,7 @@
                     <materialDesign:TransitionerSlide.BackwardWipe>
                         <materialDesign:SlideOutWipe />
                     </materialDesign:TransitionerSlide.BackwardWipe>
-                    <StackPanel VerticalAlignment="Center">
+                    <StackPanel Margin="10" VerticalAlignment="Center">
                         <TextBlock
                             Margin="0,0,0,20"
                             HorizontalAlignment="Center"
@@ -98,7 +98,7 @@
                     <materialDesign:TransitionerSlide.BackwardWipe>
                         <materialDesign:SlideOutWipe />
                     </materialDesign:TransitionerSlide.BackwardWipe>
-                    <Grid>
+                    <Grid Margin="10">
                         <StackPanel>
                             <TextBlock Margin="0,0,0,5" Text="{lex:Loc Setup.Computer.Name.Description}" />
                             <TextBox
@@ -131,7 +131,7 @@
                     <materialDesign:TransitionerSlide.BackwardWipe>
                         <materialDesign:SlideOutWipe />
                     </materialDesign:TransitionerSlide.BackwardWipe>
-                    <Grid>
+                    <Grid Margin="10">
                         <StackPanel>
                             <TextBlock Margin="0,0,0,5" Text="{lex:Loc Setup.Connection.Description}" />
                             <Grid>
@@ -191,7 +191,7 @@
                     <materialDesign:TransitionerSlide.BackwardWipe>
                         <materialDesign:SlideOutWipe />
                     </materialDesign:TransitionerSlide.BackwardWipe>
-                    <Grid>
+                    <Grid Margin="10">
                         <StackPanel>
                             <TextBlock Margin="0,0,0,5" Text="{lex:Loc Setup.Password.Description}" />
                             <Button HorizontalAlignment="Left" Command="{Binding PasswordCommand}">
