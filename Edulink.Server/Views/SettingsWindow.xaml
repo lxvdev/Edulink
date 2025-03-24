@@ -37,7 +37,7 @@
                         Padding="16,16,16,8"
                         HorizontalAlignment="Left"
                         VerticalContentAlignment="Center"
-                        materialDesign:HintAssist.Hint="{lex:Loc Settings.Conenction.Port}"
+                        materialDesign:HintAssist.Hint="{lex:Loc Settings.Connection.Port}"
                         materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
                         MaxLength="4"
                         Style="{StaticResource MaterialDesignFilledTextBox}"
