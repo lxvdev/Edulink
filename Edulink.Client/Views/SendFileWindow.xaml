@@ -141,30 +141,30 @@
                                     </materialDesign:Card>
                                     <StackPanel
                                         Grid.Column="1"
-                                        Width="650"
                                         MaxWidth="650"
                                         VerticalAlignment="Center">
                                         <TextBlock
                                             d:Text="Homework.txt"
                                             Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
                                             Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                                            Text="{Binding SharingFile.FileName}" />
+                                            Text="{Binding File.Name}" />
                                         <TextBlock
                                             d:Text="C:\Homework.txt"
                                             Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
                                             Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                            Text="{Binding SharingFile.FilePath}" />
+                                            Text="{Binding File.FullName}" />
                                         <ProgressBar
                                             Height="5"
                                             Margin="0,5,0,0"
                                             materialDesign:TransitionAssist.DisableTransitions="True"
                                             BorderThickness="0"
-                                            Style="{StaticResource MaterialDesignLinearProgressBar}" />
+                                            Style="{StaticResource MaterialDesignLinearProgressBar}"
+                                            Visibility="{Binding SendingFile, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                         <TextBlock
                                             d:Text="10KB"
                                             Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
                                             Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                            Text="{Binding SharingFile.FileSize, Converter={StaticResource FileSizeAbbreviatorConverter}}" />
+                                            Text="{Binding File.Length, Converter={StaticResource FileSizeAbbreviatorConverter}}" />
                                     </StackPanel>
                                 </Grid>
                             </Grid>
