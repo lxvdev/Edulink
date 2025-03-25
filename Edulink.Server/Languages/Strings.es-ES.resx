@@ -330,11 +330,11 @@
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Sí</value>
   </data>
-  <data name="Settings.Connection.Port" xml:space="preserve">
-    <value>Puerto</value>
-  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Conexión</value>
+  </data>
+  <data name="Settings.Connection.Port" xml:space="preserve">
+    <value>Puerto</value>
   </data>
   <data name="Settings.IPAddress" xml:space="preserve">
     <value>Dirección IP: {0}</value>

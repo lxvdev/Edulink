@@ -310,11 +310,11 @@
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="Settings.Connection.Port" xml:space="preserve">
-    <value>Port</value>
-  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Connection</value>
+  </data>
+  <data name="Settings.Connection.Port" xml:space="preserve">
+    <value>Port</value>
   </data>
   <data name="Settings.IPAddress" xml:space="preserve">
     <value>IP Address: {0}</value>

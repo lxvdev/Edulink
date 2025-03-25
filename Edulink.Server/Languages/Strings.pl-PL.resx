@@ -309,11 +309,11 @@
   <data name="MessageDialog.Yes" xml:space="preserve">
     <value>Tak</value>
   </data>
-  <data name="Settings.Connection.Port" xml:space="preserve">
-    <value>Port</value>
-  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Połączenie</value>
+  </data>
+  <data name="Settings.Connection.Port" xml:space="preserve">
+    <value>Port</value>
   </data>
   <data name="Settings.IPAddress" xml:space="preserve">
     <value>Adres IP: {0}</value>
