@@ -234,6 +234,30 @@
   <data name="PasswordDialog.Title.SetPassword" xml:space="preserve">
     <value>Establecer contraseña</value>
   </data>
+  <data name="SelectComputer.Next" xml:space="preserve">
+    <value>Siguiente</value>
+  </data>
+  <data name="SelectComputer.SendToTeacher" xml:space="preserve">
+    <value>Enviar al profesor</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.LoadingList" xml:space="preserve">
+    <value>Cargando lista</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.NotConnected" xml:space="preserve">
+    <value>Desconectado</value>
+  </data>
+  <data name="SendFile.InitialStatusMessage.SharingNotAllowed" xml:space="preserve">
+    <value>No se permite compartir</value>
+  </data>
+  <data name="SendFile.Send.SendFileTo" xml:space="preserve">
+    <value>Enviar archivo a {0}</value>
+  </data>
+  <data name="SendFile.Send.SendFileTo.Teacher" xml:space="preserve">
+    <value>profesor</value>
+  </data>
+  <data name="SendFile.Title" xml:space="preserve">
+    <value>Enviar archivo</value>
+  </data>
   <data name="Settings.Connection" xml:space="preserve">
     <value>Conexión</value>
   </data>
@@ -344,6 +368,9 @@
   </data>
   <data name="TrayContextMenu.RestartApplication" xml:space="preserve">
     <value>Reiniciar aplicación</value>
+  </data>
+  <data name="TrayContextMenu.SendFile" xml:space="preserve">
+    <value>Enviar archivo</value>
   </data>
   <data name="TrayContextMenu.SendMessageToTeacher" xml:space="preserve">
     <value>Enviar mensaje al profesor</value>
