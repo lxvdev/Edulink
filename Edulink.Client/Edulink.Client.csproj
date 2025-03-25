@@ -146,6 +146,7 @@
     <Compile Include="MVVM\ValidatableClosableViewModel.cs" />
     <Compile Include="MVVM\ValidatableViewModel.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ReceiveFileWindowViewModel.cs" />
     <Compile Include="ViewModels\SelectComputerControlViewModel.cs" />
     <Compile Include="ViewModels\SendFileWindowViewModel.cs" />
     <Compile Include="ViewModels\SetupWindowViewModel.cs" />
@@ -180,6 +181,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReceiveFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SelectComputerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +213,9 @@
     <Compile Include="Classes\SystemUtility.cs" />
     <Compile Include="Classes\TaskSchedulerHelper.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Views\ReceiveFileWindow.xaml.cs">
+      <DependentUpon>ReceiveFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectComputerControl.xaml.cs">
       <DependentUpon>SelectComputerControl.xaml</DependentUpon>
     </Compile>
