@@ -412,6 +412,42 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        internal static string ReceiveFile_Accept {
+            get {
+                return ResourceManager.GetString("ReceiveFile.Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        internal static string ReceiveFile_Decline {
+            get {
+                return ResourceManager.GetString("ReceiveFile.Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Receive file from {0}.
+        /// </summary>
+        internal static string ReceiveFile_ReceiveFileFrom {
+            get {
+                return ResourceManager.GetString("ReceiveFile.ReceiveFileFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to teacher.
+        /// </summary>
+        internal static string ReceiveFile_ReceiveFileFrom_Teacher {
+            get {
+                return ResourceManager.GetString("ReceiveFile.ReceiveFileFrom.Teacher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         internal static string SelectComputer_Next {
@@ -882,9 +918,9 @@ namespace Edulink.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Checking for updates.
         /// </summary>
-        internal static string UpdaterDialog_CheckingUpdates {
+        internal static string UpdaterDialog_ChekingUpdates {
             get {
-                return ResourceManager.GetString("UpdaterDialog.CheckingUpdates", resourceCulture);
+                return ResourceManager.GetString("UpdaterDialog.ChekingUpdates", resourceCulture);
             }
         }
         

@@ -234,6 +234,18 @@
   <data name="PasswordDialog.Title.SetPassword" xml:space="preserve">
     <value>Establecer contraseña</value>
   </data>
+  <data name="ReceiveFile.Accept" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="ReceiveFile.Decline" xml:space="preserve">
+    <value>Rechazar</value>
+  </data>
+  <data name="ReceiveFile.ReceiveFileFrom" xml:space="preserve">
+    <value>Recibir archivo de {0}</value>
+  </data>
+  <data name="ReceiveFile.ReceiveFileFrom.Teacher" xml:space="preserve">
+    <value>profesor</value>
+  </data>
   <data name="SelectComputer.Next" xml:space="preserve">
     <value>Siguiente</value>
   </data>
