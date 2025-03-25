@@ -194,11 +194,7 @@ namespace Edulink.ViewModels
             }
         }
 
-        public void SetReceivingStatus(bool value)
-        {
-            Receiving = value;
-            OnPropertyChanged(nameof(InitialStatusMessage));
-        }
+        public void SetReceivingStatus(bool value) => Receiving = value;
 
         public void SetSharingStatus(bool student, bool teacher)
         {
