@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -74,12 +75,7 @@ namespace Edulink.Views
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                string filePath = files.FirstOrDefault();
-
-                if (filePath != null)
-                {
-                    _viewModel.SetSharingFile(new SharingFile(filePath));
-                }
+                SetFile(files.FirstOrDefault());
             }
         }
 
@@ -92,12 +88,14 @@ namespace Edulink.Views
                 return;
             }
 
-            string filePath = openFileDialog.FileName;
+            SetFile(openFileDialog.FileName);
+        }
 
-            if (filePath != null)
-            {
-                _viewModel.SetSharingFile(new SharingFile(filePath));
-            }
+        private void SetFile(string filePath)
+        {
+            if (filePath == null) return;
+
+            _viewModel.SetFile(new FileInfo(filePath));
         }
     }
 }

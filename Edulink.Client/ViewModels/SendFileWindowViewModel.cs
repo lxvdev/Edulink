@@ -3,6 +3,7 @@ using Edulink.Models;
 using Edulink.MVVM;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 
@@ -114,22 +115,22 @@ namespace Edulink.ViewModels
         #endregion
 
         #region File sharing Properties
-        private SharingFile _sharingFile;
-        public SharingFile SharingFile
+        private FileInfo _fileInfo;
+        public FileInfo File
         {
-            get => _sharingFile;
+            get => _fileInfo;
             set
             {
-                if (_sharingFile != value)
+                if (_fileInfo != value)
                 {
-                    _sharingFile = value;
+                    _fileInfo = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(FileSelected));
                 }
             }
         }
 
-        public bool FileSelected => SharingFile != null;
+        public bool FileSelected => File != null;
 
         private bool _sendingFile;
         public bool SendingFile
@@ -221,11 +222,11 @@ namespace Edulink.ViewModels
             }
         }
 
-        public void SetSharingFile(SharingFile sharingFile)
+        public void SetFile(FileInfo file)
         {
-            if (sharingFile == null) return;
+            if (file == null) return;
 
-            SharingFile = sharingFile;
+            File = file;
         }
         #endregion
     }

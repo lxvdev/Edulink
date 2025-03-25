@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace Edulink.Classes
 {
@@ -19,7 +22,10 @@ namespace Edulink.Classes
 
         public static Bitmap CaptureScreenshot(int width = 0, int height = 0)
         {
-            Rectangle bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            //Rectangle bounds = new Rectangle((int)SystemParameters.VirtualScreenLeft, (int)SystemParameters.VirtualScreenTop,
+            //                                 (int)SystemParameters.VirtualScreenWidth, (int)SystemParameters.VirtualScreenHeight);
+
+            Rectangle bounds = new Rectangle(0, 0, (int)SystemParameters.PrimaryScreenWidth, (int)SystemParameters.PrimaryScreenHeight);
 
             int targetWidth = width > 0 ? width : bounds.Width;
             int targetHeight = height > 0 ? height : bounds.Height;
@@ -39,23 +45,26 @@ namespace Edulink.Classes
                 }
             }
 
-            using (Bitmap fullScreenshot = new Bitmap(bounds.Width, bounds.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
+            using (Bitmap fullScreenshot = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppRgb))
             {
-                using (Graphics g = Graphics.FromImage(fullScreenshot))
+                // Take screenshot
+                using (Graphics graphics = Graphics.FromImage(fullScreenshot))
                 {
-                    g.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy);
+                    graphics.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy);
                 }
 
+                // If its the desired size then return
                 if (targetWidth == bounds.Width && targetHeight == bounds.Height)
                 {
                     return new Bitmap(fullScreenshot);
                 }
 
+                // Resize screenshot
                 Bitmap resizedScreenshot = new Bitmap(targetWidth, targetHeight);
 
                 using (Graphics g = Graphics.FromImage(resizedScreenshot))
                 {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
                     g.DrawImage(fullScreenshot, 0, 0, targetWidth, targetHeight);
                 }
 
@@ -70,7 +79,7 @@ namespace Edulink.Classes
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = url,
-                    UseShellExecute = true
+                    UseShellExecute = false
                 });
             }
             else
