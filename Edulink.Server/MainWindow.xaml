@@ -220,7 +220,7 @@
                                             Cursor="Hand"
                                             ToolTip="{StaticResource ClientTooltip}">
                                             <Grid Margin="0,0,0,5">
-                                                <materialDesign:Card Height="134">
+                                                <materialDesign:Card Width="240" Height="134">
                                                     <Grid>
                                                         <materialDesign:PackIcon
                                                             Width="30"
