@@ -1,0 +1,119 @@
+﻿<Window
+    x:Class="Edulink.Views.ReceiveFileWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:classes="clr-namespace:Edulink.Classes"
+    xmlns:converters="clr-namespace:Edulink.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:local="clr-namespace:Edulink.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Edulink.ViewModels"
+    Title="Receive file"
+    Width="520"
+    Height="270"
+    MinWidth="520"
+    MinHeight="270"
+    d:DataContext="{d:DesignInstance vm:ReceiveFileWindowViewModel,
+                                     IsDesignTimeCreatable=True}"
+    lex:LocalizeDictionary.DesignCulture="{x:Static classes:LocalizationConfig.DesignCulture}"
+    lex:ResxLocalizationProvider.DefaultAssembly="{x:Static classes:LocalizationConfig.DefaultAssembly}"
+    lex:ResxLocalizationProvider.DefaultDictionary="{x:Static classes:LocalizationConfig.DefaultDictionary}"
+    ResizeMode="NoResize"
+    Style="{StaticResource MaterialDesignWindow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="BooleanToVisibilityConverter"
+            FalseValue="Collapsed"
+            TrueValue="Visible" />
+        <materialDesign:BooleanToVisibilityConverter
+            x:Key="InvertBooleanToVisibilityConverter"
+            FalseValue="Visible"
+            TrueValue="Collapsed" />
+        <materialDesign:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+        <converters:FileSizeAbbreviatorConverter x:Key="FileSizeAbbreviatorConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <StackPanel
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <materialDesign:PackIcon
+                Width="28"
+                Height="28"
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                Kind="DesktopWindows" />
+            <TextBlock Style="{StaticResource MaterialDesignHeadline4TextBlock}">
+                <TextBlock.Text>
+                    <MultiBinding Converter="{lex:StringFormatConverter}">
+                        <Binding Source="{lex:Loc ReceiveFile.ReceiveFileFrom}" />
+                        <Binding Path="SourceName" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
+        <!--  File info  -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card
+                Grid.Column="0"
+                Width="75"
+                Height="75"
+                Margin="0,0,10,0"
+                Padding="4"
+                Style="{StaticResource MaterialDesignOutlinedCard}">
+                <materialDesign:PackIcon
+                    Width="48"
+                    Height="48"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    Kind="FileOutline" />
+            </materialDesign:Card>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock
+                    d:Text="Homework.txt"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="{Binding File.Name}" />
+                <TextBlock
+                    d:Text="C:\Homework.txt"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
+                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                    Text="{Binding File.FullName}" />
+                <ProgressBar
+                    Height="5"
+                    Margin="0,5,0,0"
+                    materialDesign:TransitionAssist.DisableTransitions="True"
+                    BorderThickness="0"
+                    Style="{StaticResource MaterialDesignLinearProgressBar}"
+                    Visibility="{Binding ReceivingFile, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <TextBlock
+                    d:Text="10KB"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
+                    Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                    Text="{Binding File.Length, Converter={StaticResource FileSizeAbbreviatorConverter}}" />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <Button Content="{lex:Loc ReceiveFile.Decline, Converter={lex:ToUpperConverter}}" Style="{StaticResource MaterialDesignFlatButton}" />
+            <Button
+                Margin="5,0,0,0"
+                Content="{lex:Loc ReceiveFile.Accept,
+                                  Converter={lex:ToUpperConverter}}"
+                Style="{StaticResource MaterialDesignFlatButton}" />
+        </StackPanel>
+    </Grid>
+</Window>
