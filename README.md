@@ -10,6 +10,7 @@ Seamless classroom control at your fingertips
 [![GitHub License](https://img.shields.io/github/license/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/blob/master/LICENSE.txt)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/t/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/commits)
 [![GitHub Repo stars](https://img.shields.io/github/stars/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/stargazers)
+![Language](https://img.shields.io/badge/C%23-5632D5?style=for-the-badge&label=Language)
 
 [![GitHub Issues](https://img.shields.io/github/issues/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/lxvdev/Edulink?style=for-the-badge)](https://github.com/lxvdev/Edulink/pulls)
