@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="FileSharing.cs" />
     <Compile Include="TcpHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\EdulinkCommand.cs" />
