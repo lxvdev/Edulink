@@ -3,6 +3,7 @@
     public class Settings
     {
         public int Port { get; set; } = 7153;
+        public int FileSharingPort { get; set; } = 8073;
         public bool DisconnectionNotificationEnabled { get; set; } = true;
         public bool FileSharingStudents { get; set; } = true;
         public bool FileSharingTeacher { get; set; } = true;
