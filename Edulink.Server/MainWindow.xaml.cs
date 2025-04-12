@@ -1,5 +1,6 @@
 ﻿using Edulink.Classes;
 using Edulink.Communication.Models;
+using Edulink.Converters;
 using Edulink.Core;
 using Edulink.Models;
 using Edulink.MVVM;
@@ -13,6 +14,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -119,7 +121,15 @@ namespace Edulink
             }
             else if (command == Commands.ComputerList.ToString())
             {
-                await HandleComputerList(e);
+                await HandleComputerListAsync(e);
+            }
+            else if (command == Commands.RequestSendFile.ToString())
+            {
+                await HandleRequestSendFileAsync(e);
+            }
+            else if (command == Commands.ResponseSendFile.ToString())
+            {
+                await HandleResponseSendFileAsync(e);
             }
             else if (command == Commands.Disconnect.ToString())
             {
@@ -131,8 +141,97 @@ namespace Edulink
             }
         }
 
+        private async Task HandleResponseSendFileAsync(Server.CommandReceivedEventArgs e)
+        {
+            // Deserialize the parameters
+            Computer targetComputer = JsonConvert.DeserializeObject<Computer>(e.Command.Parameters["TargetComputer"]);
+
+            // Check if the target computer is a teacher
+            if (targetComputer.IsTeacher)
+            {
+                // Todo
+            }
+            else
+            {
+                Client targetClient = _viewModel.Clients.FirstOrDefault(client => client.ID == targetComputer.ID);
+
+                if (targetClient == null)
+                {
+                    Debug.WriteLine("Target computer not found.");
+                    return;
+                }
+
+                bool accepted = bool.Parse(e.Command.Parameters["Accepted"]);
+                var parameters = new Dictionary<string, string>
+                {
+                    { "Accepted", accepted.ToString() }
+                };
+
+                if (accepted)
+                {
+                    IEnumerable<IPEndPoint> ipEndPoints = JsonConvert.DeserializeObject<IEnumerable<IPEndPoint>>(e.Command.Parameters["IP"], new IPEndPointConverter());
+                    parameters.Add("IP", JsonConvert.SerializeObject(ipEndPoints, new IPEndPointConverter()));
+                }
+
+                await targetClient.Helper.SendCommandAsync(new EdulinkCommand
+                {
+                    Command = Commands.ResponseSendFile.ToString(),
+                    Parameters = parameters
+                });
+
+                Debug.WriteLine("Response sent successfully.");
+            }
+        }
+
+        private async Task HandleRequestSendFileAsync(Server.CommandReceivedEventArgs e)
+        {
+            try
+            {
+                // Deserialize the parameters
+                Computer targetComputer = JsonConvert.DeserializeObject<Computer>(e.Command.Parameters["TargetComputer"]);
+
+                // Check if the target computer is a teacher
+                if (targetComputer.IsTeacher)
+                {
+                    // Todo
+                }
+                else
+                {
+                    string fileName = e.Command.Parameters["FileName"];
+                    long fileLength = long.Parse(e.Command.Parameters["FileLength"]);
+
+                    // Find the target computer in the list
+                    Client targetClient = _viewModel.Clients.FirstOrDefault(client => client.ID == targetComputer.ID);
+
+                    if (targetClient == null)
+                    {
+                        Debug.WriteLine("Target computer not found.");
+                        return;
+                    }
+
+                    // Send the file name and file length to the target computer
+                    await targetClient.Helper.SendCommandAsync(new EdulinkCommand
+                    {
+                        Command = Commands.RequestSendFile.ToString(),
+                        Parameters = new Dictionary<string, string>
+                        {
+                            { "SourceComputer", JsonConvert.SerializeObject(new Computer() { Name = e.Client.Name, ID = e.Client.ID }) },
+                            { "FileName", fileName },
+                            { "FileLength", fileLength.ToString() }
+                        }
+                    });
+
+                    Debug.WriteLine("File send request sent successfully.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error handling file send request: {ex.Message}");
+            }
+        }
+
         #region Handle computer list
-        private async Task HandleComputerList(Server.CommandReceivedEventArgs e)
+        private async Task HandleComputerListAsync(Server.CommandReceivedEventArgs e)
         {
             // File sharing settings
             bool isFileSharingBetweenStudentsAllowed = App.SettingsManager.Settings.FileSharingStudents;
@@ -146,7 +245,7 @@ namespace Edulink
 
             // Convert Clients to Computers
             List<Computer> computers = _viewModel.Clients
-                /*.Where(client => client.ID != e.Client.ID) */// Remove sender computer
+                /*.Where(client => client.ID != e.Client.ID) */ // Remove sender computer (commented out for testing purposes)
                 .Select(client => new Computer
                 {
                     Name = client.Name,
@@ -188,6 +287,7 @@ namespace Edulink
         }
         #endregion
 
+        #region Handle desktop
         private void HandleDesktop(Server.CommandReceivedEventArgs e)
         {
             if (e is null) throw new ArgumentNullException(nameof(e));
@@ -210,7 +310,9 @@ namespace Edulink
                 }
             }
         }
+        #endregion
 
+        #region Handle preview
         // Set the client preview to the received image preview
         private void HandlePreview(Server.CommandReceivedEventArgs e)
         {
@@ -228,7 +330,9 @@ namespace Edulink
                 e.Client.Preview = bitmapImage;
             }
         }
+        #endregion
 
+        #region Handle message
         private async Task HandleMessageAsync(Server.CommandReceivedEventArgs e)
         {
             if (e is null) throw new ArgumentNullException(nameof(e));
@@ -249,6 +353,8 @@ namespace Edulink
                 });
             }
         }
+        #endregion
+
         #endregion
 
         #region Menu Items
