@@ -1,5 +1,6 @@
 ﻿using Edulink.Classes;
 using Edulink.Communication.Models;
+using Edulink.Converters;
 using Edulink.Models;
 using Edulink.ViewModels;
 using Edulink.Views;
@@ -12,7 +13,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -93,25 +94,25 @@ namespace Edulink
                 mutex = new Mutex(true, "EdulinkClientMutex", out isPrimaryInstance);
 
                 // Foolproof way to check if the application is already running because anyone with the enough knowledge can bypass the mutex
-                Process process = Process.GetCurrentProcess();
+                //Process process = Process.GetCurrentProcess();
 
-                string currentProcessPath = process.MainModule.FileName;
+                //string currentProcessPath = process.MainModule.FileName;
 
-                bool isAlreadyRunning = Process.GetProcesses()
-                    .Where(p => p.Id != process.Id)
-                    .Any(p =>
-                    {
-                        try
-                        {
-                            return p.MainModule.FileName.Equals(currentProcessPath, StringComparison.OrdinalIgnoreCase);
-                        }
-                        catch
-                        {
-                            return false;
-                        }
-                    });
+                //bool isAlreadyRunning = Process.GetProcesses()
+                //    .Where(p => p.Id != process.Id)
+                //    .Any(p =>
+                //    {
+                //        try
+                //        {
+                //            return p.MainModule.FileName.Equals(currentProcessPath, StringComparison.OrdinalIgnoreCase);
+                //        }
+                //        catch
+                //        {
+                //            return false;
+                //        }
+                //    });
 
-                if (isAlreadyRunning)
+                if (!isPrimaryInstance && !allowMultipleInstances)
                 {
                     Environment.Exit(0);
                     return;
@@ -322,6 +323,35 @@ namespace Edulink
                 {
                     HandleComputerList(edulinkCommand);
                 }
+                else if (command == Commands.RequestSendFile.ToString())
+                {
+                    Computer sourceComputer = JsonConvert.DeserializeObject<Computer>(edulinkCommand.Parameters["SourceComputer"]);
+
+                    if (sourceComputer == null)
+                    {
+                        Debug.WriteLine("Source computer is null.");
+                        return;
+                    }
+
+                    long fileLength = long.Parse(edulinkCommand.Parameters["FileLength"]);
+
+                    ReceiveFileWindow receiveFileWindow = new ReceiveFileWindow(sourceComputer, edulinkCommand.Parameters["FileName"], fileLength);
+                    receiveFileWindow.Show();
+                }
+                else if (command == Commands.ResponseSendFile.ToString())
+                {
+                    bool.TryParse(edulinkCommand.Parameters["Accepted"], out bool accepted);
+
+                    if (accepted)
+                    {
+                        IEnumerable<IPEndPoint> ipAddresses = JsonConvert.DeserializeObject<IEnumerable<IPEndPoint>>(edulinkCommand.Parameters["IP"], new IPEndPointConverter());
+                        SendFileWindow?.HandleResponse(accepted, ipAddresses);
+                    }
+                    else
+                    {
+                        SendFileWindow?.HandleResponse(accepted);
+                    }
+                }
                 else if (command == Commands.Disconnect.ToString())
                 {
                     Client.Dispose();
@@ -330,7 +360,6 @@ namespace Edulink
             catch (Exception ex)
             {
                 Console.WriteLine($"Error handling command: {ex.Message}");
-
             }
         }
 
