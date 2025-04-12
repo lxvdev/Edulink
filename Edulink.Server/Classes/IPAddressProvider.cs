@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
@@ -9,9 +10,9 @@ namespace Edulink.Classes
     {
         private static readonly List<string> _ignoredNics = new List<string> { "Hyper-V", "virtual", "VMware", "VirtualBox", "vbox" };
 
-        public static string GetIPAddresses()
+        public static List<IPAddress> GetIPAddresses()
         {
-            List<string> ipList = new List<string>();
+            List<IPAddress> ipList = new List<IPAddress>();
 
             foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
             {
@@ -24,14 +25,14 @@ namespace Edulink.Classes
                 }
 
                 // Collect all IPv4 addresses from the current interface
-                IEnumerable<string> ipAddresses = nic.GetIPProperties().UnicastAddresses
+                IEnumerable<IPAddress> ipAddresses = nic.GetIPProperties().UnicastAddresses
                     .Where(a => a.Address.AddressFamily == AddressFamily.InterNetwork)
-                    .Select(a => a.Address.ToString());
+                    .Select(a => a.Address);
 
                 ipList.AddRange(ipAddresses);
             }
 
-            return ipList.Any() ? string.Join(", ", ipList) : "No active network interfaces";
+            return ipList;
         }
     }
 }
