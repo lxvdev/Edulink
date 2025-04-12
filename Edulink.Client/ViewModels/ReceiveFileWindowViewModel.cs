@@ -2,12 +2,11 @@
 using Edulink.Models;
 using Edulink.MVVM;
 using System;
-using System.IO;
 using System.Windows.Input;
 
 namespace Edulink.ViewModels
 {
-    public class ReceiveFileWindowViewModel : ViewModelBase
+    public class ReceiveFileWindowViewModel : ClosableViewModel
     {
         private bool _receivingFile;
         public bool ReceivingFile
@@ -39,15 +38,43 @@ namespace Edulink.ViewModels
 
         public string SourceName => SourceComputer?.IsTeacher == false ? SourceComputer.Name : LocalizedStrings.Instance["ReceiveFile.ReceiveFileFrom.Teacher"];
 
-        private FileInfo _file;
-        public FileInfo File
+        private string _fileName;
+        public string FileName
         {
-            get => _file;
+            get => _fileName;
             set
             {
-                if (_file != value)
+                if (_fileName != value)
                 {
-                    _file = value;
+                    _fileName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private long _fileLength;
+        public long FileLength
+        {
+            get => _fileLength;
+            set
+            {
+                if (_fileLength != value)
+                {
+                    _fileLength = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _saveDirectory;
+        public string SaveDirectory
+        {
+            get => _saveDirectory;
+            set
+            {
+                if (_saveDirectory != value)
+                {
+                    _saveDirectory = value;
                     OnPropertyChanged();
                 }
             }
@@ -55,19 +82,20 @@ namespace Edulink.ViewModels
 
         public event EventHandler RequestAccept;
 
-        public ReceiveFileWindowViewModel(Computer sourceComputer, FileInfo fileInfo)
+        public event EventHandler RequestDecline;
+
+        public ReceiveFileWindowViewModel(Computer sourceComputer, string fileName, long fileLength, string saveDirectory)
         {
             _sourceComputer = sourceComputer;
-            _file = fileInfo;
+            _fileName = fileName;
+            _fileLength = fileLength;
+            _saveDirectory = saveDirectory;
         }
 
         public ReceiveFileWindowViewModel() { }
 
-        public ICommand AcceptCommand => new RelayCommand(execute => HandleAccept());
+        public ICommand AcceptCommand => new RelayCommand(execute => RequestAccept?.Invoke(this, EventArgs.Empty));
 
-        private void HandleAccept()
-        {
-            RequestAccept?.Invoke(this, EventArgs.Empty);
-        }
+        public ICommand DeclineCommand => new RelayCommand(execute => RequestDecline?.Invoke(this, EventArgs.Empty));
     }
 }
