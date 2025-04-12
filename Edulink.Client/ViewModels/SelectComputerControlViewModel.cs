@@ -98,6 +98,13 @@ namespace Edulink.ViewModels
 
             computers.ForEach(computer => Computers.Add(computer));
         }
+
+        public void Reset()
+        {
+            _computers.Clear();
+            SelectedComputer = null;
+            SendTeacher = false;
+        }
         #endregion
     }
 }
