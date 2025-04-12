@@ -21,28 +21,20 @@ namespace Edulink.ViewModels
             {
                 if (_pageIndex != value)
                 {
+                    if (value == 0)
+                    {
+                        SelectComputerViewModel.Computers.Clear();
+                        RequestComputerList?.Invoke(this, EventArgs.Empty);
+                        OnPropertyChanged(nameof(InitialStatusMessage));
+                    }
+
                     _pageIndex = value;
                     OnPropertyChanged();
                 }
             }
         }
 
-        #region Sharing and Receiving Status Properties
-        private bool _receiving;
-        public bool Receiving
-        {
-            get => _receiving;
-            set
-            {
-                if (_receiving != value)
-                {
-                    _receiving = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(InitialStatusMessage));
-                }
-            }
-        }
-
+        #region Sharing status
         private bool _sharingToStudents;
         public bool SharingToStudents
         {
@@ -77,15 +69,15 @@ namespace Edulink.ViewModels
         {
             get
             {
-                if (!_receiving && !App.Client.Connected)
+                if (!_isReceivingList && !App.Client.Connected)
                 {
                     return "SendFile.InitialStatusMessage.NotConnected";
                 }
-                else if (_receiving)
+                else if (_isReceivingList)
                 {
                     return "SendFile.InitialStatusMessage.LoadingList";
                 }
-                else if (!_receiving && !_sharingToStudents && !_sharingToTeacher)
+                else if (!_isReceivingList && !_sharingToStudents && !_sharingToTeacher)
                 {
                     return "SendFile.InitialStatusMessage.SharingNotAllowed";
                 }
@@ -95,7 +87,39 @@ namespace Edulink.ViewModels
         }
         #endregion
 
-        #region Computer Properties
+        #region Receiving status
+        private bool _isReceivingList;
+        public bool IsReceivingList
+        {
+            get => _isReceivingList;
+            set
+            {
+                if (_isReceivingList != value)
+                {
+                    _isReceivingList = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(InitialStatusMessage));
+                }
+            }
+        }
+
+        private bool _isReceivingResponse;
+        public bool IsReceivingResponse
+        {
+            get => _isReceivingResponse;
+            set
+            {
+                if (_isReceivingResponse != value)
+                {
+                    _isReceivingResponse = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanChangeFile));
+                }
+            }
+        }
+        #endregion
+
+        #region Target computer
         private Computer _targetComputer;
         public Computer TargetComputer
         {
@@ -114,7 +138,7 @@ namespace Edulink.ViewModels
         public string TargetName => TargetComputer?.IsTeacher == false ? TargetComputer.Name : LocalizedStrings.Instance["SendFile.Send.SendFileTo.Teacher"];
         #endregion
 
-        #region File sharing Properties
+        #region File sharing
         private FileInfo _fileInfo;
         public FileInfo File
         {
@@ -125,32 +149,66 @@ namespace Edulink.ViewModels
                 {
                     _fileInfo = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(FileSelected));
+                    OnPropertyChanged(nameof(IsFileSelected));
                 }
             }
         }
 
-        public bool FileSelected => File != null;
+        public bool IsFileSelected => File != null;
 
-        private bool _sendingFile;
-        public bool SendingFile
+        private bool _isSendingFile;
+        public bool IsSendingFile
         {
-            get => _sendingFile;
+            get => _isSendingFile;
             set
             {
-                if (_sendingFile != value)
+                if (_isSendingFile != value)
                 {
-                    _sendingFile = value;
+                    _isSendingFile = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanChangeFile));
+                }
+            }
+        }
+
+        private int _percentageSent;
+        public int Progress
+        {
+            get => _percentageSent;
+            set
+            {
+                if (_percentageSent != value)
+                {
+                    _percentageSent = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _isFileSent;
+        public bool IsFileSent
+        {
+            get => _isFileSent;
+            set
+            {
+                if (_isFileSent != value)
+                {
+                    _isFileSent = value;
                     OnPropertyChanged();
                 }
             }
         }
         #endregion
 
+        public bool CanChangeFile => !IsSendingFile && !IsReceivingResponse;
+
+        public event EventHandler RequestComputerList;
+
         public SendFileWindowViewModel()
         {
             SelectComputerViewModel = new SelectComputerControlViewModel();
             SelectComputerViewModel.RequestNext += _computerControlViewModel_RequestNext;
+            RequestComputerList?.Invoke(this, EventArgs.Empty);
         }
 
         #region Event handlers
@@ -164,7 +222,7 @@ namespace Edulink.ViewModels
         #endregion
 
         #region Commands
-        public ICommand ListPageCommand => new RelayCommand(execute => GoToListPage(), canExecute => !_receiving && SelectComputerViewModel.Computers.Any());
+        public ICommand ListPageCommand => new RelayCommand(execute => GoToListPage(), canExecute => !_isReceivingList && SelectComputerViewModel.Computers.Any());
 
         private void GoToListPage()
         {
@@ -172,12 +230,20 @@ namespace Edulink.ViewModels
         }
 
         public ICommand SendFilePageCommand => new RelayCommand(execute => GoToSendFilePage(),
-                                                                canExecute => !_receiving && SelectComputerViewModel.SelectedComputer != null);
+                                                                canExecute => !_isReceivingList && SelectComputerViewModel.SelectedComputer != null);
 
         private void GoToSendFilePage()
         {
             TargetComputer = SelectComputerViewModel.SelectedComputer;
             PageIndex = 2;
+        }
+        public event EventHandler RequestSendFile;
+
+        public ICommand SendCommand => new RelayCommand(execute => HandleSendCommandAsync(), canExecute => IsFileSelected && !CanChangeFile);
+
+        private void HandleSendCommandAsync()
+        {
+            RequestSendFile?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
@@ -186,15 +252,13 @@ namespace Edulink.ViewModels
         {
             SelectComputerViewModel.UpdateList(computers);
 
-            SetReceivingStatus(false);
+            IsReceivingList = false;
 
             if (ListPageCommand.CanExecute(this))
             {
                 ListPageCommand.Execute(this);
             }
         }
-
-        public void SetReceivingStatus(bool value) => Receiving = value;
 
         public void SetSharingStatus(bool student, bool teacher)
         {
@@ -204,7 +268,7 @@ namespace Edulink.ViewModels
             // Update sharing status on select computer view model
             SelectComputerViewModel.CanSendTeacher = SharingToTeacher;
 
-            SetReceivingStatus(false);
+            IsReceivingList = false;
 
             // Go to send file page if only sharing to the teacher is allowed
             if (SharingToTeacher && !SelectComputerViewModel.Computers.Any())
@@ -218,11 +282,21 @@ namespace Edulink.ViewModels
             }
         }
 
-        public void SetFile(FileInfo file)
-        {
-            if (file == null) return;
+        public void SetFile(FileInfo file) => File = file;
 
-            File = file;
+        public void Reset()
+        {
+            PageIndex = 0;
+            IsReceivingList = false;
+            IsReceivingResponse = false;
+            TargetComputer = null;
+            SharingToStudents = false;
+            SharingToTeacher = false;
+            File = null;
+            IsSendingFile = false;
+            IsFileSent = false;
+            Progress = 0;
+            SelectComputerViewModel.Reset();
         }
         #endregion
     }
