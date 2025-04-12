@@ -98,6 +98,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\IPEndPointConverter.cs" />
     <Compile Include="Models\Computer.cs" />
     <Compile Include="MVVM\ClosableViewModel.cs" />
     <Compile Include="MVVM\TrackableValidatableClosableViewModel.cs" />
