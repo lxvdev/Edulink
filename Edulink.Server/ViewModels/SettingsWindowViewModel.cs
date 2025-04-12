@@ -3,8 +3,11 @@ using Edulink.MVVM;
 using Edulink.Views;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Input;
 using WPFLocalizeExtension.Engine;
@@ -130,13 +133,25 @@ namespace Edulink.ViewModels
         }
 
         private string _ipAddresses;
-        public string IPAddresses => _ipAddresses;
+        public string IPAddresses
+        {
+            get => _ipAddresses;
+            set
+            {
+                if (_ipAddresses != value)
+                {
+                    _ipAddresses = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public SettingsWindowViewModel()
         {
             LoadSettings();
             ValidatePort();
-            _ipAddresses = IPAddressProvider.GetIPAddresses();
+
+            GetIPAddresses();
         }
 
         public ICommand SaveAndRestartCommand => new RelayCommand(execute => Save(true), canExecute => !HasErrors);
@@ -187,11 +202,11 @@ namespace Edulink.ViewModels
             _snackbarMessageQueue.Enqueue(LocalizedStrings.Instance["Settings.Message.CopiedToClipboard"], new PackIcon { Kind = PackIconKind.Close }, () => { });
         }
 
-        public ICommand RefreshIPAddressesCommand => new RelayCommand(execute => RefreshIPAddresses());
-        private void RefreshIPAddresses()
+        public ICommand RefreshIPAddressesCommand => new RelayCommand(execute => GetIPAddresses());
+        private void GetIPAddresses()
         {
-            _ipAddresses = IPAddressProvider.GetIPAddresses();
-            OnPropertyChanged(nameof(IPAddresses));
+            List<IPAddress> ipAddresses = IPAddressProvider.GetIPAddresses();
+            IPAddresses = ipAddresses.Any() ? string.Join(", ", ipAddresses) : "No active network interfaces";
         }
 
         private void LoadSettings()
