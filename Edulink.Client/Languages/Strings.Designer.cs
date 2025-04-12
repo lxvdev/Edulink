@@ -151,6 +151,15 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not send file.
+        /// </summary>
+        internal static string Message_Content_CouldNotSendFile {
+            get {
+                return ResourceManager.GetString("Message.Content.CouldNotSendFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please enter a password.
         /// </summary>
         internal static string Message_Content_EnterAPassword {
@@ -169,11 +178,47 @@ namespace Edulink.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file is currently being used by another program.
+        /// </summary>
+        internal static string Message_Content_FileInUse {
+            get {
+                return ResourceManager.GetString("Message.Content.FileInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File sent successfully.
+        /// </summary>
+        internal static string Message_Content_FileSentSuccessfully {
+            get {
+                return ResourceManager.GetString("Message.Content.FileSentSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File transfer has been declined.
+        /// </summary>
+        internal static string Message_Content_FileTransferDeclined {
+            get {
+                return ResourceManager.GetString("Message.Content.FileTransferDeclined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect password.
         /// </summary>
         internal static string Message_Content_IncorrectPassword {
             get {
                 return ResourceManager.GetString("Message.Content.IncorrectPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid file path.
+        /// </summary>
+        internal static string Message_Content_InvalidFilePath {
+            get {
+                return ResourceManager.GetString("Message.Content.InvalidFilePath", resourceCulture);
             }
         }
         
@@ -192,6 +237,42 @@ namespace Edulink.Languages {
         internal static string Message_Content_PasswordsDoNotMatch {
             get {
                 return ResourceManager.GetString("Message.Content.PasswordsDoNotMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path too long.
+        /// </summary>
+        internal static string Message_Content_PathTooLong {
+            get {
+                return ResourceManager.GetString("Message.Content.PathTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file cannot be larger than 200MB.
+        /// </summary>
+        internal static string Message_Content_TheFileCannotBeLargerThan200MB {
+            get {
+                return ResourceManager.GetString("Message.Content.TheFileCannotBeLargerThan200MB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unauthorized access.
+        /// </summary>
+        internal static string Message_Content_UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("Message.Content.UnauthorizedAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unexpected error.
+        /// </summary>
+        internal static string Message_Content_UnexpectedError {
+            get {
+                return ResourceManager.GetString("Message.Content.UnexpectedError", resourceCulture);
             }
         }
         
@@ -489,6 +570,24 @@ namespace Edulink.Languages {
         internal static string SendFile_InitialStatusMessage_SharingNotAllowed {
             get {
                 return ResourceManager.GetString("SendFile.InitialStatusMessage.SharingNotAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag and Drop file here or Choose file.
+        /// </summary>
+        internal static string SendFile_Send_DragAndDropFileHereOrChooseFile {
+            get {
+                return ResourceManager.GetString("SendFile.Send.DragAndDropFileHereOrChooseFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        internal static string SendFile_Send_Send {
+            get {
+                return ResourceManager.GetString("SendFile.Send.Send", resourceCulture);
             }
         }
         

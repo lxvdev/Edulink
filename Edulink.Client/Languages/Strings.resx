@@ -147,20 +147,47 @@
   <data name="Message.Content.AreYouSureYouWantToLeaveWithoutSavingChanges" xml:space="preserve">
     <value>Are you sure you want to leave without saving changes?</value>
   </data>
+  <data name="Message.Content.CouldNotSendFile" xml:space="preserve">
+    <value>Could not send file</value>
+  </data>
   <data name="Message.Content.EnterAPassword" xml:space="preserve">
     <value>Please enter a password</value>
   </data>
   <data name="Message.Content.FailedToRestartAsAdmin" xml:space="preserve">
     <value>Failed to restart the application as administrator</value>
   </data>
+  <data name="Message.Content.FileInUse" xml:space="preserve">
+    <value>The file is currently being used by another program</value>
+  </data>
+  <data name="Message.Content.FileSentSuccessfully" xml:space="preserve">
+    <value>File sent successfully</value>
+  </data>
+  <data name="Message.Content.FileTransferDeclined" xml:space="preserve">
+    <value>File transfer has been declined</value>
+  </data>
   <data name="Message.Content.IncorrectPassword" xml:space="preserve">
     <value>Incorrect password</value>
+  </data>
+  <data name="Message.Content.InvalidFilePath" xml:space="preserve">
+    <value>Invalid file path</value>
   </data>
   <data name="Message.Content.NoPasswordSet" xml:space="preserve">
     <value>It is strongly recommended to set a password. Would you like to set a password now?</value>
   </data>
   <data name="Message.Content.PasswordsDoNotMatch" xml:space="preserve">
     <value>Passwords do not match</value>
+  </data>
+  <data name="Message.Content.PathTooLong" xml:space="preserve">
+    <value>Path too long</value>
+  </data>
+  <data name="Message.Content.TheFileCannotBeLargerThan200MB" xml:space="preserve">
+    <value>The file cannot be larger than 200MB</value>
+  </data>
+  <data name="Message.Content.UnauthorizedAccess" xml:space="preserve">
+    <value>Unauthorized access</value>
+  </data>
+  <data name="Message.Content.UnexpectedError" xml:space="preserve">
+    <value>Unexpected error</value>
   </data>
   <data name="Message.Title.Error" xml:space="preserve">
     <value>Error</value>
@@ -260,6 +287,12 @@
   </data>
   <data name="SendFile.InitialStatusMessage.SharingNotAllowed" xml:space="preserve">
     <value>Sharing is not allowed</value>
+  </data>
+  <data name="SendFile.Send.DragAndDropFileHereOrChooseFile" xml:space="preserve">
+    <value>Drag and Drop file here or Choose file</value>
+  </data>
+  <data name="SendFile.Send.Send" xml:space="preserve">
+    <value>Send</value>
   </data>
   <data name="SendFile.Send.SendFileTo" xml:space="preserve">
     <value>Send file to {0}</value>
