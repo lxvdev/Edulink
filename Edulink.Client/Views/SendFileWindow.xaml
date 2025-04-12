@@ -51,7 +51,7 @@
                             Margin="0,0,8,0"
                             IsIndeterminate="True"
                             Style="{StaticResource MaterialDesignCircularProgressBar}"
-                            Visibility="{Binding Receiving, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            Visibility="{Binding IsReceivingList, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}" Text="{Binding InitialStatusMessage, Converter={lex:TranslateConverter}}" />
                     </StackPanel>
                 </Grid>
@@ -74,6 +74,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+                    <!--  Title  -->
                     <StackPanel
                         Grid.Row="0"
                         Margin="0,0,0,10"
@@ -95,20 +96,24 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <materialDesign:Card
-                        Grid.Row="1"
-                        AllowDrop="True"
-                        Style="{StaticResource MaterialDesignOutlinedCard}">
+                    <!--  File info  -->
+                    <materialDesign:Card Grid.Row="1" Style="{StaticResource MaterialDesignOutlinedCard}">
                         <Button
                             Height="Auto"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
                             d:Height="300"
+                            AllowDrop="True"
                             Click="SelectFileButton_Click"
                             Drop="SelectFileButton_Drop"
+                            IsEnabled="{Binding CanChangeFile}"
                             Style="{StaticResource MaterialDesignFlatButton}">
-                            <Grid>
-                                <StackPanel VerticalAlignment="Center" Visibility="{Binding FileSelected, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
+                            <Grid MinWidth="400">
+                                <!--  Drag and drop  -->
+                                <StackPanel
+                                    VerticalAlignment="Center"
+                                    d:Visibility="Collapsed"
+                                    Visibility="{Binding IsFileSelected, Converter={StaticResource InvertBooleanToVisibilityConverter}}">
                                     <materialDesign:PackIcon
                                         Width="28"
                                         Height="28"
@@ -116,13 +121,20 @@
                                         HorizontalAlignment="Center"
                                         Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
                                         Kind="FilePlusOutline" />
-                                    <TextBlock HorizontalAlignment="Center" Text="Drag and Drop file here or Choose file" />
+                                    <TextBlock HorizontalAlignment="Center" Text="{lex:Loc SendFile.Send.DragAndDropFileHereOrChooseFile}" />
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
+                                        Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                        Text="Maximum file size is 200MB" />
                                 </StackPanel>
-                                <Grid Visibility="{Binding FileSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <!--  File info and progress  -->
+                                <Grid d:Visibility="Visible" Visibility="{Binding IsFileSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
+                                    <!--  File icon  -->
                                     <materialDesign:Card
                                         Grid.Column="0"
                                         Width="75"
@@ -139,6 +151,7 @@
                                             Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
                                             Kind="FileOutline" />
                                     </materialDesign:Card>
+                                    <!--  File name, path, size and progress  -->
                                     <StackPanel
                                         Grid.Column="1"
                                         MaxWidth="650"
@@ -156,10 +169,12 @@
                                         <ProgressBar
                                             Height="5"
                                             Margin="0,5,0,0"
+                                            d:Visibility="Visible"
                                             materialDesign:TransitionAssist.DisableTransitions="True"
                                             BorderThickness="0"
                                             Style="{StaticResource MaterialDesignLinearProgressBar}"
-                                            Visibility="{Binding SendingFile, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            Visibility="{Binding IsSendingFile, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            Value="{Binding Progress}" />
                                         <TextBlock
                                             d:Text="10KB"
                                             Foreground="{DynamicResource MaterialDesign.Brush.Card.Border}"
@@ -175,7 +190,11 @@
                         Grid.Row="2"
                         Margin="0,10,0,0"
                         HorizontalAlignment="Right"
-                        Content="Send"
+                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="{Binding IsReceivingResponse}"
+                        Command="{Binding SendCommand}"
+                        Content="{lex:Loc SendFile.Send.Send,
+                                          Converter={lex:ToUpperConverter}}"
                         Style="{StaticResource MaterialDesignFlatButton}" />
                 </Grid>
             </materialDesign:TransitionerSlide>
