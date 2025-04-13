@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Server and client",
+    "Projects": [
+      {
+        "Path": "Edulink.Server\\Edulink.Server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Edulink.Client\\Edulink.Client.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
